@@ -19,6 +19,8 @@ services:
   webapp:
     container_name: applicationweb
     image: application:latest 
+    environment:
+        - CONNECTION_STRING=Server=sqlserver,1433; Database=SoftwareFest; User Id=sa; Password=SQLSxrvxr123#; TrustServerCertificate=True;
     ports: 
       - "80:80"
     restart: always
