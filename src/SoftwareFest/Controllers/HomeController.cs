@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SofwareFest.Models;
-using SofwareFest.ViewModels;
+using SoftwareFest.Models;
+using SoftwareFest.ViewModels;
 using System.Diagnostics;
+using SoftwareFest.ViewModels;
 
-namespace SofwareFest.Controllers
+namespace SoftwareFest.Controllers
 {
     public class HomeController : Controller
     {

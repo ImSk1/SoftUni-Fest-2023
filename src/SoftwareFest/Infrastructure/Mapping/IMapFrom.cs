@@ -1,4 +1,4 @@
-﻿namespace SofwareFest.Infrastructure.Mapping
+﻿namespace SoftwareFest.Infrastructure.Mapping
 {
     using AutoMapper;
     public interface IMapFrom<T>

@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
-using SofwareFest.Models;
+using SoftwareFest.Models;
+using SofwareFest.Infrastructure;
 
-namespace SofwareFest.Infrastructure.Extensions
+namespace SoftwareFest.Infrastructure.Extensions
 {
     public static class ServiceCollectionExtensions
     {

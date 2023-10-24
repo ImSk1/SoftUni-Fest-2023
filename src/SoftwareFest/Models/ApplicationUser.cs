@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace SofwareFest.Models
+namespace SoftwareFest.Models
 {
     public class ApplicationUser : IdentityUser
     {

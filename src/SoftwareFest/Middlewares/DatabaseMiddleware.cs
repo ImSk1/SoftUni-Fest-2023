@@ -3,7 +3,7 @@ using Polly;
 using SofwareFest.Infrastructure;
 using System.Diagnostics.CodeAnalysis;
 
-namespace SofwareFest.Middlewares
+namespace SoftwareFest.Middlewares
 {
     [ExcludeFromCodeCoverage]
     public class DatabaseMiddleware

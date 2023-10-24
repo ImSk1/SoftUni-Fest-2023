@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SofwareFest.Models;
+using SoftwareFest.Models;
+using SoftwareFest.Models;
 
 namespace SofwareFest.Infrastructure
 {

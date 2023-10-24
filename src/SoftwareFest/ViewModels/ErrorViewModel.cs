@@ -1,4 +1,4 @@
-namespace SofwareFest.ViewModels
+namespace SoftwareFest.ViewModels
 {
     public class ErrorViewModel
     {

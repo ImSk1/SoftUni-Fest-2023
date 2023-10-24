@@ -1,9 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
-using SofwareFest.Infrastructure.Extensions;
-using SofwareFest.Middlewares;
-using ServiceCollectionExtensions = SofwareFest.Infrastructure.Extensions.ServiceCollectionExtensions;
+using SoftwareFest.Middlewares;
+using System.Diagnostics.CodeAnalysis;
+using SoftwareFest.Infrastructure.Extensions;
+using ServiceCollectionExtensions = SoftwareFest.Infrastructure.Extensions.ServiceCollectionExtensions;
 
 var appName = "SoftUni-Fest";
 var builder = WebApplication.CreateBuilder(args);
