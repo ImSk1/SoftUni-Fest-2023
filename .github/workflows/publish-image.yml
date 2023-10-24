@@ -48,7 +48,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: src/SoftwareFestI
+          context: src/SoftwareFest
           file: src/SoftwareFest/Dockerfile
           push: true
           tags: ${{secrets.DOCKER_USERNAME}}/softwarefest
