@@ -18,10 +18,10 @@ services:
 
   webapp:
     container_name: applicationweb
-    image: application:latest 
+    image: sk1es/softwarefest:latest
     domainname: davidh-contacts
     ports: 
-      - "80:80"
+      - "5102:80"
     restart: always
 
 volumes:
