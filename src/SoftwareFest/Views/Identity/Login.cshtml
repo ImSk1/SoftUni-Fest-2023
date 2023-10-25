@@ -1,0 +1,8 @@
+﻿@using SoftwareFest.ViewModels;
+@model LoginViewModel
+
+<form method="post" asp-action="Login" asp-controller="Identity">
+    <input type="email" asp-for="@Model.Email" />
+    <input type="password" asp-for="@Model.Password" />
+    <button type="submit">Login</button>
+</form>
