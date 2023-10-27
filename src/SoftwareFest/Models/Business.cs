@@ -19,7 +19,6 @@
 
         public ApplicationUser User { get; set; } = null!;
 
-        [Required]
-        public string StripeUserId { get; set; } = null!;
+        public string? StripeUserId { get; set; }
     }
 }

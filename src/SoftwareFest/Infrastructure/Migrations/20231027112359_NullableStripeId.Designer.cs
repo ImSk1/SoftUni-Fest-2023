@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SofwareFest.Infrastructure;
 
@@ -11,9 +12,11 @@ using SofwareFest.Infrastructure;
 namespace SoftwareFest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231027112359_NullableStripeId")]
+    partial class NullableStripeId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,6 +237,7 @@ namespace SoftwareFest.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("StripeUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -328,7 +332,7 @@ namespace SoftwareFest.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 27, 11, 24, 58, 335, DateTimeKind.Utc).AddTicks(8540));
+                        .HasDefaultValue(new DateTime(2023, 10, 27, 11, 23, 59, 916, DateTimeKind.Utc).AddTicks(1283));
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
