@@ -1,0 +1,10 @@
+﻿@using SoftwareFest.ViewModels;
+@model ClientRegisterViewModel
+
+<form method="post" asp-action="Register" asp-controller="Identity">
+    <input type="text" asp-for="@Model.FirstName" />
+    <input type="text" asp-for="@Model.LastName" />
+    <input type="email" asp-for="@Model.User.Email" />
+    <input type="password" asp-for="@Model.User.Password" />
+    <button type="submit">Register</button>
+</form>
