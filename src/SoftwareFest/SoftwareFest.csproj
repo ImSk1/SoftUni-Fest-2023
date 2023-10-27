@@ -40,4 +40,8 @@
     <Folder Include="Infrastructure\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\css\layout.css" />
+  </ItemGroup>
+
 </Project>
