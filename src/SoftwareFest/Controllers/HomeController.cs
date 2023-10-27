@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SoftwareFest.Models;
-using SoftwareFest.ViewModels;
-using System.Diagnostics;
-using SoftwareFest.ViewModels;
-
-namespace SoftwareFest.Controllers
+﻿namespace SoftwareFest.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using SoftwareFest.ViewModels;
+    using System.Diagnostics;
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

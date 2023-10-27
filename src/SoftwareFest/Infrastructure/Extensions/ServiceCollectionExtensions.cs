@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Serilog;
-using SoftwareFest.Models;
-using SofwareFest.Infrastructure;
-
-namespace SoftwareFest.Infrastructure.Extensions
+﻿namespace SoftwareFest.Infrastructure.Extensions
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Diagnostics.HealthChecks;
+    using Serilog;
+    using SoftwareFest.MailSending;
+    using SoftwareFest.Models;
+    using SofwareFest.Infrastructure;
+
     public static class ServiceCollectionExtensions
     {
         public static void AddConfiguration(this WebApplicationBuilder builder)
@@ -68,6 +69,11 @@ namespace SoftwareFest.Infrastructure.Extensions
                     .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!,
                         name: "IdentityDB-check",
                         tags: new string[] { "IdentityDB" });
+        }
+        public static void AddEmailSending(this WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<EmailSendingSettings>(builder.Configuration.GetSection("EmailSending"));
+            builder.Services.AddTransient<IMailSender, MailSender>();
         }
     }
 }

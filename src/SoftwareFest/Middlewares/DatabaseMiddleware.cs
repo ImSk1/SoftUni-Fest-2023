@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Polly;
-using SofwareFest.Infrastructure;
-using System.Diagnostics.CodeAnalysis;
-
-namespace SoftwareFest.Middlewares
+﻿namespace SoftwareFest.Middlewares
 {
+    using Microsoft.EntityFrameworkCore;
+    using Polly;
+    using SofwareFest.Infrastructure;
+    using System.Diagnostics.CodeAnalysis;
+
     [ExcludeFromCodeCoverage]
     public class DatabaseMiddleware
     {
