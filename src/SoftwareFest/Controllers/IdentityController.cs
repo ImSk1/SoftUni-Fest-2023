@@ -60,7 +60,7 @@
             => View();
 
         [HttpPost("/register")]
-        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
+        public async Task<IActionResult> Register([FromBody] BusinessRegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -68,7 +68,7 @@
             }
 
             var user = _mapper.Map<ApplicationUser>(model);
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.User.Password);
 
             if (!result.Succeeded)
             {
@@ -77,7 +77,7 @@
                 return View(model);
             }
 
-            _logger.LogInformation("User {0} registered successfully.", model.Email);
+            _logger.LogInformation("User {0} registered successfully.", model.User.Email);
 
             return RedirectToAction(nameof(Login));
         }

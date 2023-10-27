@@ -1,8 +1,26 @@
 ﻿@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="page-container">
+    <section class="left">
+        <header>
+            @*<img class="blob-img" src="~/images/blob-haikei.png" />*@
+            <img class="logo" src="~/images/screenshot_2023-10-27_124010-transformed.png" />
+       </header>
+       <div class="text">
+           <h1>A New Era of Online Transactions</h1>
+            <h2>Payment Service Solution</h2>
+           <div class="buttons">
+               <button>Business</button>
+               <button>Client</button>
+           </div>
+       </div>
+    </section>
+    <section class="right">
+        <div class="inage-container">
+            <img class="main-img" src="~/images/9830596.jpg" />
+        </div>
+    </section>
 </div>
