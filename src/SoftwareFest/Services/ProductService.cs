@@ -57,17 +57,6 @@
             return product;
         }
 
-        public async Task<List<ShowProductViewModel>> GetProducts()
-        {
-            var products = await _context.Products
-                .Select(x => _mapper.Map<ShowProductViewModel>(x))
-                .ToListAsync();
-
-            _logger.LogInformation($"Retrieved all products from the database.");
-
-            return products;
-        }
-
         public async Task<IPage<ShowProductViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50, Expression<Func<Product, bool>>? predicate = null, Expression<Func<ShowProductViewModel, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
         {
             pageIndex -= 1;
