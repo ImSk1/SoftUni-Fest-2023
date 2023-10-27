@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 using SoftwareFest.Infrastructure.Extensions;
+using SoftwareFest.MailSending;
 using SoftwareFest.Services;
 using SoftwareFest.Services.Contracts;
 
@@ -24,8 +25,11 @@ builder.AddMvc();
 builder.AddDatabase();
 builder.AddCustomHealthChecks();
 builder.AddCustomIdentity();
+builder.AddEmailSending();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<IBusinessService, BusinessService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddTransient<IMailSender, MailSender>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog(ServiceCollectionExtensions.CreateSerilogLogger(builder.Configuration, appName));
