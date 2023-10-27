@@ -3,10 +3,15 @@ using Serilog;
 using SoftwareFest.Middlewares;
 using System.Diagnostics.CodeAnalysis;
 using SoftwareFest.Infrastructure.Extensions;
+using SoftwareFest.Services;
+using SoftwareFest.Services.Contracts;
+using Stripe;
 using ServiceCollectionExtensions = SoftwareFest.Infrastructure.Extensions.ServiceCollectionExtensions;
 
 var appName = "SoftUni-Fest";
 var builder = WebApplication.CreateBuilder(args);
+
+StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
 // Add services to the container.
 builder.AddConfiguration();
@@ -14,6 +19,8 @@ builder.AddMvc();
 builder.AddDatabase();
 builder.AddCustomHealthChecks();
 builder.AddCustomIdentity();
+builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog(ServiceCollectionExtensions.CreateSerilogLogger(builder.Configuration, appName));
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
