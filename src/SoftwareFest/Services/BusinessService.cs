@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SoftwareFest.Infrastructure.Exceptions;
 using SoftwareFest.Models;
 using SoftwareFest.Services.Contracts;
@@ -41,16 +42,43 @@ namespace SoftwareFest.Services
         }
 
         public async Task<BusinessViewModel> GetBusinessById(int id) 
-            => _mapper.Map<BusinessViewModel>(await _dbContext.Businesses.FindAsync(id));
-        
-        public Task UpdateBusiness(BusinessViewModel business)
+            => _mapper.Map<BusinessViewModel>(await _dbContext.Businesses.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id));
+
+        public async Task<BusinessViewModel> GetBusinessByUserId(string userId)
         {
-            throw new NotImplementedException();
+            var user = await _userManager
+                .Users
+                .AsNoTracking()
+                .Include(x => x.Business)
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            return _mapper.Map<BusinessViewModel>(user.Business);
         }
 
-        public Task<bool> DeleteBusiness(int id)
+        public async Task UpdateBusiness(BusinessViewModel business)
         {
-            throw new NotImplementedException();
+            var businessDbo = _mapper.Map<Business>(business);
+            _dbContext.Update(businessDbo);
+            await _dbContext.SaveChangesAsync();
+
+            _logger.LogInformation($"Successfully updated business with name {business.Id}");
+        }
+
+        public async Task<bool> DeleteBusiness(int id)
+        {
+            var business = await _dbContext.Businesses.FindAsync(id);
+
+            if (business == null)
+            {
+                _logger.LogWarning($"No business found with ID {id}");
+                return false;
+            }
+
+            _dbContext.Businesses.Remove(business);
+            await _dbContext.SaveChangesAsync();
+
+            _logger.LogInformation($"Successfully deleted business with ID {id}");
+            return true;
         }
     }
 }
