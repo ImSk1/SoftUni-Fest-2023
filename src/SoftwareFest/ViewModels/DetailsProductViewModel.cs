@@ -24,11 +24,9 @@ namespace SoftwareFest.ViewModels
         public void Mapping(Profile mapping)
         {
             mapping.CreateMap<DetailsProductViewModel, Product>()
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => (long)src.Price * 100))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.Parse(typeof(ProductType), src.Type)));
 
             mapping.CreateMap<Product, DetailsProductViewModel>()
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => (decimal)src.Price / 100))
                 .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()));
         }
     }

@@ -1,0 +1,107 @@
+﻿.main-holder {
+    width: 100%;
+}
+
+    .main-holder .main-block {
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .main-holder .main-block .logo-header {
+            height: 20vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .main-holder .main-block .logo-header .logo-img {
+                width: 200px;
+            }
+
+        .main-holder .main-block .container {
+            width: 20%;
+            height: 40%;
+            display: flex;
+            flex-direction: row;
+            border-radius: 30px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            border: 2px solid black;
+        }
+
+            .main-holder .main-block .container form {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                padding: 40px 30px;
+            }
+
+            .main-holder .main-block .container input {
+                width: 80%;
+                margin: 5px;
+                height: 40px;
+                font-size: 18px;
+                padding-left: 10px;
+                border-radius: 10px;
+                border: 2px solid black;
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                transition: all 0.5s;
+            }
+
+                .main-holder .main-block .container input:hover {
+                    border: 2px solid #74A94A;
+                }
+
+            .main-holder .main-block .container button {
+                width: 84%;
+                margin: 5px;
+                height: 44px;
+                font-size: 18px;
+                padding-left: 10px;
+                border-radius: 10px;
+                border: 2px solid #74A94A;
+                background-color: white;
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                transition: all 0.5s;
+            }
+
+                .main-holder .main-block .container button:hover {
+                    border: 2px solid black;
+                }
+
+.action-text {
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.a-link {
+    margin-top: 10px;
+    color: #74A94A;
+    text-decoration:underline;
+}
+
+@media(max-width:1500px) {
+    .main-holder .main-block .container {
+        width: 30%;
+        height: 40%;
+    }
+}
+
+@media(max-width:800px) {
+    .main-holder .main-block .container {
+        width: 40%;
+        height: 40%;
+    }
+}
+
+@media(max-width:600px) {
+    .main-holder .main-block .container {
+        width: 60%;
+        height: 40%;
+    }
+}

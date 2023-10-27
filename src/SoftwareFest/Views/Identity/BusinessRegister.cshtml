@@ -1,9 +1,23 @@
 ﻿@using SoftwareFest.ViewModels;
 @model BusinessViewModel
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
 
-<form method="post" asp-action="BusinessRegister" asp-controller="Identity">
-    <input type="text" asp-for="@Model.BusinessName" />
-    <input type="email" asp-for="@Model.Email" />
-    <input type="password" asp-for="@Model.Password" />
-    <button type="submit">Register</button>
-</form>
+<div class="main-holder">
+    <div class="main-block">
+        <div class="logo-header">
+            <a asp-action="Index" asp-controller="Home"><img class="logo-img" src="~/images/screenshot_2023-10-27_124010-transformed.png" /></a>
+        </div>
+        <div class="container">
+            <form method="post" asp-action="BusinessRegister" asp-controller="Identity">
+                <h1 class="action-text">Join as Business</h1>
+                <input placeholder="Business Name" type="text" asp-for="@Model.BusinessName" />
+                <input placeholder="Email" type="email" asp-for="@Model.Email" />
+                <input placeholder="Password" type="password" asp-for="@Model.Password" />
+                <button type="submit">Register</button>
+            </form>
+        </div>
+        <a class="a-link" asp-action="Login">Log in instead</a>
+    </div>
+</div>
