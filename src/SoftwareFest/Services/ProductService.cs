@@ -1,10 +1,7 @@
 ﻿namespace SoftwareFest.Services
 {
-    using System.Security.Claims;
-
     using AutoMapper;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     using SoftwareFest.Models;
@@ -44,6 +41,16 @@
             _logger.LogInformation($"Succesfully added product with id {product.Id}");
         }
 
+        public async Task<DetailsProductViewModel> GetById(int id)
+        {
+            var product = await _context.Products
+                .Where(x => x.Id == id)
+                .Select(x => _mapper.Map<DetailsProductViewModel>(x))
+                .FirstOrDefaultAsync();
+
+            return product;
+        }
+
         public async Task<List<ShowProductViewModel>> GetProducts()
         {
             var products = await _context.Products
@@ -54,5 +61,7 @@
 
             return products;
         }
+
+
     }
 }

@@ -8,5 +8,7 @@
         Task<List<ShowProductViewModel>> GetProducts();
 
         Task AddProduct(AddProductViewModel model, string userId);
+
+        Task<DetailsProductViewModel> GetById(int id);
     }
 }
