@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SoftwareFest.Services.Contracts;
 using Stripe;
+using System.Security.Claims;
 
 namespace SoftwareFest.Controllers
 {
@@ -8,9 +9,11 @@ namespace SoftwareFest.Controllers
     public class StripeController : Controller
     {
         private readonly IConfiguration _config;
-        public StripeController(IConfiguration configuration)
+        private readonly IBusinessService _businessService;
+        public StripeController(IConfiguration configuration, IBusinessService businessService)
         {
             _config = configuration;
+            _businessService = businessService;
         }
 
 
@@ -34,10 +37,13 @@ namespace SoftwareFest.Controllers
 
             var service = new OAuthTokenService();
             var response = await service.CreateAsync(options);
-            
-            //TODO:Save AC to DB
 
-            return Redirect("/somePage");
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var business = await _businessService.GetBusinessByUserId(userId);
+            business.StripeUserId = response.StripeUserId;
+            await _businessService.UpdateBusiness(business);
+
+            return Redirect("~/");
         }
     }
 }

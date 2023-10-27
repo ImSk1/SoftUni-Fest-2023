@@ -19,13 +19,13 @@
         [HttpGet("checkout")]
         public async Task<IActionResult> Checkout()
         {
-            ProductViewModel exampleProduct = new ProductViewModel
+            DetailsProductViewModel exampleProduct = new DetailsProductViewModel
             {
                 Id = 1,
                 Name = "Laptop",
                 Description = "High-performance laptop with 16GB RAM and 1TB SSD",
                 Price = 99999,
-                Category = "Electronics",
+                Type = "Electronics",
                 ImageUrl = "https://example.com/images/laptop.jpg"
             };
             var sessionId = await _checkoutService.CheckOut(exampleProduct);
