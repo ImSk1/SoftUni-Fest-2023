@@ -1,31 +1,33 @@
 ﻿@model SoftwareFest.Pagination.Page<SoftwareFest.ViewModels.ShowProductViewModel>
-@foreach (var product in Model)
-{
-    <div class="product">
-        <input type="hidden" id="productId" value="@product.Id" />
-
-        <div class="product-name">
-            <label for="productName">Name: </label>
-            <span id="productName">@product.Name</span>
-        </div>
-
-        <div class="product-image">
-            <label for="productImage">Image: </label>
-            <img id="productImage" src="@product.ImageUrl" alt="@product.Name" />
-        </div>
-
-        <div class="product-price">
-            <label for="productPrice">Price: </label>
-            <span id="productPrice">@product.Price</span>
-        </div>
-    </div>
-}
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disable" : "";
     var nextDisabled = !Model.HasNextPage ? "disable" : "";
 }
-<
-<div class="next-btn">
-    <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn default-border @prevDisabled">Previous</a>
-    <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn default-border @nextDisabled">Next</a>
+<div class="container-all">
+    <div class="products">
+        @foreach (var product in Model)
+        {
+            <div class="product">
+                <input type="hidden" id="productId" value="@product.Id" />
+                <div class="product-image">
+                    <img id="productImage" src="@product.ImageUrl" alt="@product.Name" />
+                </div>
+                <div class="product-details">
+                    <span id="productName">@product.Name</span>
+                    <div class="product-retailer">
+                        <img src="~/images/9834857.jpg" />
+                        <span id="productPrice">Kur</span>
+                    </div>
+                    <div class="product-price">
+                        <span id="productPrice">@($"{product.Price:f2}") $</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="next-btn">
+        <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+        <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+    </div>
 </div>

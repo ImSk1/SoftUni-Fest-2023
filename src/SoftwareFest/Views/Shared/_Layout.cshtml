@@ -10,11 +10,12 @@
     <link href="~/css/layout.css" rel="stylesheet" />
     <link href="~/css/keyframes.css" rel="stylesheet" />
     <link href="~/css/add.css" rel="stylesheet" />
+    <link href="~/css/all.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="~/images/screenshot_2023-10-27_124010-transformed.png" />
+            <a asp-action="Index" asp-controller="Home"><img src="~/images/screenshot_2023-10-27_124010-transformed.png" /></a>
         </div>
         <nav class="navbar">
             <ul class="nav">
@@ -36,9 +37,7 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        @RenderBody()
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
