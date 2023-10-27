@@ -32,7 +32,7 @@ namespace SoftwareFest.Services
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            UnitAmount = (long)(product.Price * 100), // Price is in USD cents.
+                            UnitAmount = product.Price, // Price is in USD cents.
                             Currency = "USD",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
