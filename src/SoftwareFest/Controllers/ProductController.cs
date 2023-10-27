@@ -1,12 +1,10 @@
 ﻿namespace SoftwareFest.Controllers
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Security.Claims;
-
     using Microsoft.AspNetCore.Mvc;
-
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
+    using System.ComponentModel.DataAnnotations;
+    using System.Security.Claims;
 
     public class ProductController : Controller
     {
@@ -19,7 +17,7 @@
             _logger = logger;
         }
 
-        [HttpGet()]
+        [HttpGet("offers")]
         public async Task<IActionResult> All(
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")] 
             int pageIndex = 1, 
@@ -31,14 +29,14 @@
             return View(result);
         }
 
-        [HttpGet("add")]
+        [HttpGet("create")]
         public IActionResult Add()
         {
             var model = new ProductViewModel();
             return View(model);
         }
 
-        [HttpPost("add")]
+        [HttpPost("create")]
         public async Task<IActionResult> Add(ProductViewModel model)
         {
             if (!ModelState.IsValid)
