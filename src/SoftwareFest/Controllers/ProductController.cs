@@ -19,22 +19,26 @@
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index([Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")] int pageIndex = 1, [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")] int pageSize = 50)
+        [HttpGet()]
+        public async Task<IActionResult> All(
+            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")] 
+            int pageIndex = 1, 
+            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
+            int pageSize = 50)
         {
             var result = await _productService.GetPagedProducts(pageIndex, pageSize);
             
             return View(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Add()
+        [HttpGet("add")]
+        public IActionResult Add()
         {
             var model = new ProductViewModel();
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add(ProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -45,7 +49,7 @@
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             await _productService.AddProduct(model, userId);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(All));
         }
 
         [HttpGet]
