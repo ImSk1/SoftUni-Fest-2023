@@ -6,6 +6,11 @@
 
     public class Business
     {
+        public Business()
+        {
+            Products = new List<Product>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -18,8 +23,10 @@
         public string UserId { get; set; } = null!;
 
         public ApplicationUser User { get; set; } = null!;
-
         
         public string? StripeUserId { get; set; } = null!;
+
+        [InverseProperty(nameof(Product.Business))]
+        public List<Product> Products { get; set; } = null!;
     }
 }

@@ -19,7 +19,7 @@
         [HttpGet("checkout")]
         public async Task<IActionResult> Checkout()
         {
-            DetailsProductViewModel exampleProduct = new DetailsProductViewModel
+            ProductViewModel exampleProduct = new ProductViewModel
             {
                 Id = 1,
                 Name = "Laptop",

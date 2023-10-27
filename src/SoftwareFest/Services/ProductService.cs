@@ -3,7 +3,6 @@
     using System.Linq.Expressions;
 
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +28,7 @@
             _logger = logger;
         }
 
-        public async Task AddProduct(AddProductViewModel model, string userId)
+        public async Task AddProduct(ProductViewModel model, string userId)
         {
             var product = _mapper.Map<Product>(model);
 
@@ -47,12 +46,37 @@
             _logger.LogInformation($"Succesfully added product with id {product.Id}");
         }
 
-        public async Task<DetailsProductViewModel> GetById(int id)
+        public async Task<bool> IsOwner(string userId, int productId)
+        {
+            //TODO: Do it again
+
+            var temp = await _context.Users
+                .Include(u => u.Business)
+                .ThenInclude(b => b.Products)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            return temp.Business.Products
+                        .Select(p => p.Id)
+                        .Contains(productId);
+        }
+
+        public async Task Delete(int id)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ProductViewModel> GetById(int id)
         {
             var product = await _context.Products
                 .Where(x => x.Id == id)
-                .Select(x => _mapper.Map<DetailsProductViewModel>(x))
+                .Select(x => _mapper.Map<ProductViewModel>(x))
                 .FirstOrDefaultAsync();
+
+            _logger.LogInformation($"Retrieved details for product with id {id}");
 
             return product;
         }
@@ -90,6 +114,21 @@
             
             _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
             return new Page<ShowProductViewModel>(result, pageIndex, pageSize, totalCount);
+        }
+
+        public async Task Update(ProductViewModel model)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(x => x.Id == model.Id);
+
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.Name = model.Name;
+            product.ImageUrl = model.ImageUrl;
+
+            _logger.LogInformation($"Updated product with id {model.Id}");
+
+            await _context.SaveChangesAsync();
         }
     }
 }

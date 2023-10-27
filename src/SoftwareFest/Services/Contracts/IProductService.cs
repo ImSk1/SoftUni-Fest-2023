@@ -11,8 +11,13 @@
     {
         Task<IPage<ShowProductViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50, Expression<Func<Product, bool>>? predicate = null, Expression<Func<ShowProductViewModel, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending);
 
-        Task AddProduct(AddProductViewModel model, string userId);
+        Task AddProduct(ProductViewModel model, string userId);
 
-        Task<DetailsProductViewModel> GetById(int id);
+        Task<ProductViewModel> GetById(int id);
+        Task Update(ProductViewModel model);
+
+        Task Delete(int id);
+
+        Task<bool> IsOwner(string userId, int productId);
     }
 }
