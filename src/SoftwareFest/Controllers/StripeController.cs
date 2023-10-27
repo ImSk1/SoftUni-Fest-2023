@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using SoftwareFest.Models;
 using SoftwareFest.Services.Contracts;
 using Stripe;
 using System.Security.Claims;
@@ -10,6 +12,7 @@ namespace SoftwareFest.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IBusinessService _businessService;
+
         public StripeController(IConfiguration configuration, IBusinessService businessService)
         {
             _config = configuration;
@@ -20,6 +23,12 @@ namespace SoftwareFest.Controllers
         [HttpGet("connect")]
         public async Task<IActionResult> ConnectStripe()
         {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var currentBusiness = await _businessService.GetBusinessByUserId(userId);
+            if (currentBusiness.StripeUserId != null)
+            {
+                return BadRequest("Already connected");
+            }
             var cliendId = _config["Stripe:ClientId"];
             var redirectUrl = "https://localhost:7215/stripe/callback";
             return Redirect(

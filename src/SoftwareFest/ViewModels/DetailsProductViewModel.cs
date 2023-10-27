@@ -14,11 +14,12 @@ namespace SoftwareFest.ViewModels
 
         public string Description { get; set; } = default!;
 
-        public decimal Price { get; set; }
+        public long Price { get; set; }
 
         public string Type { get; set; } = default!;
 
         public string ImageUrl { get; set; } = default!;
+        public int BusinessId { get; set; }
 
         public void Mapping(Profile mapping)
         {

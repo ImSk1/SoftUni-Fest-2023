@@ -22,7 +22,7 @@
         public string Description { get; set; } = null!;
 
         [Required]
-        public decimal Price { get; set; }
+        public long Price { get; set; }
 
         [Required]
         public ProductType Type { get; set; }
