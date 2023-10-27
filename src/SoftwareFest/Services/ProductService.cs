@@ -7,7 +7,6 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    using SoftwareFest.Models;
     using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
@@ -15,7 +14,6 @@
     using SoftwareFest.ViewModels;
 
     using SofwareFest.Infrastructure;
-    using Stripe;
 
     using Product = SoftwareFest.Models.Product;
 
@@ -73,14 +71,10 @@
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ProductViewModel> GetById(int id)
+        public async Task<ProductViewModel> GetById(int productId, string userId)
         {
-            var product = await _context.Products
-                .Where(x => x.Id == id)
-                .Select(x => _mapper.Map<ProductViewModel>(x))
-                .FirstOrDefaultAsync();
-
-            _logger.LogInformation($"Retrieved details for product with id {id}");
+            var product = await GetById(productId);
+            product.IsMine = await IsOwner(userId, productId);
 
             return product;
         }
@@ -139,6 +133,19 @@
             _logger.LogInformation($"Updated product with id {model.Id}");
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<ProductViewModel> GetById(int productId)
+        {
+            var product = await _context.Products
+                .Include(x => x.Business)
+                .Where(x => x.Id == productId)
+                .Select(x => _mapper.Map<ProductViewModel>(x))
+                .FirstOrDefaultAsync();
+
+            _logger.LogInformation($"Retrieved details for product with id {productId}");
+
+            return product;
         }
     }
 }

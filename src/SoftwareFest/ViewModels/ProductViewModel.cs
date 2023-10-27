@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 using AutoMapper;
+
 using SoftwareFest.Infrastructure.Mapping;
 using SoftwareFest.Models;
 using SoftwareFest.Models.Enums;
@@ -28,11 +30,17 @@ namespace SoftwareFest.ViewModels
 
         public string ImageUrl { get; set; } = default!;
 
+        public string BusinessName { get; set; } = default!;
+
         public int? BusinessId { get; set; }
+
+        public bool IsMine { get; set; } = false;
 
         public void Mapping(Profile map)
         {
-            map.CreateMap<Product, ProductViewModel>().ReverseMap();
+            map.CreateMap<Product, ProductViewModel>()
+                .ForMember(desc => desc.BusinessName, opt => opt.MapFrom(src => src.Business.BusinessName))
+                .ReverseMap();
         }
     }
 }
