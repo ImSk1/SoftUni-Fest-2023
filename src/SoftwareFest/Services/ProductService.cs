@@ -1,5 +1,6 @@
 ﻿namespace SoftwareFest.Services
 {
+    using System.Linq;
     using System.Linq.Expressions;
 
     using AutoMapper;
@@ -14,6 +15,9 @@
     using SoftwareFest.ViewModels;
 
     using SofwareFest.Infrastructure;
+    using Stripe;
+
+    using Product = SoftwareFest.Models.Product;
 
     public class ProductService : IProductService
     {
@@ -81,13 +85,17 @@
             return product;
         }
 
-        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50, Expression<Func<Product, bool>>? predicate = null, Expression<Func<ShowProductViewModel, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
+        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, bool>>? predicate = null, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
         {
+            predicate ??= p => true;
+            orderBy ??= x => x.Id;
+
             pageIndex -= 1;
             if (pageIndex < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
+
 
             var totalCount = await _context.Products
                 .Where(predicate)
@@ -97,21 +105,23 @@
 
             if (sortDirection == SortDirection.Ascending)
             {
-                result = await _context.Products
+                var products = await _context.Products
                     .Where(predicate)
-                    .Select(x => _mapper.Map<ShowProductViewModel>(x))
                     .OrderBy(orderBy)
                     .ToListAsync();
+
+                 result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
             }
             else
             {
-                result = await _context.Products
+                var products = await _context.Products
                     .Where(predicate)
-                    .Select(x => _mapper.Map<ShowProductViewModel>(x))
                     .OrderByDescending(orderBy)
                     .ToListAsync();
+
+                result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
             }
-            
+
             _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
             return new Page<ShowProductViewModel>(result, pageIndex, pageSize, totalCount);
         }
