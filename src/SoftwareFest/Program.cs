@@ -1,11 +1,16 @@
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Serilog;
-using SoftwareFest.Middlewares;
 using System.Diagnostics.CodeAnalysis;
+
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
+using Serilog;
+
 using SoftwareFest.Infrastructure.Extensions;
 using SoftwareFest.Services;
 using SoftwareFest.Services.Contracts;
+
 using Stripe;
+
+using ProductService = SoftwareFest.Services.ProductService;
 using ServiceCollectionExtensions = SoftwareFest.Infrastructure.Extensions.ServiceCollectionExtensions;
 
 var appName = "SoftUni-Fest";
@@ -24,6 +29,8 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog(ServiceCollectionExtensions.CreateSerilogLogger(builder.Configuration, appName));
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

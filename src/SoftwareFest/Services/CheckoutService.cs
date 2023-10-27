@@ -12,7 +12,7 @@ namespace SoftwareFest.Services
         {
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<string> CheckOut(ProductViewModel product)
+        public async Task<string> CheckOut(DetailsProductViewModel product)
         {
             //var baseUrl = _httpContextAccessor.HttpContext.Request.Host.ToString();
             var baseUrl = "https://localhost:7215";
