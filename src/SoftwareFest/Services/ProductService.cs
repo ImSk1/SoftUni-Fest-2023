@@ -1,10 +1,16 @@
 ﻿namespace SoftwareFest.Services
 {
+    using System.Linq.Expressions;
+
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     using Microsoft.EntityFrameworkCore;
 
     using SoftwareFest.Models;
+    using SoftwareFest.Pagination;
+    using SoftwareFest.Pagination.Contracts;
+    using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
 
@@ -62,6 +68,39 @@
             return products;
         }
 
+        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50, Expression<Func<Product, bool>>? predicate = null, Expression<Func<ShowProductViewModel, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
+        {
+            pageIndex -= 1;
+            if (pageIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageIndex));
+            }
 
+            var totalCount = await _context.Products
+                .Where(predicate)
+                .CountAsync();
+
+            var result = new List<ShowProductViewModel>();
+
+            if (sortDirection == SortDirection.Ascending)
+            {
+                result = await _context.Products
+                    .Where(predicate)
+                    .Select(x => _mapper.Map<ShowProductViewModel>(x))
+                    .OrderBy(orderBy)
+                    .ToListAsync();
+            }
+            else
+            {
+                result = await _context.Products
+                    .Where(predicate)
+                    .Select(x => _mapper.Map<ShowProductViewModel>(x))
+                    .OrderByDescending(orderBy)
+                    .ToListAsync();
+            }
+            
+            _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
+            return new Page<ShowProductViewModel>(result, pageIndex, pageSize, totalCount);
+        }
     }
 }
