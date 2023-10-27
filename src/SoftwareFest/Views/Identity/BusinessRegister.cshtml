@@ -1,9 +1,9 @@
 ﻿@using SoftwareFest.ViewModels;
-@model BusinessRegisterViewModel
+@model BusinessViewModel
 
-<form method="post" asp-action="Register" asp-controller="Identity">
+<form method="post" asp-action="BusinessRegister" asp-controller="Identity">
     <input type="text" asp-for="@Model.BusinessName" />
-    <input type="email" asp-for="@Model.User.Email" />
-    <input type="password" asp-for="@Model.User.Password" />
+    <input type="email" asp-for="@Model.Email" />
+    <input type="password" asp-for="@Model.Password" />
     <button type="submit">Register</button>
 </form>

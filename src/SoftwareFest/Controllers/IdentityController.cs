@@ -1,4 +1,6 @@
-﻿namespace SoftwareFest.Controllers
+﻿using SoftwareFest.Services.Contracts;
+
+namespace SoftwareFest.Controllers
 {
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
@@ -14,18 +16,22 @@
         private readonly ApplicationDbContext _context;
         private readonly ILogger<IdentityController> _logger;
         private readonly IMapper _mapper;
+        private readonly IBusinessService _businessService;
 
         public IdentityController (
             UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
             ApplicationDbContext context, 
-            ILogger<IdentityController> logger, IMapper mapper)
+            ILogger<IdentityController> logger, 
+            IMapper mapper,
+            IBusinessService businessService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _logger = logger;
             _mapper = mapper;
+            _businessService = businessService;
         }
 
         [HttpGet("/login")]
@@ -55,31 +61,43 @@
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet("/register")]
-        public IActionResult Register() 
+        [HttpGet("/register/business")]
+        public IActionResult BusinessRegister() 
+            => View();
+        [HttpGet("/register/client")]
+        public IActionResult ClientRegister()
             => View();
 
-        [HttpPost("/register")]
-        public async Task<IActionResult> Register([FromBody] BusinessRegisterViewModel model)
+        [HttpPost("/register/business")]
+        public async Task<IActionResult> BusinessRegister(BusinessViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var user = _mapper.Map<ApplicationUser>(model);
-            var result = await _userManager.CreateAsync(user, model.User.Password);
-
+            var result = await Register(model);
             if (!result.Succeeded)
             {
                 _logger.LogError("User registration failed: {0}", string.Join(", ", result.Errors));
 
                 return View(model);
             }
+            _logger.LogInformation("User {0} registered successfully.", model.Email);
 
-            _logger.LogInformation("User {0} registered successfully.", model.User.Email);
+            await _businessService.CreateBusiness(model);
+
+            _logger.LogInformation("Business {0} created successfully.", model.BusinessName);
 
             return RedirectToAction(nameof(Login));
+        }
+
+        [NonAction]
+        public async Task<IdentityResult> Register(UserViewModel model)
+        {
+            var user = _mapper.Map<ApplicationUser>(model);
+            var result = await _userManager.CreateAsync(user, model.Password);
+            return result;
         }
 
         [HttpPost("/logout")]

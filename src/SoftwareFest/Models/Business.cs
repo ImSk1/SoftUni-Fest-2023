@@ -19,6 +19,7 @@
 
         public ApplicationUser User { get; set; } = null!;
 
+        
         public string? StripeUserId { get; set; } = null!;
     }
 }

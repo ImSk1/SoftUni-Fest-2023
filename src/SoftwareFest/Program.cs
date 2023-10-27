@@ -25,6 +25,7 @@ builder.AddDatabase();
 builder.AddCustomHealthChecks();
 builder.AddCustomIdentity();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
+builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog(ServiceCollectionExtensions.CreateSerilogLogger(builder.Configuration, appName));
