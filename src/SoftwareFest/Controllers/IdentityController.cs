@@ -17,6 +17,7 @@ namespace SoftwareFest.Controllers
         private readonly ILogger<IdentityController> _logger;
         private readonly IMapper _mapper;
         private readonly IBusinessService _businessService;
+        private readonly IClientService _clientService;
 
         public IdentityController (
             UserManager<ApplicationUser> userManager, 
@@ -24,7 +25,8 @@ namespace SoftwareFest.Controllers
             ApplicationDbContext context, 
             ILogger<IdentityController> logger, 
             IMapper mapper,
-            IBusinessService businessService)
+            IBusinessService businessService,
+            IClientService clientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,6 +34,7 @@ namespace SoftwareFest.Controllers
             _logger = logger;
             _mapper = mapper;
             _businessService = businessService;
+            _clientService = clientService;
         }
 
         [HttpGet("/login")]
@@ -67,6 +70,30 @@ namespace SoftwareFest.Controllers
         [HttpGet("/register/client")]
         public IActionResult ClientRegister()
             => View();
+
+        [HttpPost("/register/client")]
+        public async Task<IActionResult> ClientRegister(ClientViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var result = await Register(model);
+            if (!result.Succeeded)
+            {
+                _logger.LogError("User registration failed: {0}", string.Join(", ", result.Errors));
+
+                return View(model);
+            }
+            _logger.LogInformation("User {0} registered successfully.", model.Email);
+
+            await _clientService.CreateClient(model);
+
+            _logger.LogInformation("Client Profile {0} created successfully.", model.FirstName + " " + model.LastName);
+
+            return RedirectToAction(nameof(Login));
+        }
 
         [HttpPost("/register/business")]
         public async Task<IActionResult> BusinessRegister(BusinessViewModel model)
