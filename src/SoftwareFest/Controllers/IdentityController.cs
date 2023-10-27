@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SoftwareFest.Models;
-using SoftwareFest.ViewModels;
-using SofwareFest.Infrastructure;
-
-namespace SoftwareFest.Controllers
+﻿namespace SoftwareFest.Controllers
 {
+    using AutoMapper;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using SoftwareFest.Models;
+    using SoftwareFest.ViewModels;
+    using SofwareFest.Infrastructure;
+
     public class IdentityController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -16,8 +15,8 @@ namespace SoftwareFest.Controllers
         private readonly ILogger<IdentityController> _logger;
         private readonly IMapper _mapper;
 
-        public IdentityController
-            (UserManager<ApplicationUser> userManager, 
+        public IdentityController (
+            UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
             ApplicationDbContext context, 
             ILogger<IdentityController> logger, IMapper mapper)
@@ -29,14 +28,12 @@ namespace SoftwareFest.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("/login")]
         public IActionResult Login()
-        {
-            return View();
-        }
+            => View();
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        [HttpPost("/login")]
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -44,7 +41,6 @@ namespace SoftwareFest.Controllers
             }
 
             var user = await _userManager.FindByEmailAsync(model.Email);
-
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, isPersistent: false, lockoutOnFailure: false);
 
             if (!result.Succeeded)
@@ -59,14 +55,12 @@ namespace SoftwareFest.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        [HttpGet("/register")]
+        public IActionResult Register() 
+            => View();
 
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        [HttpPost("/register")]
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -74,7 +68,6 @@ namespace SoftwareFest.Controllers
             }
 
             var user = _mapper.Map<ApplicationUser>(model);
-
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
@@ -89,11 +82,10 @@ namespace SoftwareFest.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        [HttpPost]
+        [HttpPost("/logout")]
         public async Task<IActionResult> Logout()
         {
             _logger.LogInformation("Signing out {0}", User?.Identity?.Name);
-
             await _signInManager.SignOutAsync();
 
             return RedirectToAction(nameof(Login));
