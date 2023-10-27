@@ -1,5 +1,6 @@
 ﻿namespace SoftwareFest.Controllers
 {
+    using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
 
     using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,10 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")] int pageIndex = 1, [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")] int pageSize = 50)
         {
-            var products = await _productService.GetProducts();
-
-            return View();
+            var result = await _productService.GetPagedProducts(pageIndex, pageSize);
+            return View(result);
         }
 
         [HttpGet]
