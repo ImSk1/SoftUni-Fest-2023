@@ -1,0 +1,35 @@
+﻿@using SoftwareFest.ViewModels;
+@model ProductViewModel
+
+<div>
+    <h3>
+        @Model.Name
+    </h3>
+    <p>
+        Price: @((decimal)Model.Price / 100)
+    </p>
+    <p>
+        Type: @Model.Type.ToString()
+    </p>
+    <p>
+        Retailer: @Model.BusinessName
+    </p>
+    <p>
+        <img src="@Model.ImageUrl"/>
+    </p>
+    <p>
+        Description: @Model.Description
+    </p>
+</div>
+
+@{
+    if (Model.IsMine)
+    {
+        <form method="post">
+            <input type="submit" asp-action="Delete" asp-controller="Product" value="Delete" asp-route-id="@Model.Id"/>
+        </form>
+        <form method="post">
+            <input type="submit" asp-action="Update" asp-controller="Product" value="Update" asp-route-id="@Model.Id"/>
+        </form>
+    }
+}

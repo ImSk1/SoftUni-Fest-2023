@@ -2,7 +2,6 @@
 {
     using System.Linq.Expressions;
 
-    using SoftwareFest.Models;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.ViewModels;
@@ -13,9 +12,13 @@
             Expression<Func<Models.Product, bool>>? predicate = null,
             Expression<Func<Models.Product, object>>? orderBy = null,
             SortDirection sortDirection = SortDirection.Ascending);
+
         Task AddProduct(ProductViewModel model, string userId);
 
-        Task<ProductViewModel> GetById(int id);
+        Task<ProductViewModel> GetById(int productId, string userId);
+
+        Task<ProductViewModel> GetById(int productId);
+
         Task Update(ProductViewModel model);
 
         Task Delete(int id);

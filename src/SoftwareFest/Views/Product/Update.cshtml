@@ -1,0 +1,13 @@
+﻿@using SoftwareFest.ViewModels;
+@model ProductViewModel
+
+<div>
+    <form method="post" asp-action="Update" asp-controller="Product">
+        <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+        <input asp-for="@Model.Name" />
+        <input asp-for="@Model.Description" />
+        <input asp-for="@Model.Price" />
+        <input asp-for="@Model.ImageUrl" />
+        <input type="submit" value="Save" />
+    </form>
+</div>

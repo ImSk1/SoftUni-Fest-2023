@@ -55,7 +55,9 @@
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var product = await _productService.GetById(id);
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var product = await _productService.GetById(id, userId);
             
             return View(product);
         }
@@ -70,7 +72,7 @@
                 return Forbid();
             }
 
-            var product = await _productService.GetById(id);
+            var product = await _productService.GetById(id, userId);
 
             return View(product);
         }
