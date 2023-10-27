@@ -1,13 +1,17 @@
-﻿using SoftwareFest.Services.Contracts;
+﻿using SoftwareFest.MailSending;
+using SoftwareFest.Services.Contracts;
 
 namespace SoftwareFest.Controllers
 {
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.WebUtilities;
     using SoftwareFest.Models;
     using SoftwareFest.ViewModels;
     using SofwareFest.Infrastructure;
+    using Stripe;
+    using System.Text;
 
     public class IdentityController : Controller
     {
@@ -18,7 +22,7 @@ namespace SoftwareFest.Controllers
         private readonly IMapper _mapper;
         private readonly IBusinessService _businessService;
         private readonly IClientService _clientService;
-
+        private readonly IMailSender _mailSender;
         public IdentityController (
             UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
@@ -26,7 +30,8 @@ namespace SoftwareFest.Controllers
             ILogger<IdentityController> logger, 
             IMapper mapper,
             IBusinessService businessService,
-            IClientService clientService)
+            IClientService clientService,
+            IMailSender mailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -35,6 +40,7 @@ namespace SoftwareFest.Controllers
             _mapper = mapper;
             _businessService = businessService;
             _clientService = clientService;
+            _mailSender = mailSender;
         }
 
         [HttpGet("/login")]
@@ -79,13 +85,22 @@ namespace SoftwareFest.Controllers
                 return View(model);
             }
 
-            var result = await Register(model);
+            var user = new ApplicationUser()
+            {
+                Email = model.Email,
+                UserName = model.Email
+            };
+
+            var result = await Register(user, model.Password);
             if (!result.Succeeded)
             {
                 _logger.LogError("User registration failed: {0}", string.Join(", ", result.Errors));
 
                 return View(model);
             }
+
+            await SendEmailConfirmation(user);
+
             _logger.LogInformation("User {0} registered successfully.", model.Email);
 
             await _clientService.CreateClient(model);
@@ -102,14 +117,21 @@ namespace SoftwareFest.Controllers
             {
                 return View(model);
             }
+            var user = new ApplicationUser()
+            {
+                Email = model.Email,
+                UserName = model.Email
+            };
 
-            var result = await Register(model);
+            var result = await Register(user, model.Password);
             if (!result.Succeeded)
             {
                 _logger.LogError("User registration failed: {0}", string.Join(", ", result.Errors));
 
                 return View(model);
             }
+
+            await SendEmailConfirmation(user);
             _logger.LogInformation("User {0} registered successfully.", model.Email);
 
             await _businessService.CreateBusiness(model);
@@ -120,11 +142,22 @@ namespace SoftwareFest.Controllers
         }
 
         [NonAction]
-        public async Task<IdentityResult> Register(UserViewModel model)
+        public async Task<IdentityResult> Register(ApplicationUser user, string password)
         {
-            var user = _mapper.Map<ApplicationUser>(model);
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, password);
             return result;
+        }
+        [NonAction]
+        public async Task SendEmailConfirmation(ApplicationUser user)
+        {
+            await _userManager.UpdateSecurityStampAsync(user);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+            string callbackUrl = Url.Action(nameof(ConfirmEmail), "Identity", new { user.Id, token }, Request.Scheme)!;
+
+            await _mailSender.SendEmailAsync(new MailMessage() { To = user.Email, Subject = "Email Confirmation for PaySol", Content = callbackUrl });
         }
 
         [HttpPost("/logout")]
@@ -134,6 +167,21 @@ namespace SoftwareFest.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction(nameof(Login));
+        }
+        [HttpGet("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string? id, string? token)
+        {
+            if (id == null || token == null)
+            {
+                return RedirectToAction(nameof(Login), "Identity");
+            }
+            var code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
+
+            IdentityResult result = await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(id), code);
+
+            TempData["StatusMessage"] = result.Succeeded ? "Thank you for confirming your email." : "An error occurred while trying to confirm your email";
+
+            return RedirectToAction("Login", "Identity");
         }
     }
 }
