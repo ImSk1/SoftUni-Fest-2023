@@ -9,25 +9,21 @@
     {
         private readonly IConfiguration _config;
         private readonly ICheckoutService _checkoutService;
-        public CheckoutController(IConfiguration configuration, ICheckoutService checkoutService)
+        private readonly IProductService _productService;
+        
+        public CheckoutController(IConfiguration configuration, ICheckoutService checkoutService, IProductService productService)
         {
             _config = configuration;
             _checkoutService = checkoutService;
+            _productService = productService;
         }
 
         [HttpGet("checkout")]
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> Checkout(int productId)
         {
-            ProductViewModel exampleProduct = new ProductViewModel
-            {
-                Id = 1,
-                Name = "Laptop",
-                Description = "High-performance laptop with 16GB RAM and 1TB SSD",
-                Price = 99999,
-                ImageUrl = "https://example.com/images/laptop.jpg",
-                BusinessId = 1
-            };
-            var sessionId = await _checkoutService.CheckOut(exampleProduct);
+            var product = await _productService.GetById(productId);
+
+            var sessionId = await _checkoutService.CheckOut(product);
             var publicKey = _config["Stripe:PublicKey"];
 
             var checkoutOrderResponse = new CheckoutOrderResponse()

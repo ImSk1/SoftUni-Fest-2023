@@ -19,7 +19,7 @@ namespace SoftwareFest.Services
         {
             //var baseUrl = _httpContextAccessor.HttpContext.Request.Host.ToString();
             var baseUrl = "https://localhost:7215";
-            var business = await _buinessService.GetBusinessById(product.BusinessId);
+            var business = await _buinessService.GetBusinessById((int)product.BusinessId);
             var sellerStripeId = business.StripeUserId;
 
             long amount = (long)(product.Price * 100);  // Price in cents
