@@ -22,7 +22,7 @@
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => (decimal)src.Price / 100));
 
             mapping.CreateMap<ShowProductViewModel, Product>()
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => (long)src.Price * 100));
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => (long)(src.Price * 100)));
         }
     }
 }

@@ -33,7 +33,7 @@
         public void Mapping(Profile mapping)
         {
             mapping.CreateMap<AddProductViewModel, Product>()
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => (long)src.Price * 100));
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => (long)(src.Price * 100)));
         }
     }
 }

@@ -25,7 +25,7 @@
                 Name = "Laptop",
                 Description = "High-performance laptop with 16GB RAM and 1TB SSD",
                 Price = 99999,
-                Category = "Electronics",
+                Type = "Electronics",
                 ImageUrl = "https://example.com/images/laptop.jpg"
             };
             var sessionId = await _checkoutService.CheckOut(exampleProduct);
