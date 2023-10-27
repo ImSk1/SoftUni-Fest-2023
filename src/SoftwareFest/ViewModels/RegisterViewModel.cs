@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using SoftwareFest.Infrastructure.Mapping;
-using SoftwareFest.Models;
-
-namespace SoftwareFest.ViewModels
+﻿namespace SoftwareFest.ViewModels
 {
+    using AutoMapper;
+    using SoftwareFest.Infrastructure.Mapping;
+    using SoftwareFest.Models;
+
     public class RegisterViewModel : IMapFrom<ApplicationUser>
     {
         public string Email { get; set; } = default!;

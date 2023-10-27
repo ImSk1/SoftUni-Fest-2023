@@ -1,6 +1,6 @@
 ﻿namespace SofwareFest.Infrastructure
 {
-
+    
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using SoftwareFest.Models;
