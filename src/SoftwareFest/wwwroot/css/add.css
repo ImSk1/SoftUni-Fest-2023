@@ -1,0 +1,41 @@
+﻿.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 80vh;
+}
+
+    .container form {
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border: 2px solid black;
+        padding: 15px 0px;
+    }
+
+    .container input, select, textarea {
+        width: 350px;
+        margin: 15px 30px;
+        border-radius: 10px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border: 2px solid black;
+        padding: 10px;
+    }
+
+    .container h1 {
+        font-size: 30px;
+        font-weight: 600;
+    }
+
+    .container select {
+        background-color: white;
+    }
+
+.button {
+    background-color: black;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+}

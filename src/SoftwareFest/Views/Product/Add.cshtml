@@ -2,14 +2,19 @@
 @using SoftwareFest.ViewModels;
 @model ProductViewModel
 
-<form method="post" asp-action="Add" asp-controller="Product">
-    <input asp-for="@Model.Name"/>
-    <input asp-for="@Model.Price"/>
-    <input asp-for="@Model.Description"/>
-    <select asp-for="@Model.Type">
-        <option value="@ProductType.Physical">Phisical</option>
-        <option value="@ProductType.Service">Service</option>
-    </select>
-    <input asp-for="@Model.ImageUrl" />
-    <input type="submit" value="Submit"/>
-</form>
+<div class="container">
+    <form method="post" asp-action="Add" asp-controller="Product">
+        <h1>Create listing</h1>
+        <input placeholder="Name" asp-for="@Model.Name" />
+        <input placeholder="Price" asp-for="@Model.Price" />
+        <textarea placeholder="Description" asp-for="@Model.Description" rows="2"></textarea>
+        <div class="select-clas">
+            <select placeholder="Offer type" asp-for="@Model.Type">
+                <option value="@ProductType.Physical">Phisical</option>
+                <option value="@ProductType.Service">Service</option>
+            </select>
+        </div>
+        <input placeholder="Image" asp-for="@Model.ImageUrl" />
+        <input class="button" type="submit" value="Submit" />
+    </form>
+</div>

@@ -12,7 +12,7 @@ namespace SoftwareFest.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IBusinessService _businessService;
-
+        
         public StripeController(IConfiguration configuration, IBusinessService businessService)
         {
             _config = configuration;
