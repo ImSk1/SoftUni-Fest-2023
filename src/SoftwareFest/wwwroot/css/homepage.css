@@ -60,6 +60,7 @@ img {
 }
 
 .holder-text {
+    animation: 1s ease-out 0s 1 slideInFromLeft;
     font-size: 30px;
     position: relative;
     top: -306px;

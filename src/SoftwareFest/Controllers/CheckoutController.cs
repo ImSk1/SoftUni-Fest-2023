@@ -5,7 +5,6 @@
     using SoftwareFest.ViewModels;
     using Stripe.Checkout;
 
-    [Route("[controller]")]
     public class CheckoutController : Controller
     {
         private readonly IConfiguration _config;
@@ -26,7 +25,7 @@
                 Description = "High-performance laptop with 16GB RAM and 1TB SSD",
                 Price = 99999,
                 ImageUrl = "https://example.com/images/laptop.jpg",
-                BusinessId = 3
+                BusinessId = 1
             };
             var sessionId = await _checkoutService.CheckOut(exampleProduct);
             var publicKey = _config["Stripe:PublicKey"];

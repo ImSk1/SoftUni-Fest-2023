@@ -7,25 +7,29 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SofwareFest.styles.css" asp-append-version="true" />
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link href="~/css/keyframes.css" rel="stylesheet" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SofwareFest</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+        <div class="logo">
+            <img src="~/images/screenshot_2023-10-27_124010-transformed.png" />
+        </div>
+        <nav class="navbar">
+            <ul class="nav">
+                <li><a href="@Url.Action("Popular", "Home")">Popular</a></li>
+                <li><a href="@Url.Action("Services", "Home")">Services</a></li>
+                <li><a href="@Url.Action("Offers", "Home")">Offers</a></li>
+            </ul>
+
+            <div class="account-dropdown">
+                <button class="dropbtn">Account</button>
+                <div class="dropdown">
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("Profile", "Account")">Profile</a>
+                        <a href="@Url.Action("Payments", "Account")">Payments</a>
+                        <a href="@Url.Action("Logout", "Account")">Logout</a>
+                    </div>
                 </div>
             </div>
         </nav>
