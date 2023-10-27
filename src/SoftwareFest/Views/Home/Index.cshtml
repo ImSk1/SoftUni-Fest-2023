@@ -3,24 +3,41 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="page-container">
-    <section class="left">
-        <header>
-            @*<img class="blob-img" src="~/images/blob-haikei.png" />*@
-            <img class="logo" src="~/images/screenshot_2023-10-27_124010-transformed.png" />
-       </header>
-       <div class="text">
-           <h1>A New Era of Online Transactions</h1>
-            <h2>Payment Service Solution</h2>
-           <div class="buttons">
-               <button>Business</button>
-               <button>Client</button>
-           </div>
-       </div>
-    </section>
-    <section class="right">
-        <div class="inage-container">
-            <img class="main-img" src="~/images/9830596.jpg" />
+<div class="leftside">
+    <div class="header" id="sticky-header">
+        <img src="~/images/screenshot_2023-10-27_124010-transformed.png" />
+    </div>
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="~/video/crypto.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="content-center">
+        <div class="center-items">
+            <div class="holder-text">
+                <h2 class="video-text">Unlock a New Era in <span>Payments</span></h2>
+                <h4 class="video-text">Your Ultimate Payment Solution Destination</h4>
+                <ul style="width: 60%;">
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i><span>Secure</span> Online Payments</li>
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i>Multiple <span>Payment</span> Options</li>
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i>Payment Processing</li>
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i>International <span>Transactions</span></li>
+                </ul>
+            </div>
         </div>
-    </section>
+    </div>
+</div>
+<div class="rightside">
+    <img class="hide"src="~/images/screenshot_2023-10-27_124010-transformed.png" />
+    <div class="centertext">
+        <h6>Join as</h6>
+        <div class="buttons">
+            <form method="get" asp-action="BusinessRegister" asp-controller="Identity" style="display:flex;">
+                <button class="btn-style" type="submit">Business</button>
+            </form>
+            <form method="get" asp-action="ClientRegister" asp-controller="Identity" style="display:flex;">
+                <button class="btn-style" type="submit">Client</button>
+            </form>
+        </div>
+    </div>
 </div>
