@@ -28,9 +28,11 @@ namespace SoftwareFest.ViewModels
         [Required]
         public ProductType Type { get; set; } = default!;
 
-        public string ImageUrl { get; set; } = default!;
+        public IFormFile? Image { get; set; }
 
-        public string BusinessName { get; set; } = default!;
+        public string? ImageUrl { get; set; }
+
+        public string? BusinessName { get; set; }
 
         public int? BusinessId { get; set; }
 
@@ -39,8 +41,9 @@ namespace SoftwareFest.ViewModels
         public void Mapping(Profile map)
         {
             map.CreateMap<Product, ProductViewModel>()
-                .ForMember(desc => desc.BusinessName, opt => opt.MapFrom(src => src.Business.BusinessName))
-                .ReverseMap();
+                .ForMember(desc => desc.BusinessName, opt => opt.MapFrom(src => src.Business.BusinessName));
+
+            map.CreateMap<ProductViewModel,Product>();
         }
     }
 }

@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Migrations\" />
+    <Folder Include="wwwroot\localstorage\" />
   </ItemGroup>
 
   <ItemGroup>

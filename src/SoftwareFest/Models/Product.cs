@@ -1,10 +1,8 @@
 ﻿namespace SoftwareFest.Models
 {
-
+    using SoftwareFest.Models.Enums;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
-    using SoftwareFest.Models.Enums;
 
     public class Product
     {

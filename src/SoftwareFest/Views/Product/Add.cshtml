@@ -3,7 +3,7 @@
 @model ProductViewModel
 
 <div class="container">
-    <form method="post" asp-action="Add" asp-controller="Product">
+    <form method="post" asp-action="Add" asp-controller="Product" enctype="multipart/form-data">
         <h1>Create listing</h1>
         <input placeholder="Name" asp-for="@Model.Name" />
         <input placeholder="Price" asp-for="@Model.Price" />
@@ -14,7 +14,7 @@
                 <option value="@ProductType.Service">Service</option>
             </select>
         </div>
-        <input placeholder="Image" asp-for="@Model.ImageUrl" />
+        <input placeholder="Image" asp-for="@Model.Image" type="file" accept=".png, .jpg" />
         <input class="button" type="submit" value="Submit" />
     </form>
 </div>

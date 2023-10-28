@@ -8,19 +8,27 @@
         @foreach (var product in Model)
         {
             <div class="product">
-                <input type="hidden" id="productId" value="@product.Id" />
-                <div class="product-image">
-                    <img id="productImage" src="@product.ImageUrl" alt="@product.Name" />
+                <div class="border">
+                    <input type="hidden" id="productId" value="@product.Id" />
+                    <div class="product-image">
+                        <img id="productImage" src="@product.ImageUrl" alt="@product.Name" />
+                    </div>
+                    <div class="product-details">
+                        <div class="name">
+                            <span id="productName">@product.Name</span>
+                        </div>
+                        <div class="product-retailer">
+                            Retailer: 
+                            <img src="~/images/9834857.jpg" />
+                            <span id="productPrice">Kur</span>
+                        </div>
+                        <div class="product-price">
+                            <span id="productPrice">@($"{product.Price:f2}") $</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="product-details">
-                    <span id="productName">@product.Name</span>
-                    <div class="product-retailer">
-                        <img src="~/images/9834857.jpg" />
-                        <span id="productPrice">Kur</span>
-                    </div>
-                    <div class="product-price">
-                        <span id="productPrice">@($"{product.Price:f2}") $</span>
-                    </div>
+                <div class="btn-button">
+                    <input class="btn-input" type="submit" value="Details" />
                 </div>
             </div>
         }

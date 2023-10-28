@@ -3,10 +3,10 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 80vh;
 }
 
     .container form {
+        margin-top: 200px;
         display: flex;
         flex-direction: column;
         border-radius: 10px;
