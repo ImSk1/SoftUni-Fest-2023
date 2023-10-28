@@ -6,6 +6,7 @@ using Serilog;
 
 using SoftwareFest.Infrastructure.Extensions;
 using SoftwareFest.MailSending;
+using SoftwareFest.Middlewares;
 using SoftwareFest.Services;
 using SoftwareFest.Services.Contracts;
 
@@ -42,7 +43,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error/Error");
 }
 else
 {

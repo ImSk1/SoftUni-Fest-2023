@@ -106,8 +106,9 @@
             border-top: 2px solid white;
         }
 
-        .dropdown-content a:last-of-type {
+        .dropdown-content button:last-of-type {
             border-top: 2px solid white;
+            background: none;
         }
 
         .dropdown-content a:hover:first-of-type {

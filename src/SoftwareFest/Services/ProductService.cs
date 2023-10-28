@@ -117,7 +117,7 @@
                 .FirstOrDefaultAsync(x => x.Id == model.Id);
 
             product!.Description = model.Description;
-            product.Price = model.Price;
+            product.Price = (long)(model.Price * 100);
             product.Name = model.Name;
 
             _logger.LogInformation($"Updated product with id {model.Id}");

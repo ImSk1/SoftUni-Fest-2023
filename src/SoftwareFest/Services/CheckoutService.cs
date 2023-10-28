@@ -61,6 +61,12 @@ namespace SoftwareFest.Services
                     {
                         Destination = sellerStripeId
                     }
+                },
+                Metadata = new Dictionary<string, string>
+                {
+                    { "offer_id", product.Id.ToString() },
+                    { "business_id", business.Id.ToString() },
+
                 }
             };
             Console.WriteLine(JsonConvert.SerializeObject(options));

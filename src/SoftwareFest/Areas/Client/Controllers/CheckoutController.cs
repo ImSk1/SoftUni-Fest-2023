@@ -40,11 +40,19 @@
         public IActionResult CheckoutSuccess([FromQuery] string sessionId)
         {
             var sessionService = new SessionService();
-            var session = sessionService.Get(sessionId);
+            var session = sessionService.Get(sessionId, new SessionGetOptions
+            {
+                Expand = new List<string>
+                {
+                    "line_items"
+                }
+
+            });
 
             var total = session.AmountTotal.Value;
             var customerEmail = session.CustomerDetails.Email;
-
+            var productId = session.Metadata["offer_id"];
+            var additionalInfo = session.Metadata["business_id"];
 
             return Ok($"{total} {customerEmail}");
         }

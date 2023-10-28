@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<link href="~/css/errorpage.css" rel="stylesheet" />
+
+<div id="notfound">
+    <div class="notfound">
+        <div class="notfound-404">
+        </div>
+        <h2>@ViewData["statusCode"] - Page not found</h2>
+        <p>Quack Quack, it looks like you've stumbled upon a lost duck instead of the weather report you were searching for.</p>
+        <a asp-action="Index" asp-controller="Home" asp-area="Home">Go To Homepage</a>
+    </div>
+</div>

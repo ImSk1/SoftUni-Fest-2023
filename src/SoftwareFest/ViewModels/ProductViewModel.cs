@@ -23,7 +23,7 @@ namespace SoftwareFest.ViewModels
         public string Description { get; set; } = default!;
 
         [Required]
-        public long Price { get; set; }
+        public double Price { get; set; }
 
         [Required]
         public ProductType Type { get; set; } = default!;
@@ -39,9 +39,12 @@ namespace SoftwareFest.ViewModels
         public void Mapping(Profile map)
         {
             map.CreateMap<Product, ProductViewModel>()
-                .ForMember(desc => desc.BusinessName, opt => opt.MapFrom(src => src.Business.BusinessName));
+                .ForMember(desc => desc.BusinessName, opt => opt.MapFrom(src => src.Business.BusinessName))
+                .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => (double)((double)src.Price / 100)));
 
-            map.CreateMap<ProductViewModel,Product>();
+
+            map.CreateMap<ProductViewModel,Product>()
+                .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => (long)(src.Price * 100)));
         }
     }
 }

@@ -34,7 +34,7 @@ namespace SoftwareFest.Areas.Business.Controllers
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             await _productService.AddProduct(model, userId);
 
-            return RedirectToAction("~/");
+            return RedirectToAction(nameof(Add));
         }
         [HttpGet]
         public async Task<IActionResult> Update(int id)

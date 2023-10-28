@@ -38,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Infrastructure\Migrations\" />
     <Folder Include="wwwroot\localstorage\" />
   </ItemGroup>
