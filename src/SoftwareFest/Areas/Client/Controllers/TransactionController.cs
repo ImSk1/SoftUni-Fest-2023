@@ -7,7 +7,7 @@
     using System.Security.Claims;
 
     [Route("[controller]")]
-    public class TransactionController : Controller
+    public class TransactionController : BaseClientController
     {
         private readonly ITransactionService _transactionService;
 
@@ -27,7 +27,7 @@
 
             var model = await _transactionService.GetPagedTransactions(userId, pageIndex, pageSize);
 
-            return Ok(JsonConvert.SerializeObject(model));
+            return View(model);
         }
     }
 }

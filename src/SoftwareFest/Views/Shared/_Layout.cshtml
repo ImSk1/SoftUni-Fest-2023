@@ -45,7 +45,7 @@
                         }
                         else if (User.IsInRole("Client"))
                         {
-                            <a asp-action="Purchases" asp-controller="Transactions" asp-area="Client">Purchases</a>
+                            <a asp-action="Transactions" asp-controller="Transaction" asp-area="Client">Purchases</a>
                         }
                         <form method="post" asp-action="Logout" asp-area="Home" asp-controller="Identity">
                             <button type="submit">Logout</button>
