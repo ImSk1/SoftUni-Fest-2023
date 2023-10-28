@@ -2,9 +2,16 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
+    using SoftwareFest.Models;
+    using SoftwareFest.Models.Enums;
+    using SoftwareFest.Pagination;
+    using SoftwareFest.Pagination.Contracts;
+    using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq.Expressions;
     using System.Security.Claims;
 
     [Authorize]
@@ -26,8 +33,32 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageSize = 50)
         {
+            ViewBag.Name = string.Empty;
+            ViewBag.Direction = SortDirection.Ascending;
+            ViewBag.Type = ProductType.All;
+
             var result = await _productService.GetPagedProducts(pageIndex, pageSize);
             
+            return View(result);
+        }
+
+        [HttpPost("offers")]
+        public async Task<IActionResult> All(
+            string name, ProductType type, SortDirection direction,
+            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
+            int pageIndex = 1,
+            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
+            int pageSize = 50)
+        {
+            var result = await _productService.GetPagedProducts(pageIndex, pageSize,
+                p => p.Name.Contains(string.IsNullOrEmpty(name) ? p.Name : name) && p.Type == (type == ProductType.All ? p.Type : type),
+                p => p.Price,
+                direction);
+
+            ViewBag.Name = name;
+            ViewBag.Type = type;
+            ViewBag.Direction = direction;
+
             return View(result);
         }
 

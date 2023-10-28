@@ -27,7 +27,9 @@
         public int PageSize { get; }
 
         public int TotalCount { get; }
+
         public bool HasPreviousPage => (CurrentPage - 1 > 0);
+
         public bool HasNextPage => (CurrentPage + 1 <= Math.Ceiling((double)TotalCount / (double)PageSize));
 
         public IEnumerator<T> GetEnumerator() => _values.GetEnumerator();
