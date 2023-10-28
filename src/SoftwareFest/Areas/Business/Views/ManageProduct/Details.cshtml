@@ -1,0 +1,40 @@
+﻿@using SoftwareFest.ViewModels;
+@model ProductViewModel
+
+<div class="product-container">
+    <div class="product-container-inside">
+        <section class="left-side">
+            <img src="@Model.ImageUrl" />
+        </section>
+        <section class="right-side">
+            <div class="title">
+                @Model.Name
+            </div>
+            <div class="type">
+                Type: @Model.Type.ToString()
+            </div>
+            <div class="description">
+                @Model.Description
+            </div>
+            <div class="retailer">
+                Retailer: @Model.BusinessName
+            </div>
+            <div class="price-container">
+                <div class="price">
+                    @($"{Model.Price:f2} $")
+                </div>
+            </div>
+            @if (Model.IsMine)
+            {
+                <div class="buttons">
+                    <form class="form" method="get" asp-action="Update" asp-controller="ManageProduct" asp-area="Business" asp-route-id="@Model.Id">
+                        <button type="submit" class="btn-form"><i class="fa fa-pen-to-square"></i> Update</button>
+                    </form>
+                    <form class="form" method="post" asp-action="Delete" asp-controller="ManageProduct" asp-area="Business" asp-route-id="@Model.Id">
+                        <button type="submit" class="btn-form"><i class="fa fa-trash"></i> Delete</button>
+                    </form>
+                </div>
+            }
+        </section>
+    </div>
+</div>

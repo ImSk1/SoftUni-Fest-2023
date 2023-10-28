@@ -111,6 +111,24 @@
             return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
         }
 
+        public async Task<IPage<ShowProductViewModel>> GetPagedProductsByUserId(string userId, int pageIndex = 1, int pageSize = 50)
+        {
+            pageIndex -= 1;
+            if (pageIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageIndex));
+            }
+
+            var business = await _context.Businesses.Include(a => a.Products).FirstOrDefaultAsync(a => a.UserId == userId);
+
+            var totalCount = business.Products.Count();
+
+            var result = business.Products.Select(_mapper.Map<ShowProductViewModel>);
+
+            _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
+            return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
+        }
+
         public async Task Update(ProductViewModel model)
         {
             var product = await _context.Products
