@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SofwareFest.Infrastructure;
 
@@ -11,9 +12,11 @@ using SofwareFest.Infrastructure;
 namespace SoftwareFest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231028163356_WalletAddress")]
+    partial class WalletAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,8 +302,7 @@ namespace SoftwareFest.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<decimal>("EthPrice")
-                        .HasPrecision(18, 10)
-                        .HasColumnType("decimal(18,10)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -341,7 +343,7 @@ namespace SoftwareFest.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 28, 16, 53, 31, 855, DateTimeKind.Utc).AddTicks(5987));
+                        .HasDefaultValue(new DateTime(2023, 10, 28, 16, 33, 56, 520, DateTimeKind.Utc).AddTicks(7039));
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");

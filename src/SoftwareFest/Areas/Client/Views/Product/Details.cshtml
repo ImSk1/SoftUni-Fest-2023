@@ -1,6 +1,14 @@
 ﻿@using SoftwareFest.Models.Enums;
 @using SoftwareFest.ViewModels;
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using SoftwareFest.Services.Contracts
+@inject IBusinessService businessService
 @model ProductViewModel
+@{
+
+    var business = await businessService.GetBusinessById((int)Model.BusinessId);
+}
 
 <div class="product-container">
     <div class="product-container-inside">
@@ -23,6 +31,11 @@
             <div class="price-container">
                 <div class="price">
                     @($"{Model.Price:f2} $")
+                </div>
+            </div>
+            <div class="price-container">
+                <div class="price">
+                    @($"{Model.EthPrice} ETH")
                 </div>
             </div>
             <div class="buttons">
@@ -55,8 +68,10 @@
             if (window.ethereum) {
                 ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
                     var from = accounts[0];
-                    var to = "0x5088b359D47B94651Afa029711C6E0a32a7D0c64"; // Seller's Ethereum address
-                    var amountInEther = 0.001;
+                    var to = '@business.EthereumWalletAddress.ToString()';
+                    console.log(to);// Seller's Ethereum address
+                    var amountInEther = @Model.EthPrice;
+                    console.log(amountInEther);
                     var amountInWeiHex = toWeiHex(amountInEther);
 
                     var txParams = {
