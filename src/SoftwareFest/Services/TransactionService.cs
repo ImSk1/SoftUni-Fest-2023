@@ -49,7 +49,7 @@
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IPage<TransactionViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50)
+        public async Task<IPage<TransactionViewModel>> GetPagedTransactions(string userId, int pageIndex = 1, int pageSize = 50)
         {
             pageIndex -= 1;
             if (pageIndex < 0)
@@ -59,11 +59,15 @@
 
 
             var totalCount = await _context.Transactions
+                .Include(c => c.Client)
+                .Where(c => c.Client.UserId == userId)
                 .CountAsync();
 
             var result = new List<TransactionViewModel>();
 
             var transactions = await _context.Transactions
+                .Include(c => c.Client)
+                .Where(c => c.Client.UserId == userId)
                 .OrderByDescending(t => t.Date)
                 .ToListAsync();
 
