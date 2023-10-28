@@ -26,12 +26,11 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IRetailerService, RetailerService>();
 builder.Services.AddTransient<IMailSender, MailSender>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog(ServiceCollectionExtensions.CreateSerilogLogger(builder.Configuration, appName));
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
-builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
