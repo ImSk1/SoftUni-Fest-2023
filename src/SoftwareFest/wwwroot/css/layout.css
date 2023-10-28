@@ -106,29 +106,36 @@
             border-top: 2px solid white;
         }
 
-        .dropdown-content button:last-of-type {
-            border-top: 2px solid white;
-            background: none;
-        }
+    .dropdown-content form button {
+        color: black;
+        width: 100%;
+        padding: 5px 15px;
+        text-decoration: none;
+        display: block;
+        border: none;
+        border-top: 2px solid white;
+        background: none;
+        text-align: start;
+    }
 
-        .dropdown-content a:hover:first-of-type {
-            border-bottom: 2px solid black;
-            border-top: 2px solid black;
-        }
+    .dropdown-content a:hover:first-of-type {
+        border-bottom: 2px solid black;
+        border-top: 2px solid black;
+    }
 
-        .dropdown-content a:hover:last-of-type {
-            border-top: 2px solid black;
-        }
+    .dropdown-content form button:hover {
+        border-top: 2px solid black;
+    }
 
-        .dropdown-content a:nth-of-type(2) {
-            border-top: 2px solid white;
-            border-bottom: 2px solid white;
-        }
+    .dropdown-content a:nth-of-type(2) {
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+    }
 
-        .dropdown-content a:hover:nth-of-type(2) {
-            border-top: 2px solid black;
-            border-bottom: 2px solid black;
-        }
+    .dropdown-content a:hover:nth-of-type(2) {
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+    }
 
 .account-dropdown:hover .dropdown {
     display: block;

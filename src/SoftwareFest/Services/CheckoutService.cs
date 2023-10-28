@@ -50,7 +50,7 @@ namespace SoftwareFest.Services
                                 Images = new List<string> { product.ImageUrl }
                             },
                         },
-                        Quantity = 1,
+                        Quantity = 1
                     },
                 },
                 Mode = "payment",
@@ -66,7 +66,7 @@ namespace SoftwareFest.Services
                 {
                     { "offer_id", product.Id.ToString() },
                     { "business_id", business.Id.ToString() },
-
+                    { "quantity", product.Quantity?.ToString() ?? 1.ToString() }
                 }
             };
             Console.WriteLine(JsonConvert.SerializeObject(options));

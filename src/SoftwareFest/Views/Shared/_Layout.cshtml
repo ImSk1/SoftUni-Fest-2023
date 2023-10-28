@@ -43,7 +43,7 @@
                         @if (User.IsInRole("Business"))
                         {
                             <a asp-action="Manage" asp-controller="Account" asp-area="Business">Manage</a>
-                            <a asp-action="Mine" asp-controller="ManageProduct" asp-area="Business">My Listings</a>
+                            <a asp-action="MyListings" asp-controller="ManageProduct" asp-area="Business">My Listings</a>
                         }
                         else if (User.IsInRole("Client"))
                         {

@@ -36,6 +36,8 @@ namespace SoftwareFest.ViewModels
 
         public bool IsMine { get; set; } = false;
 
+        public int? Quantity { get; set; }
+
         public void Mapping(Profile map)
         {
             map.CreateMap<Product, ProductViewModel>()

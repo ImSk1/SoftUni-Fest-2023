@@ -1,15 +1,20 @@
 ﻿namespace SoftwareFest.Services
 {
     using AutoMapper;
+
     using Microsoft.EntityFrameworkCore;
+
     using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
+
     using SofwareFest.Infrastructure;
+
     using System.Linq;
     using System.Linq.Expressions;
+
     using Product = SoftwareFest.Models.Product;
 
     public class ProductService : IProductService
@@ -81,7 +86,6 @@
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
 
-
             var totalCount = await _context.Products
                 .Where(predicate)
                 .CountAsync();
@@ -95,7 +99,7 @@
                     .OrderBy(orderBy)
                     .ToListAsync();
 
-                 result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
+                result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
             }
             else
             {
@@ -111,6 +115,24 @@
             return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
         }
 
+        public async Task<IPage<ShowProductViewModel>> GetPagedProductsByUserId(string userId, int pageIndex = 1, int pageSize = 50)
+        {
+            pageIndex -= 1;
+            if (pageIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pageIndex));
+            }
+
+            var business = await _context.Businesses.Include(a => a.Products).FirstOrDefaultAsync(a => a.UserId == userId);
+
+            var totalCount = business.Products.Count();
+
+            var result = business.Products.Select(_mapper.Map<ShowProductViewModel>);
+
+            _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
+            return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
+        }
+
         public async Task Update(ProductViewModel model)
         {
             var product = await _context.Products
@@ -119,6 +141,7 @@
             product!.Description = model.Description;
             product.Price = (long)(model.Price * 100);
             product.Name = model.Name;
+            product.Quantity = model.Quantity;
 
             _logger.LogInformation($"Updated product with id {model.Id}");
 
@@ -136,6 +159,21 @@
             _logger.LogInformation($"Retrieved details for product with id {productId}");
 
             return product!;
+        }
+
+        public async Task<bool> HasEnoughQuantity(int productId)
+        {
+            var quantity = await _context.Products
+                .Where(p => p.Id == productId)
+                .Select(p => p.Quantity)
+                .FirstOrDefaultAsync();
+
+            if (quantity == 0)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
