@@ -11,17 +11,12 @@
 <div class="container-all">
     <div class="products">
         <form class="formichka" method="post" asp-action="All" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-controller="Product" asp-area="Client">
-            <input name="name" value="@name" type="text" />
-            <select name="type"> 
-                <option selected="@(ProductType.All == type ? true: false)" value="@ProductType.All">All</option>
-                <option selected="@(ProductType.Physical == type ? true: false)" value="@ProductType.Physical">Physical</option>
-                <option selected="@(ProductType.Service == type ? true: false)" value="@ProductType.Service">Service</option>
-            </select>
+            <input placeholder="Name" name="name" value="@name" type="text" />
             <select name="direction">
                 <option selected="@(SortDirection.Ascending == direction ? true: false)" value="@SortDirection.Ascending">Lowest -> Highest</option>
                 <option selected="@(SortDirection.Descending == direction ? true: false)" value="@SortDirection.Descending">Highest -> Lowest</option>
             </select>
-            <input type="submit" value="Search" />
+            <input class="submit-input" type="submit" value="Search" />
         </form>
         @foreach (var product in Model)
         {
