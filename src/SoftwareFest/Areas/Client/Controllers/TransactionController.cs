@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-
-namespace SoftwareFest.Areas.Client.Controllers
+﻿namespace SoftwareFest.Areas.Client.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
+    using SoftwareFest.Services.Contracts;
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
-
-    using Microsoft.AspNetCore.Mvc;
-
-    using SoftwareFest.Services.Contracts;
 
     [Route("[controller]")]
     public class TransactionController : Controller

@@ -3,7 +3,6 @@
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-
     using SoftwareFest.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

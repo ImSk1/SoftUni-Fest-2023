@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SoftwareFest.Models;
-
-namespace SoftwareFest.Areas.Home.Controllers
+﻿namespace SoftwareFest.Areas.Home.Controllers
 {
     using System.Diagnostics;
     using System.Security.Claims;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftwareFest.ViewModels;
+    using Microsoft.AspNetCore.Identity;
+    using SoftwareFest.Models;
 
 
     [AllowAnonymous]

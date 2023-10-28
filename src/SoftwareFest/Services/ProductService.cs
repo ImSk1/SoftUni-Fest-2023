@@ -1,21 +1,15 @@
 ﻿namespace SoftwareFest.Services
 {
     using AutoMapper;
-
     using Microsoft.EntityFrameworkCore;
-
-    using SoftwareFest.Models.Enums;
     using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
-
     using SofwareFest.Infrastructure;
-
     using System.Linq;
     using System.Linq.Expressions;
-
     using Product = SoftwareFest.Models.Product;
 
     public class ProductService : IProductService

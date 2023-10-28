@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using MailKit.Search;
-using Microsoft.EntityFrameworkCore;
-using SoftwareFest.Pagination;
-using SoftwareFest.Pagination.Enums;
-using SoftwareFest.Services.Contracts;
-using SoftwareFest.ViewModels;
-using SofwareFest.Infrastructure;
-using System;
-
-namespace SoftwareFest.Services
+﻿namespace SoftwareFest.Services
 {
+    using AutoMapper;
+    using MailKit.Search;
+    using Microsoft.EntityFrameworkCore;
+    using SoftwareFest.Pagination;
+    using SoftwareFest.Pagination.Enums;
+    using SoftwareFest.Services.Contracts;
+    using SoftwareFest.ViewModels;
+    using SofwareFest.Infrastructure;
+    using System;
+
     public class RetailerService : IRetailerService
     {
         private readonly ApplicationDbContext _context;
