@@ -31,8 +31,7 @@
 
                 if (await _userManager.IsInRoleAsync(user, "Business"))
                 {
-                    return RedirectToAction("Add", "ManageProduct", new { Area = "Business" });
-
+                    return RedirectToAction("MyListings", "ManageProduct", new { Area = "Business" });
                 }
                 if (await _userManager.IsInRoleAsync(user, "Client"))
                 {
