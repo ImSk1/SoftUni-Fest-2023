@@ -58,16 +58,20 @@ namespace SoftwareFest.Services
         public async Task<Page<ShowProductViewModel>> GetPagedProductsByRetailerId(int retailerId, int pageIndex, int pageSize, string name)
         {
             pageIndex -= 1;
+
             if (pageIndex < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
 
             var business = await _context.Businesses.Include(a => a.Products).FirstOrDefaultAsync(a => a.Id == retailerId);
-
             var totalCount = business.Products.Count();
-
             var result = business.Products.Select(_mapper.Map<ShowProductViewModel>);
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                result = result.Where(a => a.Name.ToLower().Contains(name.ToLower()));
+            }
 
             return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
         }
