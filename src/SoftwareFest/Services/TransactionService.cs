@@ -29,7 +29,7 @@
             _logger = logger;
         }
 
-        public async Task Create(int productId, string userId, string stripeTransactionId)
+        public async Task Create(int productId, string userId, string stripeTransactionId = "")
         {
             var clientId = await _context.Clients
                 .Where(c => c.UserId == userId)

@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using SoftwareFest.Services.Contracts;
 using SoftwareFest.ViewModels;
 
 namespace SoftwareFest.Areas.Client.Controllers
@@ -10,11 +12,13 @@ namespace SoftwareFest.Areas.Client.Controllers
     {
         private readonly HttpClient httpClient;
         private readonly IConfiguration _configuration;
+        private readonly ITransactionService _transactionService;
 
-        public EthereumController(IConfiguration config)
+        public EthereumController(IConfiguration config, ITransactionService transactionService)
         {
             httpClient = new HttpClient();
             _configuration = config;
+            _transactionService = transactionService;
         }
         [HttpPost("handle")]
         public async Task<IActionResult> HandleTransaction([FromBody] EthTransactionViewModel data)
@@ -30,6 +34,9 @@ namespace SoftwareFest.Areas.Client.Controllers
             // Check if transaction was successful
             if (jsonContent["result"]["isError"].ToString() == "0")
             {
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                await _transactionService.Create(data.ProductId, userId);
+
                 return Json( new { url = "/ethereum/callback/true"});
             }
             else
