@@ -15,50 +15,30 @@
 
         [HttpGet("retailers")]
         public async Task<IActionResult> Retailers(
+            string name = "",
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageIndex = 1,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
-        {
-            var result = await _retailerService.GetPagedProducts(pageIndex, pageSize);
-
-            return View(result);
-        }
-
-        [HttpPost("retailers")]
-        public async Task<IActionResult> Retailers(
-            string name,
-            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageIndex = 1,
-            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
+            int pageSize = 3)
         {
             var result = await _retailerService.GetPagedProducts(pageIndex, pageSize, name);
+
+            ViewBag.Name = name;
 
             return View(result);
         }
 
         [HttpGet("retailer/{retailerId}")]
         public async Task<IActionResult> Retailer(int retailerId,
+            string name = null,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageIndex = 1,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
-        {
-            var result = await _retailerService.GetPagedProductsByRetailerId(retailerId, pageIndex, pageSize, null);
-
-            return View(result);
-        }
-
-        [HttpPost("retailer/{retailerId}")]
-        public async Task<IActionResult> Retailer(int retailerId,
-            string name,
-            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageIndex = 1,
-            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
+            int pageSize = 6)
         {
             var result = await _retailerService.GetPagedProductsByRetailerId(retailerId, pageIndex, pageSize, name);
+
+            ViewBag.Name = name;
 
             return View(result);
         }

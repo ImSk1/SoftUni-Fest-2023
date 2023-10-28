@@ -90,6 +90,7 @@
             if (sortDirection == SortDirection.Ascending)
             {
                 var products = await _context.Products
+                    .Include(x => x.Business)
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
                     .OrderBy(orderBy)
@@ -102,6 +103,7 @@
             else
             {
                 var products = await _context.Products
+                    .Include(x => x.Business)
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
                     .OrderByDescending(orderBy)
@@ -124,11 +126,17 @@
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
 
-            var business = await _context.Businesses.Include(a => a.Products).FirstOrDefaultAsync(a => a.UserId == userId);
+            var business = await _context.Businesses
+                .Include(a => a.Products)
+                .FirstOrDefaultAsync(a => a.UserId == userId);
 
             var totalCount = business.Products.Count();
 
-            var result = business.Products.Select(_mapper.Map<ShowProductViewModel>);
+            var result = business.Products
+                .OrderBy(p => p.Price)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize)
+                .Select(_mapper.Map<ShowProductViewModel>);
 
             _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
             return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);

@@ -21,23 +21,11 @@
 
         [HttpGet("offers")]
         public async Task<IActionResult> All(
+            string name = "", SortDirection direction = SortDirection.Ascending,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageIndex = 1,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
-        {
-            var result = await _productService.GetPagedProducts(string.Empty, pageIndex, pageSize);
-
-            return View(result);
-        }
-
-        [HttpPost("offers")]
-        public async Task<IActionResult> All(
-            string name, SortDirection direction,
-            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageIndex = 1,
-            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
+            int pageSize = 6)
         {
             var result = await _productService.GetPagedProducts(name, pageIndex, pageSize, x => x.Price, direction);
 

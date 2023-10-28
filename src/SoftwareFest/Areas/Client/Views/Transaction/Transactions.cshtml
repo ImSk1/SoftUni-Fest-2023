@@ -49,10 +49,7 @@
         }
     </table>
 
-    <div class="next-btn">
-        <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-        <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
-    </div>
+<div class="next-btn">
+    <a asp-area="Client" asp-action="Transactions" asp-controller="Transaction" asp-route-pageIndex="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+    <a asp-area="Client" asp-action="Transactions" asp-controller="Transaction" asp-route-pageIndex="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
 </div>
-
-

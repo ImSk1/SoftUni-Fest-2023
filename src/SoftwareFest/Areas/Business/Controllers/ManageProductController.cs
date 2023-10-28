@@ -57,7 +57,7 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageIndex = 1,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
+            int pageSize = 6)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var product = await _productService.GetPagedProductsByUserId(userId, pageIndex, pageSize);

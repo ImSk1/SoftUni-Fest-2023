@@ -5,7 +5,6 @@
 
     public interface IRetailerService
     {
-        Task<Page<RetailerViewModel>> GetPagedProducts(int pageIndex, int pageSize);
         Task<Page<RetailerViewModel>> GetPagedProducts(int pageIndex, int pageSize, string name);
         Task<Page<ShowProductViewModel>> GetPagedProductsByRetailerId(int retailerId, int pageIndex, int pageSize, string name);
     }
