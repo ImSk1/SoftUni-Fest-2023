@@ -1,15 +1,20 @@
 ﻿namespace SoftwareFest.Services
 {
     using AutoMapper;
+
     using Microsoft.EntityFrameworkCore;
+
     using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
+
     using SofwareFest.Infrastructure;
+
     using System.Linq;
     using System.Linq.Expressions;
+
     using Product = SoftwareFest.Models.Product;
 
     public class ProductService : IProductService
@@ -95,7 +100,7 @@
                     .OrderBy(orderBy)
                     .ToListAsync();
 
-                 result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
+                result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
             }
             else
             {
@@ -137,6 +142,7 @@
             product!.Description = model.Description;
             product.Price = (long)(model.Price * 100);
             product.Name = model.Name;
+            product.Quantity = model.Quantity;
 
             _logger.LogInformation($"Updated product with id {model.Id}");
 
@@ -154,6 +160,21 @@
             _logger.LogInformation($"Retrieved details for product with id {productId}");
 
             return product!;
+        }
+
+        public async Task<bool> HasEnoughQuantity(int productId)
+        {
+            var quantity = await _context.Products
+                .Where(p => p.Id == productId)
+                .Select(p => p.Quantity)
+                .FirstOrDefaultAsync();
+
+            if (quantity == 0)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

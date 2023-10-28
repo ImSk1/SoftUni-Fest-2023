@@ -14,6 +14,7 @@
     using SofwareFest.Infrastructure;
     using AutoMapper;
     using SoftwareFest.Pagination;
+    using SoftwareFest.Models.Enums;
 
     public class TransactionService : ITransactionService
     {
@@ -46,6 +47,15 @@
             _logger.LogInformation($"Transaction created for user with id {userId}, product with id {productId} and stripe transaction id {stripeTransactionId}");
 
             await _context.Transactions.AddAsync(transaction);
+
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == productId);
+
+            if (product.Type == ProductType.Physical)
+            {
+                product.Quantity--;
+            }
+
             await _context.SaveChangesAsync();
         }
 
