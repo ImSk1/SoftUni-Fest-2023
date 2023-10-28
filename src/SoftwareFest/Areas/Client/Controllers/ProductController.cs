@@ -30,7 +30,7 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageSize = 50)
         {
-            var result = await _productService.GetPagedProducts(pageIndex, pageSize);
+            var result = await _productService.GetPagedProducts(pageIndex, pageSize, x => x.Quantity > 0 || x.Quantity == null);
 
             return View(result);
         }

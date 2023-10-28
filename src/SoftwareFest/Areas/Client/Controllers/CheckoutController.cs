@@ -29,6 +29,11 @@
         {
             var product = await _productService.GetById(productId);
 
+            if (!await _productService.HasEnoughQuantity(productId))
+            {
+                return Forbid();
+            }
+
             var sessionId = await _checkoutService.CheckOut(product);
             var publicKey = _config["Stripe:PublicKey"];
 
