@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
-using SoftwareFest.Services.Contracts;
-using SoftwareFest.ViewModels;
-
-namespace SoftwareFest.Areas.Client.Controllers
+﻿namespace SoftwareFest.Areas.Client.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json.Linq;
+    using SoftwareFest.Services.Contracts;
+    using SoftwareFest.ViewModels;
+    using System.Security.Claims;
+
     [Route("[controller]")]
     public class EthereumController : BaseClientController
     {
@@ -20,6 +19,7 @@ namespace SoftwareFest.Areas.Client.Controllers
             _configuration = config;
             _transactionService = transactionService;
         }
+
         [HttpPost("handle")]
         public async Task<IActionResult> HandleTransaction([FromBody] EthTransactionViewModel data)
         {
@@ -31,13 +31,12 @@ namespace SoftwareFest.Areas.Client.Controllers
             var content = await response.Content.ReadAsStringAsync();
             var jsonContent = JObject.Parse(content);
 
-            // Check if transaction was successful
             if (jsonContent["result"]["isError"].ToString() == "0")
             {
                 var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 await _transactionService.Create(data.ProductId, userId);
 
-                return Json( new { url = "/ethereum/callback/true"});
+                return Json(new { url = "/ethereum/callback/true" });
             }
             else
             {
@@ -50,15 +49,12 @@ namespace SoftwareFest.Areas.Client.Controllers
         {
             if (isSuccessful)
             {
-                ViewData["message"] = "Crypto payment processed.";
+                return RedirectToAction("Transactions", "Transaction", new { Area = "Client" });
             }
-            else
-            {
-                ViewData["message"] = "There was an error during the payment process.";
 
-            }
+            ViewData["message"] = "There was an error during the payment process.";
+
             return View();
         }
-       
     }
 }

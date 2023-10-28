@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using SoftwareFest.Infrastructure.Exceptions;
-
-namespace SoftwareFest.Areas.Home.Controllers
+﻿namespace SoftwareFest.Areas.Home.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using SoftwareFest.Infrastructure.Exceptions;
+
     [AllowAnonymous]
     [Area("Home")]
     public class ErrorController : Controller

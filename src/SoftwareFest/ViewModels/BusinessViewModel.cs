@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using SoftwareFest.Infrastructure.Mapping;
-using SoftwareFest.Models;
-using System.ComponentModel.DataAnnotations;
-
-namespace SoftwareFest.ViewModels
+﻿namespace SoftwareFest.ViewModels
 {
+    using AutoMapper;
+    using SoftwareFest.Infrastructure.Mapping;
+    using SoftwareFest.Models;
+    using System.ComponentModel.DataAnnotations;
+
     public class BusinessViewModel : UserViewModel, IMapFrom<Business>
     {
         public int? Id { get; set; }

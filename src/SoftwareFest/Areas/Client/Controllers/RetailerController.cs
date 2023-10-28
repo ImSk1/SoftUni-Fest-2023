@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SoftwareFest.Services.Contracts;
-using System.ComponentModel.DataAnnotations;
-
-namespace SoftwareFest.Areas.Client.Controllers
+﻿namespace SoftwareFest.Areas.Client.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using SoftwareFest.Services.Contracts;
+    using System.ComponentModel.DataAnnotations;
+
     public class RetailerController : BaseClientController
     {
         private readonly IRetailerService _retailerService;

@@ -1,12 +1,11 @@
-﻿using Microsoft.Extensions.Options;
-using MailKit.Security;
-using MimeKit;
-using MimeKit.Text;
-using MailKit.Net.Smtp;
-
-
-namespace SoftwareFest.MailSending
+﻿namespace SoftwareFest.MailSending
 {
+    using Microsoft.Extensions.Options;
+    using MailKit.Security;
+    using MimeKit;
+    using MimeKit.Text;
+    using MailKit.Net.Smtp;
+
     public class MailSender : IMailSender
     {
         private readonly EmailSendingSettings config;

@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using SoftwareFest.Models;
-
-namespace SoftwareFest.ViewModels
+﻿namespace SoftwareFest.ViewModels
 {
+    using AutoMapper;
+    using SoftwareFest.Models;
+
     public class ClientViewModel : UserViewModel
     {
         public int? Id { get; set; }

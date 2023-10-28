@@ -1,12 +1,11 @@
 ﻿namespace SoftwareFest.Areas.Client.Controllers
 {
-    using System.Security.Claims;
-
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
     using Stripe.Checkout;
+    using System.Security.Claims;
 
     [Authorize]
     public class CheckoutController : BaseClientController
@@ -55,7 +54,6 @@
                 {
                     "line_items"
                 }
-
             });
 
             var total = session.AmountTotal.Value;
@@ -72,8 +70,7 @@
 
         public IActionResult CheckoutFailed()
         {
-            return Ok();
+            return RedirectToAction("All", "Product", new { Area = "Client" });
         }
-
     }
 }
