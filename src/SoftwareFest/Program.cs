@@ -31,6 +31,7 @@ builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IRetailerService, RetailerService>();
 builder.Services.AddTransient<IMailSender, MailSender>();
 builder.Services.AddHttpContextAccessor();
 
