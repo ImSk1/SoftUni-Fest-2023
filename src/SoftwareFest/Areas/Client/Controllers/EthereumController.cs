@@ -20,9 +20,8 @@ namespace SoftwareFest.Areas.Client.Controllers
         public async Task<IActionResult> HandleTransaction([FromBody] EthTransactionViewModel data)
         {
             string txHash = data.TxHash;
-            string etherscanApiKey = _configuration["EtherScan:ApiKey"]!;// Replace with your Etherscan API key
+            string etherscanApiKey = _configuration["EtherScan:ApiKey"]!;
 
-            // Monitor the transaction using Etherscan
             string url = $"https://api.etherscan.io/api?module=transaction&action=getstatus&txhash={txHash}&apikey={etherscanApiKey}";
             var response = await httpClient.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
@@ -31,21 +30,28 @@ namespace SoftwareFest.Areas.Client.Controllers
             // Check if transaction was successful
             if (jsonContent["result"]["isError"].ToString() == "0")
             {
-                return RedirectToAction(nameof(SuccessfulEthereumTransaction));
+                return Json( new { url = "/ethereum/callback/true"});
             }
             else
             {
-                return RedirectToAction(nameof(FailedEthereumTransaction));
+                return Json(new { url = "/ethereum/callback/false" });
             }
         }
 
-        public IActionResult SuccessfulEthereumTransaction()
+        [HttpGet("callback/{isSuccessful}")]
+        public IActionResult PaymentCallback([FromRoute] bool isSuccessful)
         {
+            if (isSuccessful)
+            {
+                ViewData["message"] = "Crypto payment processed.";
+            }
+            else
+            {
+                ViewData["message"] = "There was an error during the payment process.";
+
+            }
             return View();
         }
-        public IActionResult FailedEthereumTransaction()
-        {
-            return View();
-        }
+       
     }
 }
