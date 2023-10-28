@@ -28,9 +28,7 @@ namespace SoftwareFest.ViewModels
         [Required]
         public ProductType Type { get; set; } = default!;
 
-        public IFormFile? Image { get; set; }
-
-        public string? ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = default!;
 
         public string? BusinessName { get; set; }
 

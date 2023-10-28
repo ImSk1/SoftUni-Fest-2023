@@ -17,14 +17,12 @@
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<ProductService> _logger;
-        private readonly IFileService _fileService;
 
-        public ProductService(ApplicationDbContext context, IMapper mapper, ILogger<ProductService> logger, IFileService fileService)
+        public ProductService(ApplicationDbContext context, IMapper mapper, ILogger<ProductService> logger)
         {
             _context = context;
             _mapper = mapper;
             _logger = logger;
-            _fileService = fileService;
         }
 
         public async Task AddProduct(ProductViewModel model, string userId)
@@ -37,14 +35,6 @@
                 .FirstOrDefaultAsync();
 
             product.BusinessId = businessId;
-
-            if(model.Image == null)
-            {
-                throw new InvalidOperationException("There isn't an attached image!");
-            }
-
-            var filepath = await _fileService.SaveFile(model.Image);
-            product.ImageUrl = filepath;
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -67,8 +57,6 @@
         {
             var product = await _context.Products
                 .FirstOrDefaultAsync(x => x.Id == id);
-
-            _fileService.DeleteFile(product!.ImageUrl);
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
@@ -131,13 +119,6 @@
             product!.Description = model.Description;
             product.Price = model.Price;
             product.Name = model.Name;
-
-            if (model.Image != null)
-            {
-                _fileService.DeleteFile(Path.Combine("wwwroot", product.ImageUrl.Remove(0, 1)));
-                var filepath = await _fileService.SaveFile(model.Image);
-                product.ImageUrl = filepath;
-            }
 
             _logger.LogInformation($"Updated product with id {model.Id}");
 

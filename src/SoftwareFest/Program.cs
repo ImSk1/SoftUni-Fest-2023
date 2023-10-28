@@ -30,7 +30,6 @@ builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddTransient<IMailSender, MailSender>();
-builder.Services.AddTransient<IFileService, LocalStorageService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog(ServiceCollectionExtensions.CreateSerilogLogger(builder.Configuration, appName));
