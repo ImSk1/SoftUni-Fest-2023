@@ -18,7 +18,7 @@ services:
 
   webapp:
     container_name: applicationweb
-    image: sk1es/softwarefest:latest
+    image: sk1es/paysol:latest
     domainname: davidh-contacts
     environment:
       - CONNECTION_STRING=Server=sqlserver,1433; Database=SoftUni-Fest; User Id=sa; Password=SQLSxrvxr123#; TrustServerCertificate=True;
