@@ -93,7 +93,10 @@
                             headers: {
                                 'Content-Type': 'application/json'
                             }
-                        });
+                        }).then(response => response.json())
+                            .then(data => {
+                                window.location.href = data.url;
+                            });
                     }).catch(function(error) {
                         console.error(error);
                     });
