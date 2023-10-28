@@ -9,7 +9,7 @@
 
     public interface IProductService
     {
-        Task<IPage<ShowProductViewModel>> GetPagedProducts(string name, ProductType type, int pageIndex = 1, int pageSize = 50,
+        Task<IPage<ShowProductViewModel>> GetPagedProducts(string name, int pageIndex = 1, int pageSize = 50,
             Expression<Func<Models.Product, object>>? orderBy = null,
             SortDirection sortDirection = SortDirection.Ascending);
         Task<IPage<ShowProductViewModel>> GetPagedProductsByUserId(string userId, int pageIndex = 1, int pageSize = 50);

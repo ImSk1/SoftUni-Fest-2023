@@ -76,7 +76,7 @@
             return product;
         }
 
-        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(string name, ProductType type, int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
+        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(string name,  int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
         {
             orderBy ??= x => x.Id;
 
@@ -89,7 +89,6 @@
             var totalCount = await _context.Products
                 .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                 .Where(x => x.Quantity != 0)
-                .Where(x => x.Type == (x.Type == ProductType.All ? x.Type : type))
                 .CountAsync();
 
             var result = new List<ShowProductViewModel>();
@@ -99,7 +98,6 @@
                 var products = await _context.Products
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
-                    .Where(x => x.Type == (x.Type == ProductType.All ? x.Type : type))
                     .OrderBy(orderBy)
                     .Skip(pageIndex * pageSize)
                     .Take(pageSize)
@@ -112,7 +110,6 @@
                 var products = await _context.Products
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
-                    .Where(x => x.Type == (x.Type == ProductType.All ? x.Type : type))
                     .OrderByDescending(orderBy)
                     .Skip(pageIndex * pageSize)
                     .Take(pageSize)
