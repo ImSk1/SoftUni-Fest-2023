@@ -66,7 +66,7 @@
 
             await _transactionService.Create(productId, userId, sessionId);
 
-            return Ok($"{total} {customerEmail}");
+            return RedirectToAction("Transactions", "Transaction", new {Area = "Client"});
         }
         [HttpGet("failed")]
 
