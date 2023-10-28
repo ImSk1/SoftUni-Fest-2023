@@ -1,0 +1,31 @@
+﻿.storage{
+    width: 100%;
+    height: 90vh;
+    padding-top: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: top;
+}
+table{
+    border-spacing: 0;
+  border-collapse: separate;
+  border-radius: 10px;
+  border: 2px solid black;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+th, tr{
+    width: 200px;
+    height: 80px;
+    font-size: 18px;
+    border-bottom: 2px solid black;
+    border-radius: 0px;
+}
+
+tr:last-child{
+    border-bottom: none;
+}
+
+h1{
+    margin-bottom: 20px;
+}

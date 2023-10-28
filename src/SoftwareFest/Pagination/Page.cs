@@ -2,7 +2,6 @@
 {
     using System.Collections;
     using System.Collections.Generic;
-
     using SoftwareFest.Pagination.Contracts;
 
     public class Page<T> : IPage<T>

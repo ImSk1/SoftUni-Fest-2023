@@ -1,13 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-using AutoMapper;
-
-using SoftwareFest.Infrastructure.Mapping;
-using SoftwareFest.Models;
-using SoftwareFest.Models.Enums;
-
-namespace SoftwareFest.ViewModels
+﻿namespace SoftwareFest.ViewModels
 {
+    using System.ComponentModel.DataAnnotations;
+    using AutoMapper;
+    using SoftwareFest.Infrastructure.Mapping;
+    using SoftwareFest.Models;
+    using SoftwareFest.Models.Enums;
+
     public class ProductViewModel : IMapFrom<Product>
     {
         public int? Id { get; set; }

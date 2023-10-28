@@ -1,15 +1,11 @@
 ﻿namespace SoftwareFest.Areas.Client.Controllers
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq.Expressions;
-    using System.Security.Claims;
-
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SoftwareFest.Models;
-    using SoftwareFest.Models.Enums;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
+    using System.ComponentModel.DataAnnotations;
+    using System.Security.Claims;
 
     [Authorize]
     public class ProductController : BaseClientController

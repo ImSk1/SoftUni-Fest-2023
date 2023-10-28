@@ -1,17 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
-
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-
 using Serilog;
-
 using SoftwareFest.Infrastructure.Extensions;
 using SoftwareFest.MailSending;
-using SoftwareFest.Middlewares;
 using SoftwareFest.Services;
 using SoftwareFest.Services.Contracts;
-
 using Stripe;
-
+using System.Diagnostics.CodeAnalysis;
 using ProductService = SoftwareFest.Services.ProductService;
 using ServiceCollectionExtensions = SoftwareFest.Infrastructure.Extensions.ServiceCollectionExtensions;
 
@@ -20,7 +14,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
-// Add services to the container.
 builder.AddConfiguration();
 builder.AddMvc();
 builder.AddDatabase();
@@ -33,16 +26,14 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IRetailerService, RetailerService>();
 builder.Services.AddTransient<IMailSender, MailSender>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Host.UseSerilog(ServiceCollectionExtensions.CreateSerilogLogger(builder.Configuration, appName));
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-builder.Services.AddScoped<IProductService, ProductService>();
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error/Error");

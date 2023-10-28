@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json;
-
-namespace SoftwareFest.Areas.Client.Controllers
+﻿namespace SoftwareFest.Areas.Client.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
+    using SoftwareFest.Services.Contracts;
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
 
-    using Microsoft.AspNetCore.Mvc;
-
-    using SoftwareFest.Services.Contracts;
-
     [Route("[controller]")]
-    public class TransactionController : Controller
+    public class TransactionController : BaseClientController
     {
         private readonly ITransactionService _transactionService;
 
@@ -30,7 +27,7 @@ namespace SoftwareFest.Areas.Client.Controllers
 
             var model = await _transactionService.GetPagedTransactions(userId, pageIndex, pageSize);
 
-            return Ok(JsonConvert.SerializeObject(model));
+            return View(model);
         }
     }
 }

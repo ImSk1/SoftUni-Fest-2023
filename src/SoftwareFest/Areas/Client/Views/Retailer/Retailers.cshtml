@@ -10,7 +10,7 @@
 <div class="container-all">
     <div class="retailersa">
         <form class="formichka2" method="post" asp-action="Retailers" asp-route-name="@name" asp-controller="Retailer" asp-area="Client">
-            <input name="name" value="@name" type="text" />
+            <input name="name" placeholder="Name" value="@name" type="text" />
             <input class="searchh" type="submit" value="Search" />
         </form>
         @foreach (var retailer in Model)

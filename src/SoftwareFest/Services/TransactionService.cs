@@ -1,20 +1,15 @@
 ﻿namespace SoftwareFest.Services
 {
-    using MailKit.Search;
-    using System;
-
+    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
-
     using SoftwareFest.Models;
+    using SoftwareFest.Models.Enums;
+    using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
-    using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
-
     using SofwareFest.Infrastructure;
-    using AutoMapper;
-    using SoftwareFest.Pagination;
-    using SoftwareFest.Models.Enums;
+    using System;
 
     public class TransactionService : ITransactionService
     {

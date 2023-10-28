@@ -1,14 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using SoftwareFest.Infrastructure.Exceptions;
-using SoftwareFest.Models;
-using SoftwareFest.Services.Contracts;
-using SoftwareFest.ViewModels;
-using SofwareFest.Infrastructure;
-
-namespace SoftwareFest.Services
+﻿namespace SoftwareFest.Services
 {
+    using AutoMapper;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using SoftwareFest.Infrastructure.Exceptions;
+    using SoftwareFest.Models;
+    using SoftwareFest.Services.Contracts;
+    using SoftwareFest.ViewModels;
+    using SofwareFest.Infrastructure;
+
     public class ClientService : IClientService
     {
         private readonly ApplicationDbContext _dbContext;
