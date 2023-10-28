@@ -30,7 +30,9 @@
                     <div class="dropdown-content">
                         <a href="@Url.Action("Profile", "Account")">Profile</a>
                         <a href="@Url.Action("Payments", "Account")">Payments</a>
-                        <a href="@Url.Action("Logout", "Account")">Logout</a>
+                        <form method="post" asp-action="Logout" asp-area="Home" asp-controller="Identity">
+                            <button type="submit">Logout</button>
+                        </form>
                     </div>
                 </div>
             </div>

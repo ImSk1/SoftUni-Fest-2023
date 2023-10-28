@@ -1,7 +1,7 @@
 ﻿@using SoftwareFest.ViewModels;
-@model LoginViewModel
+@model BusinessViewModel
 @{
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Areas/Home/Views/Shared/_HomeLayout.cshtml";
 }
 
 <div class="main-holder">
@@ -10,14 +10,14 @@
             <a asp-action="Index" asp-controller="Home"><img class="logo-img" src="~/images/screenshot_2023-10-27_124010-transformed.png" /></a>
         </div>
         <div class="container">
-            <form method="post" asp-action="Login" asp-controller="Identity">
-                <h1 class="action-text">Log in</h1>
+            <form method="post" asp-action="BusinessRegister" asp-controller="Identity">
+                <h1 class="action-text">Join as Business</h1>
+                <input placeholder="Business Name" type="text" asp-for="@Model.BusinessName" />
                 <input placeholder="Email" type="email" asp-for="@Model.Email" />
                 <input placeholder="Password" type="password" asp-for="@Model.Password" />
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </form>
         </div>
-        <a class="a-link" asp-action="Index" asp-controller="Home">Join us instead</a>
+        <a class="a-link" asp-action="Login">Log in instead</a>
     </div>
 </div>
-

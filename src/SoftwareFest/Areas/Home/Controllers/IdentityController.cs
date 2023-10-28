@@ -1,21 +1,20 @@
-﻿using SoftwareFest.MailSending;
-using SoftwareFest.Services.Contracts;
-
-namespace SoftwareFest.Controllers
+﻿namespace SoftwareFest.Areas.Home.Controllers
 {
+    using System.Security.Claims;
+    using System.Text;
     using AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.WebUtilities;
+    using SoftwareFest.MailSending;
     using SoftwareFest.Models;
+    using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
     using SofwareFest.Infrastructure;
-    using Stripe;
-    using System.Text;
 
     [AllowAnonymous]
-    public class IdentityController : Controller
+    public class IdentityController : BaseHomeController
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -25,6 +24,8 @@ namespace SoftwareFest.Controllers
         private readonly IBusinessService _businessService;
         private readonly IClientService _clientService;
         private readonly IMailSender _mailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
         public IdentityController (
             UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager,
@@ -33,7 +34,8 @@ namespace SoftwareFest.Controllers
             IMapper mapper,
             IBusinessService businessService,
             IClientService clientService,
-            IMailSender mailSender)
+            IMailSender mailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,6 +45,7 @@ namespace SoftwareFest.Controllers
             _businessService = businessService;
             _clientService = clientService;
             _mailSender = mailSender;
+            _roleManager = roleManager;
         }
 
         [HttpGet("/login")]
@@ -68,6 +71,10 @@ namespace SoftwareFest.Controllers
             }
 
             _logger.LogInformation($"User {user.UserName} logged in successfully.");
+            if (await _userManager.IsInRoleAsync(user, "Business"))
+            {
+                return RedirectToAction("ConnectStripe", "Stripe", new { Area = "Home" });
+            }
 
             return RedirectToAction("Index", "Home");
         }
@@ -109,7 +116,15 @@ namespace SoftwareFest.Controllers
 
             _logger.LogInformation("Client Profile {0} created successfully.", model.FirstName + " " + model.LastName);
 
-            return RedirectToAction(nameof(Login));
+            if (!await _roleManager.RoleExistsAsync("Client"))
+            {
+                IdentityRole role = new IdentityRole("Client");
+                await _roleManager.CreateAsync(role);
+            }
+
+            await _userManager.AddToRoleAsync(user, "Client");
+
+            return RedirectToAction(nameof(Login), true);
         }
 
         [HttpPost("/register/business")]
@@ -140,6 +155,13 @@ namespace SoftwareFest.Controllers
 
             _logger.LogInformation("Business {0} created successfully.", model.BusinessName);
 
+            if (!await _roleManager.RoleExistsAsync("Business"))
+            {
+                IdentityRole role = new IdentityRole("Business");
+                await _roleManager.CreateAsync(role);
+            }
+            
+            await _userManager.AddToRoleAsync(user, "Business");
             return RedirectToAction(nameof(Login));
         }
 
@@ -149,8 +171,29 @@ namespace SoftwareFest.Controllers
             var result = await _userManager.CreateAsync(user, password);
             return result;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EmailConfirmation()
+        {
+            var model = new EmailConfirmationViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EmailConfirmation(EmailConfirmationViewModel model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                return View(model);
+            }
+
+            await SendEmailConfirmation(user);
+
+            return RedirectToAction(nameof(Login));
+        }
         [NonAction]
-        public async Task SendEmailConfirmation(ApplicationUser user)
+        public async Task SendEmailConfirmation(ApplicationUser? user)
         {
             await _userManager.UpdateSecurityStampAsync(user);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

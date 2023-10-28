@@ -20,8 +20,8 @@
             _productService = productService;
         }
 
-        [HttpGet("checkout")]
-        public async Task<IActionResult> Checkout(int productId)
+        [Route("checkout")]
+        public async Task<IActionResult> Checkout([FromQuery] int productId)
         {
             var product = await _productService.GetById(productId);
 
@@ -36,7 +36,7 @@
             return View(checkoutOrderResponse);
         }
 
-        [HttpGet("success")]
+        [HttpGet("checkout/success")]
         public IActionResult CheckoutSuccess(string sessionId)
         {
             var sessionService = new SessionService();
@@ -44,8 +44,16 @@
 
             var total = session.AmountTotal.Value;
             var customerEmail = session.CustomerDetails.Email;
+            
 
             return Ok($"{total} {customerEmail}");
         }
+        [HttpGet("failed")]
+
+        public IActionResult CheckoutFailed()
+        {
+            return Ok();
+        }
+
     }
 }

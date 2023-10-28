@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Areas/Home/Views/Shared/_HomeLayout.cshtml";
     ViewData["Title"] = "Home Page";
 }
 
@@ -32,10 +32,10 @@
     <div class="centertext">
         <h6>Join as</h6>
         <div class="buttons">
-            <form method="get" asp-action="BusinessRegister" asp-controller="Identity" style="display:flex;">
+            <form method="get" asp-action="BusinessRegister" asp-controller="Identity" asp-area="Home" style="display:flex;">
                 <button class="btn-style" type="submit">Business</button>
             </form>
-            <form method="get" asp-action="ClientRegister" asp-controller="Identity" style="display:flex;">
+            <form method="get" asp-action="ClientRegister" asp-controller="Identity" asp-area="Home" style="display:flex;">
                 <button class="btn-style" type="submit">Client</button>
             </form>
         </div>

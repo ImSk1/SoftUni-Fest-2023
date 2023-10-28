@@ -6,15 +6,15 @@ using SoftwareFest.Services.Contracts;
 using Stripe;
 using System.Security.Claims;
 
-namespace SoftwareFest.Controllers
+namespace SoftwareFest.Areas.Home.Controllers
 {
     [Authorize]
     [Route("[controller]")]
-    public class StripeController : Controller
+    public class StripeController : BaseHomeController
     {
         private readonly IConfiguration _config;
         private readonly IBusinessService _businessService;
-        
+
         public StripeController(IConfiguration configuration, IBusinessService businessService)
         {
             _config = configuration;
@@ -29,7 +29,7 @@ namespace SoftwareFest.Controllers
             var currentBusiness = await _businessService.GetBusinessByUserId(userId);
             if (currentBusiness.StripeUserId != null)
             {
-                return BadRequest("Already connected");
+                return RedirectToAction("Index", "Home", new { Area = "Home" });
             }
             var cliendId = _config["Stripe:ClientId"];
             var redirectUrl = "https://localhost:7215/stripe/callback";
@@ -53,6 +53,7 @@ namespace SoftwareFest.Controllers
             var business = await _businessService.GetBusinessByUserId(userId);
             business.StripeUserId = response.StripeUserId;
             await _businessService.UpdateBusiness(business);
+
 
             return Redirect("~/");
         }
