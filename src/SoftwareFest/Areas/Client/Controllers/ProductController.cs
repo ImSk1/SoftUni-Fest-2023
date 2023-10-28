@@ -30,7 +30,7 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageSize = 50)
         {
-            var result = await _productService.GetPagedProducts(pageIndex, pageSize, x => x.Quantity > 0 || x.Quantity == null);
+            var result = await _productService.GetPagedProducts(string.Empty, ProductType.All, pageIndex, pageSize);
 
             return View(result);
         }
@@ -43,9 +43,11 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageSize = 50)
         {
-            Expression<Func<Product, bool>> predicate = p => p.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? p.Name.ToLower() : name.ToLower()) && p.Type == (type == ProductType.All ? p.Type : type);
+            Expression<Func<Product, bool>> predicate = p => (p.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? p.Name.ToLower() : name.ToLower())) && (p.Type == (type == ProductType.All ? p.Type : type)) && (p.Quantity != 0);
 
-            var result = await _productService.GetPagedProducts(pageIndex, pageSize, predicate, p => p.Price, direction);
+            _logger.LogError(predicate.ToString());
+
+            var result = await _productService.GetPagedProducts(name, type, pageIndex, pageSize, x => x.Price, direction);
 
             ViewBag.Name = name;
             ViewBag.Type = type;
