@@ -12,7 +12,7 @@
             Expression<Func<Models.Product, bool>>? predicate = null,
             Expression<Func<Models.Product, object>>? orderBy = null,
             SortDirection sortDirection = SortDirection.Ascending);
-
+        Task<IPage<ShowProductViewModel>> GetPagedProductsByUserId(string userId, int pageIndex = 1, int pageSize = 50);
         Task AddProduct(ProductViewModel model, string userId);
 
         Task<ProductViewModel> GetById(int productId, string userId);

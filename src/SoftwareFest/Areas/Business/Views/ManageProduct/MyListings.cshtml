@@ -17,17 +17,13 @@
                         <div class="name">
                             <span id="productName">@product.Name</span>
                         </div>
-                        <div class="product-retailer">
-                            Retailer:
-                            <span id="productPrice">Retailer</span>
-                        </div>
                         <div class="product-price">
                             <span id="productPrice">@($"{product.Price:f2}") $</span>
                         </div>
                     </div>
                 </div>
                 <div class="btn-button">
-                    <form asp-action="Details" asp-controller="Product" asp-area="Client" asp-route-id="@product.Id" method="get">
+                    <form method="get" asp-action="Details" asp-controller="ManageProduct" asp-area="Business" asp-route-id="@product.Id" method="get">
                         <input class="btn-input" type="submit" value="Details" />
                     </form>
 
@@ -35,8 +31,8 @@
             </div>
         }
         <div class="next-btn">
-            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+            <a asp-area="Business" asp-action="MyListings" asp-controller="ManageProduct" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+            <a asp-area="Business" asp-action="MyListings" asp-controller="ManageProduct" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
         </div>
     </div>
 </div>

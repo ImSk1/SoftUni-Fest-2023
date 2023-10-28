@@ -2,6 +2,7 @@
 using SoftwareFest.Areas.Client.Controllers;
 using SoftwareFest.Services.Contracts;
 using SoftwareFest.ViewModels;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace SoftwareFest.Areas.Business.Controllers
@@ -34,7 +35,7 @@ namespace SoftwareFest.Areas.Business.Controllers
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             await _productService.AddProduct(model, userId);
 
-            return RedirectToAction(nameof(Add));
+            return RedirectToAction(nameof(MyListings));
         }
         [HttpGet]
         public async Task<IActionResult> Update(int id)
@@ -47,6 +48,34 @@ namespace SoftwareFest.Areas.Business.Controllers
             }
 
             var product = await _productService.GetById(id);
+
+            return View(product);
+        }
+        [Route("mylistings")]
+        [HttpGet]
+        public async Task<IActionResult> MyListings(
+            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
+            int pageIndex = 1,
+            [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
+            int pageSize = 50)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var product = await _productService.GetPagedProductsByUserId(userId, pageIndex, pageSize);
+
+            return View(product);
+        }
+
+        [Route("mylistings/details/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var product = await _productService.GetById(id);
+
+            if(await _productService.IsOwner(userId, product.Id.Value))
+            {
+                product.IsMine = true;
+            }
 
             return View(product);
         }
@@ -67,7 +96,7 @@ namespace SoftwareFest.Areas.Business.Controllers
 
             await _productService.Update(model);
 
-            return RedirectToAction("~/", new { id = model.Id });
+            return RedirectToAction(nameof(MyListings));
         }
 
         [HttpPost]
@@ -82,7 +111,7 @@ namespace SoftwareFest.Areas.Business.Controllers
 
             await _productService.Delete(id);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyListings));
         }
     }
 }
