@@ -1,8 +1,9 @@
 ﻿namespace SofwareFest.Infrastructure
 {
-    
+
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
     using SoftwareFest.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -36,6 +37,9 @@
                 .HasOne(t => t.Client)
                 .WithMany(c => c.Transactions)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Product>()
+                .Property(x => x.EthPrice).HasPrecision(18, 10);
         }
     }
 }

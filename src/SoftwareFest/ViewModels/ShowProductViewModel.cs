@@ -1,4 +1,6 @@
-﻿namespace SoftwareFest.ViewModels
+﻿using AutoMapper;
+
+namespace SoftwareFest.ViewModels
 {
     using SoftwareFest.Infrastructure.Mapping;
     using SoftwareFest.Models;
@@ -11,7 +13,14 @@
 
         public string ImageUrl { get; set; } = null!;
 
-        public long Price { get; set; }
+        public double Price { get; set; }
 
+        public double EthPrice { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<Product, ShowProductViewModel>()
+                .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => (double)((double)src.Price / 100)));
+        }
     }
 }

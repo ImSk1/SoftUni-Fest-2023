@@ -2,6 +2,7 @@
 {
     public enum ProductType
     {
+        All,
         Physical,
         Service
     }

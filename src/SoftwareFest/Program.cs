@@ -6,6 +6,7 @@ using Serilog;
 
 using SoftwareFest.Infrastructure.Extensions;
 using SoftwareFest.MailSending;
+using SoftwareFest.Middlewares;
 using SoftwareFest.Services;
 using SoftwareFest.Services.Contracts;
 
@@ -29,6 +30,8 @@ builder.AddEmailSending();
 builder.Services.AddScoped<ICheckoutService, CheckoutService>();
 builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<IRetailerService, RetailerService>();
 builder.Services.AddTransient<IMailSender, MailSender>();
 builder.Services.AddHttpContextAccessor();
 
@@ -42,7 +45,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error/Error");
 }
 else
 {
@@ -58,8 +61,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "areas",
+    pattern: "{area=Home}/{controller=Home}/{action=Index}/{id?}"
+);
 
 app.MapHealthChecks("/hc", new HealthCheckOptions()
 {

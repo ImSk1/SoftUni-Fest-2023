@@ -1,0 +1,21 @@
+﻿@using SoftwareFest.Models.Enums;
+@using SoftwareFest.ViewModels;
+@model ProductViewModel
+
+<div class="container">
+    <form method="post" asp-action="Update" asp-controller="ManageProduct" enctype="multipart/form-data">
+        <h1>Create listing</h1>
+        <input placeholder="Name" asp-for="@Model.Name" />
+        <input placeholder="Price" asp-for="@Model.Price" />
+        <textarea placeholder="Description" asp-for="@Model.Description" rows="2"></textarea>
+        <div class="select-clas">
+            <select placeholder="Offer type" asp-for="@Model.Type">
+                <option value="@ProductType.Physical">Physical</option>
+                <option value="@ProductType.Service">Service</option>
+            </select>
+        </div>
+        <input placeholder="Image" asp-for="@Model.ImageUrl" type="text" />
+        <input placeholder="Quantity(Leave empty if service)" asp-for="@Model.Quantity" type="number" />
+        <input class="button" type="submit" value="Submit" />
+    </form>
+</div>

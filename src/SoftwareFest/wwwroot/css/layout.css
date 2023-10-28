@@ -1,0 +1,144 @@
+﻿header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: black;
+    padding: 10px 0;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-bottom: 2px solid black;
+    position: fixed;
+    background-color: white;
+    z-index: 4;
+}
+
+    header .logo {
+        width: 50px;
+        padding: 0px 30px;
+        padding-top: 10px;
+    }
+
+    header img {
+        width: 100px;
+    }
+
+.navbar {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 150px;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .nav li {
+        font-size: 20px;
+        font-weight: 500;
+        padding: 5px 10px;
+        display: inline;
+        margin-right: 20px;
+        border: 2px solid white;
+    }
+
+        .nav li:hover {
+            border-radius: 10px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            border: 2px solid black;
+        }
+
+    .nav a {
+        color: black;
+        text-decoration: none;
+    }
+
+.account-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 161px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+    .account-dropdown:hover {
+        border-radius: 10px 10px 0px 0px;
+    }
+
+.dropbtn {
+    background: transparent;
+    color: black;
+    border: none;
+    cursor: pointer;
+    padding: 5px 15px;
+}
+
+.dropdown {
+    top: 34px;
+    right: -2px;
+    position: absolute;
+    display: none;
+    background-color: white;
+    width: 161px;
+    z-index: 1;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+}
+
+    .dropdown-content a {
+        color: black;
+        padding: 5px 15px;
+        text-decoration: none;
+        display: block;
+    }
+
+        .dropdown-content a:first-of-type {
+            border-bottom: 2px solid white;
+            border-top: 2px solid white;
+        }
+
+    .dropdown-content form button {
+        color: black;
+        width: 100%;
+        padding: 5px 15px;
+        text-decoration: none;
+        display: block;
+        border: none;
+        border-top: 2px solid white;
+        background: none;
+        text-align: start;
+    }
+
+    .dropdown-content a:hover:first-of-type {
+        border-bottom: 2px solid black;
+        border-top: 2px solid black;
+    }
+
+    .dropdown-content form button:hover {
+        border-top: 2px solid black;
+    }
+
+    .dropdown-content a:nth-of-type(2) {
+        border-top: 2px solid white;
+        border-bottom: 2px solid white;
+    }
+
+    .dropdown-content a:hover:nth-of-type(2) {
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+    }
+
+.account-dropdown:hover .dropdown {
+    display: block;
+    border-top: none;
+    border-radius: 0px 0px 10px 10px;
+}

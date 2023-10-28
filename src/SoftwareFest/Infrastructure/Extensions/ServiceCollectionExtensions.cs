@@ -37,13 +37,17 @@
         }
         public static void AddCustomIdentity(this WebApplicationBuilder builder)
         {
-
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.LoginPath = new PathString("/login");
+            });
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
             {
                 cfg.Password.RequireUppercase = false;
                 cfg.User.RequireUniqueEmail = true;
                 cfg.SignIn.RequireConfirmedEmail = true;
             })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
         }

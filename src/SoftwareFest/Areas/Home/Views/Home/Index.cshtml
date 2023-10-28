@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "~/Areas/Home/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="leftside">
+    <div class="header" id="sticky-header">
+        <img src="~/images/screenshot_2023-10-27_124010-transformed.png" />
+    </div>
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="~/video/crypto.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="content-center">
+        <div class="center-items">
+            <div class="holder-text">
+                <h2 class="video-text">Unlock a New Era in <span>Payments</span></h2>
+                <h4 class="video-text">Your Ultimate Payment Solution Destination</h4>
+                <ul style="width: 60%;">
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i><span>Secure</span> Online Payments</li>
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i>Multiple <span>Payment</span> Options</li>
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i>Payment Processing</li>
+                    <li><i class="fa fa-circle-check" style="color: #90CC39; margin-right: 4px;"></i>International <span>Transactions</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="rightside">
+    <img class="hide"src="~/images/screenshot_2023-10-27_124010-transformed.png" />
+    <div class="centertext">
+        <h6>Join as</h6>
+        <div class="buttons">
+            <form method="get" asp-action="BusinessRegister" asp-controller="Identity" asp-area="Home" style="display:flex;">
+                <button class="btn-style" type="submit">Business</button>
+            </form>
+            <form method="get" asp-action="ClientRegister" asp-controller="Identity" asp-area="Home" style="display:flex;">
+                <button class="btn-style" type="submit">Client</button>
+            </form>
+        </div>
+        <a class="a-link" asp-controller="Identity" asp-action="Login">Log in instead</a>
+    </div>
+</div>

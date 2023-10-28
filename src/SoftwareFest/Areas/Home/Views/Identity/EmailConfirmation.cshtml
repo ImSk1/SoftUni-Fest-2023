@@ -1,0 +1,21 @@
+﻿@using SoftwareFest.ViewModels;
+@model EmailConfirmationViewModel
+@{
+    Layout = "~/Areas/Home/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="main-holder">
+    <div class="main-block">
+        <div class="logo-header">
+            <a asp-action="Index" asp-controller="Home"><img class="logo-img" src="~/images/screenshot_2023-10-27_124010-transformed.png" /></a>
+        </div>
+        <div class="container">
+            <form method="post" asp-action="EmailConfirmation" asp-controller="Identity">
+                <h1 class="action-text">Confiirm Email</h1>
+                <input placeholder="Email" type="email" asp-for="@Model.Email" />
+                <button type="submit">Send Email</button>
+            </form>
+        </div>
+        <a class="a-link" asp-action="Index" asp-controller="Home">Join us instead</a>
+    </div>
+</div>

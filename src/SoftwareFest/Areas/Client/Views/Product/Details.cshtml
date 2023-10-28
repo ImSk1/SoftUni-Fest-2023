@@ -1,0 +1,112 @@
+﻿@using SoftwareFest.Models.Enums;
+@using SoftwareFest.ViewModels;
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using SoftwareFest.Services.Contracts
+@inject IBusinessService businessService
+@model ProductViewModel
+@{
+
+    var business = await businessService.GetBusinessById((int)Model.BusinessId);
+}
+
+<div class="product-container">
+    <div class="product-container-inside">
+        <section class="left-side">
+            <img src="@Model.ImageUrl" />
+        </section>
+        <section class="right-side">
+            <div class="title">
+                @Model.Name
+            </div>
+            <div class="type">
+                Type: @Model.Type.ToString()
+            </div>
+            <div class="description">
+                @Model.Description
+            </div>
+            <div class="retailer">
+                Retailer: @Model.BusinessName
+            </div>
+            <div class="price-container">
+                <div class="price">
+                    @($"{Model.Price:f2} $")
+                </div>
+            </div>
+            <div class="price-container">
+                <div class="price">
+                    @($"{Model.EthPrice} ETH")
+                </div>
+            </div>
+            <div class="buttons">
+                @{
+                    if (Model.IsMine)
+                    {
+                        <form class="form" method="post" asp-action="Update" asp-controller="ManageProduct" asp-area="Business" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn-form"><i class="fa fa-pen-to-square"></i> Update</button>
+                        </form>
+                        <form class="form" method="post" asp-action="Delete" asp-controller="ManageProduct" asp-area="Business" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn-form"><i class="fa fa-trash"></i> Delete</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form class="form" method="post" asp-action="Checkout" asp-controller="Checkout" asp-area="Client" asp-route-productId="@Model.Id">
+                            <button type="submit" class="btn-form"><i class="fa fa-cart-shopping"></i> Purchase</button>
+                        </form>
+                        <button id="buyButton">Buy with Ethereum</button>
+                    }
+                }
+            </div>
+            <a class="a-link" href="https://stripe.com/en-bg">Prowed by <img class="stripe-img" src="~/images/2560px-stripe_logo,_revised_2016.svg.png" /></a>
+        </section>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('buyButton').addEventListener('click', function() {
+            if (window.ethereum) {
+                ethereum.request({ method: 'eth_requestAccounts' }).then(function(accounts) {
+                    var from = accounts[0];
+                    var to = '@business.EthereumWalletAddress.ToString()';
+                    console.log(to);// Seller's Ethereum address
+                    var amountInEther = @Model.EthPrice;
+                    console.log(amountInEther);
+                    var amountInWeiHex = toWeiHex(amountInEther);
+
+                    var txParams = {
+                        from: from,
+                        to: to,
+                        value: amountInWeiHex
+                    };
+
+                    ethereum.request({
+                        method: 'eth_sendTransaction',
+                        params: [txParams]
+                    }).then(function(txHash) {
+                        // Notify the server about the transaction hash
+                        fetch('/ethereum/handle', {
+                            method: 'POST',
+                            body: JSON.stringify({ txHash: txHash }),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+
+                }).catch(function(error) {
+                    console.error(error);
+                });
+            } else {
+                alert('MetaMask is not installed.');
+            }
+        });
+    });
+    function toWeiHex(etherValue) {
+        var weiValue = etherValue * Math.pow(10, 18);
+        var weiValueHex = '0x' + parseInt(weiValue, 10).toString(16);
+        return weiValueHex;
+    }
+</script>

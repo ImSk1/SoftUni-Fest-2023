@@ -1,0 +1,11 @@
+﻿@model SoftwareFest.ViewModels.CheckoutOrderResponse
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        var stripe = Stripe("@Model.PublicKey");
+        stripe.redirectToCheckout({
+            sessionId: "@Model.SessionId"
+        }).then(function (result) {
+            // Handle result.error here
+        });
+    });
+</script>

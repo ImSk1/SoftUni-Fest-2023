@@ -1,10 +1,8 @@
 ﻿namespace SoftwareFest.Models
 {
-
+    using SoftwareFest.Models.Enums;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
-    using SoftwareFest.Models.Enums;
 
     public class Product
     {
@@ -23,6 +21,10 @@
         public long Price { get; set; }
 
         [Required]
+        [Range(0, 0.0005)]
+        public decimal EthPrice { get; set; }
+
+        [Required]
         [ForeignKey(nameof(Business))]
         public int BusinessId { get; set; }
 
@@ -32,5 +34,7 @@
         public ProductType Type { get; set; }
 
         public string ImageUrl { get; set; } = null!;
+
+        public int? Quantity { get; set; }
     }
 }

@@ -233,6 +233,10 @@ namespace SoftwareFest.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("EthereumWalletAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StripeUserId")
                         .HasColumnType("nvarchar(max)");
 
@@ -242,7 +246,8 @@ namespace SoftwareFest.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Businesses");
                 });
@@ -271,7 +276,8 @@ namespace SoftwareFest.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
@@ -292,6 +298,10 @@ namespace SoftwareFest.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<decimal>("EthPrice")
+                        .HasPrecision(18, 10)
+                        .HasColumnType("decimal(18,10)");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -303,6 +313,9 @@ namespace SoftwareFest.Migrations
 
                     b.Property<long>("Price")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -328,7 +341,7 @@ namespace SoftwareFest.Migrations
                     b.Property<DateTime>("Date")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 10, 27, 11, 27, 12, 536, DateTimeKind.Utc).AddTicks(7912));
+                        .HasDefaultValue(new DateTime(2023, 10, 28, 16, 53, 31, 855, DateTimeKind.Utc).AddTicks(5987));
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -400,8 +413,8 @@ namespace SoftwareFest.Migrations
             modelBuilder.Entity("SoftwareFest.Models.Business", b =>
                 {
                     b.HasOne("SoftwareFest.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Business")
+                        .HasForeignKey("SoftwareFest.Models.Business", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -411,8 +424,8 @@ namespace SoftwareFest.Migrations
             modelBuilder.Entity("SoftwareFest.Models.Client", b =>
                 {
                     b.HasOne("SoftwareFest.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("Client")
+                        .HasForeignKey("SoftwareFest.Models.Client", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -422,7 +435,7 @@ namespace SoftwareFest.Migrations
             modelBuilder.Entity("SoftwareFest.Models.Product", b =>
                 {
                     b.HasOne("SoftwareFest.Models.Business", "Business")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -447,6 +460,20 @@ namespace SoftwareFest.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("SoftwareFest.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Business")
+                        .IsRequired();
+
+                    b.Navigation("Client")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SoftwareFest.Models.Business", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("SoftwareFest.Models.Client", b =>

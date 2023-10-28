@@ -22,6 +22,7 @@
             }
 
         .main-holder .main-block .container {
+            animation: 1s ease-out 0s 1 slideInFromLeft;
             width: 20%;
             height: 40%;
             display: flex;

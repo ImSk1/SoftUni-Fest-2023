@@ -1,4 +1,5 @@
-﻿using SoftwareFest.Services.Contracts;
+﻿using Newtonsoft.Json;
+using SoftwareFest.Services.Contracts;
 using SoftwareFest.ViewModels;
 using Stripe;
 using Stripe.Checkout;
@@ -15,11 +16,11 @@ namespace SoftwareFest.Services
             _httpContextAccessor = httpContextAccessor;
             _buinessService = buinessService;
         }
-        public async Task<string> CheckOut(DetailsProductViewModel product)
+        public async Task<string> CheckOut(ProductViewModel product)
         {
             //var baseUrl = _httpContextAccessor.HttpContext.Request.Host.ToString();
             var baseUrl = "https://localhost:7215";
-            var business = await _buinessService.GetBusinessById(product.BusinessId);
+            var business = await _buinessService.GetBusinessById((int)product.BusinessId);
             var sellerStripeId = business.StripeUserId;
 
             long amount = (long)(product.Price * 100);  // Price in cents
@@ -49,7 +50,7 @@ namespace SoftwareFest.Services
                                 Images = new List<string> { product.ImageUrl }
                             },
                         },
-                        Quantity = 1,
+                        Quantity = 1
                     },
                 },
                 Mode = "payment",
@@ -60,8 +61,15 @@ namespace SoftwareFest.Services
                     {
                         Destination = sellerStripeId
                     }
+                },
+                Metadata = new Dictionary<string, string>
+                {
+                    { "offer_id", product.Id.ToString() },
+                    { "business_id", business.Id.ToString() },
+                    { "quantity", product.Quantity?.ToString() ?? 1.ToString() }
                 }
             };
+            Console.WriteLine(JsonConvert.SerializeObject(options));
 
             var service = new SessionService();
             var session = await service.CreateAsync(options);
