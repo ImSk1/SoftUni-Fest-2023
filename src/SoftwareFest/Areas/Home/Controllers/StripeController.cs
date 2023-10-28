@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using SoftwareFest.Models;
-using SoftwareFest.Services.Contracts;
-using Stripe;
-using System.Security.Claims;
-
-namespace SoftwareFest.Areas.Home.Controllers
+﻿namespace SoftwareFest.Areas.Home.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using SoftwareFest.Models;
+    using SoftwareFest.Services.Contracts;
+    using Stripe;
+    using System.Security.Claims;
+
     [Authorize]
     [Route("[controller]")]
     public class StripeController : BaseHomeController

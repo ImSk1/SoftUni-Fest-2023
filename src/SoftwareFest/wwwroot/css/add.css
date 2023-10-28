@@ -6,7 +6,8 @@
 }
 
     .container form {
-        margin-top: 200px;
+        margin-top: 150px;
+        margin-bottom: 25px;
         display: flex;
         flex-direction: column;
         border-radius: 10px;
@@ -34,9 +35,13 @@
         background-color: white;
     }
 
-.button {
-    background-color: black;
-    color: white;
+.button{
+    background-color: white;
+    color: black;
     font-size: 18px;
     font-weight: 600;
+}
+.button:hover{
+    background-color: black;
+    color: white;
 }

@@ -54,11 +54,13 @@
                         <form class="form" method="post" asp-action="Checkout" asp-controller="Checkout" asp-area="Client" asp-route-productId="@Model.Id">
                             <button type="submit" class="btn-form"><i class="fa fa-cart-shopping"></i> Purchase</button>
                         </form>
-                        <button id="buyButton">Buy with Ethereum</button>
+                        <form class="form">
+                            <button class="btn-form" id="buyButton">Buy with Ethereum</button>
+                        </form>
                     }
                 }
             </div>
-            <a class="a-link" href="https://stripe.com/en-bg">Prowed by <img class="stripe-img" src="~/images/2560px-stripe_logo,_revised_2016.svg.png" /></a>
+            <a class="a-link" href="https://stripe.com/en-bg">Powered by <img class="stripe-img" src="~/images/2560px-stripe_logo,_revised_2016.svg.png" /><img class="stripe-img" src="~/images/metamask_logo-aca547fe6081482085662b03e2235f98.png"/></a>
         </section>
     </div>
 </div>
@@ -79,6 +81,8 @@
                         to: to,
                         value: amountInWeiHex
                     };
+                    var pId = @Model.Id;
+                    console.log(pId);
 
                     ethereum.request({
                         method: 'eth_sendTransaction',
@@ -87,11 +91,14 @@
                         // Notify the server about the transaction hash
                         fetch('/ethereum/handle', {
                             method: 'POST',
-                            body: JSON.stringify({ txHash: txHash }),
+                            body: JSON.stringify({ txHash: txHash, productId: @Model.Id}),
                             headers: {
                                 'Content-Type': 'application/json'
                             }
-                        });
+                        }).then(response => response.json())
+                            .then(data => {
+                                window.location.href = data.url;
+                            });
                     }).catch(function(error) {
                         console.error(error);
                     });

@@ -5,7 +5,7 @@
 
     public interface ITransactionService
     {
-        Task Create(int productId, string userId, string stripeTransactionId);
+        Task Create(int productId, string userId, string stripeTransactionId = "");
 
         Task<IPage<TransactionViewModel>> GetPagedTransactions(string userId, int pageIndex = 1, int pageSize = 50);
     }

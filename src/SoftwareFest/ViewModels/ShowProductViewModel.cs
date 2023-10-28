@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-
-namespace SoftwareFest.ViewModels
+﻿namespace SoftwareFest.ViewModels
 {
+    using AutoMapper;
     using SoftwareFest.Infrastructure.Mapping;
     using SoftwareFest.Models;
 

@@ -1,20 +1,15 @@
 ﻿namespace SoftwareFest.Services
 {
-    using MailKit.Search;
-    using System;
-
+    using AutoMapper;
     using Microsoft.EntityFrameworkCore;
-
     using SoftwareFest.Models;
+    using SoftwareFest.Models.Enums;
+    using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
-    using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
-
     using SofwareFest.Infrastructure;
-    using AutoMapper;
-    using SoftwareFest.Pagination;
-    using SoftwareFest.Models.Enums;
+    using System;
 
     public class TransactionService : ITransactionService
     {
@@ -29,7 +24,7 @@
             _logger = logger;
         }
 
-        public async Task Create(int productId, string userId, string stripeTransactionId)
+        public async Task Create(int productId, string userId, string stripeTransactionId = "")
         {
             var clientId = await _context.Clients
                 .Where(c => c.UserId == userId)
@@ -70,6 +65,8 @@
 
             var totalCount = await _context.Transactions
                 .Include(c => c.Client)
+                .Include(b => b.Product)
+                .ThenInclude(b => b.Business)
                 .Where(c => c.Client.UserId == userId)
                 .CountAsync();
 
@@ -77,6 +74,8 @@
 
             var transactions = await _context.Transactions
                 .Include(c => c.Client)
+                .Include(b => b.Product)
+                .ThenInclude(b => b.Business)
                 .Where(c => c.Client.UserId == userId)
                 .OrderByDescending(t => t.Date)
                 .ToListAsync();

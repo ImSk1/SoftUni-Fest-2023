@@ -1,15 +1,11 @@
 ﻿namespace SoftwareFest.Areas.Client.Controllers
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq.Expressions;
-    using System.Security.Claims;
-
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using SoftwareFest.Models;
-    using SoftwareFest.Models.Enums;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
+    using System.ComponentModel.DataAnnotations;
+    using System.Security.Claims;
 
     [Authorize]
     public class ProductController : BaseClientController
@@ -30,25 +26,22 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageSize = 50)
         {
-            var result = await _productService.GetPagedProducts(pageIndex, pageSize, x => x.Quantity > 0 || x.Quantity == null);
+            var result = await _productService.GetPagedProducts(string.Empty, pageIndex, pageSize);
 
             return View(result);
         }
 
         [HttpPost("offers")]
         public async Task<IActionResult> All(
-            string name, ProductType type, SortDirection direction,
+            string name, SortDirection direction,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageIndex = 1,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageSize = 50)
         {
-            Expression<Func<Product, bool>> predicate = p => p.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? p.Name.ToLower() : name.ToLower()) && p.Type == (type == ProductType.All ? p.Type : type);
-
-            var result = await _productService.GetPagedProducts(pageIndex, pageSize, predicate, p => p.Price, direction);
+            var result = await _productService.GetPagedProducts(name, pageIndex, pageSize, x => x.Price, direction);
 
             ViewBag.Name = name;
-            ViewBag.Type = type;
             ViewBag.Direction = direction;
 
             return View(result);

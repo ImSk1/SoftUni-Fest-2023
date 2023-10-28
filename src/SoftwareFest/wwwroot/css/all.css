@@ -142,7 +142,13 @@
 }
 
 .formichka {
+    border:2px solid black!important;
     display: flex !important;
     flex-direction: row !important;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+    margin-bottom: 20px!important;
+}
+.formichka .submit-input:hover{
+background-color: black;
+color: white;
 }

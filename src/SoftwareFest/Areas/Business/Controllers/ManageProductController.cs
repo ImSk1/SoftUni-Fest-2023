@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SoftwareFest.Areas.Client.Controllers;
-using SoftwareFest.Services.Contracts;
-using SoftwareFest.ViewModels;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-
-namespace SoftwareFest.Areas.Business.Controllers
+﻿namespace SoftwareFest.Areas.Business.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using SoftwareFest.Areas.Client.Controllers;
+    using SoftwareFest.Services.Contracts;
+    using SoftwareFest.ViewModels;
+    using System.ComponentModel.DataAnnotations;
+    using System.Security.Claims;
+
     public class ManageProductController : BaseBusinessController
     {
         private readonly IProductService _productService;

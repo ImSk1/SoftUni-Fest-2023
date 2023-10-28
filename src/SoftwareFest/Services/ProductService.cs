@@ -1,20 +1,15 @@
 ﻿namespace SoftwareFest.Services
 {
     using AutoMapper;
-
     using Microsoft.EntityFrameworkCore;
-
     using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
-
     using SofwareFest.Infrastructure;
-
     using System.Linq;
     using System.Linq.Expressions;
-
     using Product = SoftwareFest.Models.Product;
 
     public class ProductService : IProductService
@@ -75,9 +70,8 @@
             return product;
         }
 
-        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, bool>>? predicate = null, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
+        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(string name,  int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
         {
-            predicate ??= p => true;
             orderBy ??= x => x.Id;
 
             pageIndex -= 1;
@@ -87,7 +81,8 @@
             }
 
             var totalCount = await _context.Products
-                .Where(predicate)
+                .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
+                .Where(x => x.Quantity != 0)
                 .CountAsync();
 
             var result = new List<ShowProductViewModel>();
@@ -95,8 +90,11 @@
             if (sortDirection == SortDirection.Ascending)
             {
                 var products = await _context.Products
-                    .Where(predicate)
+                    .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
+                    .Where(x => x.Quantity != 0)
                     .OrderBy(orderBy)
+                    .Skip(pageIndex * pageSize)
+                    .Take(pageSize)
                     .ToListAsync();
 
                 result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
@@ -104,8 +102,11 @@
             else
             {
                 var products = await _context.Products
-                    .Where(predicate)
+                    .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
+                    .Where(x => x.Quantity != 0)
                     .OrderByDescending(orderBy)
+                    .Skip(pageIndex * pageSize)
+                    .Take(pageSize)
                     .ToListAsync();
 
                 result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
@@ -140,6 +141,7 @@
 
             product!.Description = model.Description;
             product.Price = (long)(model.Price * 100);
+            product.EthPrice = model.EthPrice;
             product.Name = model.Name;
             product.Quantity = model.Quantity;
 

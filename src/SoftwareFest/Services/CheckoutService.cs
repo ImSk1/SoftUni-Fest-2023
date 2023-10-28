@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using SoftwareFest.Services.Contracts;
-using SoftwareFest.ViewModels;
-using Stripe;
-using Stripe.Checkout;
-
-namespace SoftwareFest.Services
+﻿namespace SoftwareFest.Services
 {
+    using Newtonsoft.Json;
+    using SoftwareFest.Services.Contracts;
+    using SoftwareFest.ViewModels;
+    using Stripe;
+    using Stripe.Checkout;
+
     public class CheckoutService : ICheckoutService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

@@ -2,14 +2,14 @@
 {
     using System.Linq.Expressions;
 
+    using SoftwareFest.Models.Enums;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.ViewModels;
 
     public interface IProductService
     {
-        Task<IPage<ShowProductViewModel>> GetPagedProducts(int pageIndex = 1, int pageSize = 50,
-            Expression<Func<Models.Product, bool>>? predicate = null,
+        Task<IPage<ShowProductViewModel>> GetPagedProducts(string name, int pageIndex = 1, int pageSize = 50,
             Expression<Func<Models.Product, object>>? orderBy = null,
             SortDirection sortDirection = SortDirection.Ascending);
         Task<IPage<ShowProductViewModel>> GetPagedProductsByUserId(string userId, int pageIndex = 1, int pageSize = 50);
