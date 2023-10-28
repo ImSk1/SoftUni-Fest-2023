@@ -90,6 +90,7 @@
             if (sortDirection == SortDirection.Ascending)
             {
                 var products = await _context.Products
+                    .Include(x => x.Business)
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
                     .OrderBy(orderBy)
@@ -102,6 +103,7 @@
             else
             {
                 var products = await _context.Products
+                    .Include(x => x.Business)
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
                     .OrderByDescending(orderBy)
