@@ -6,51 +6,53 @@
     var prevDisabled = !Model.HasPreviousPage ? "disable" : "";
     var nextDisabled = !Model.HasNextPage ? "disable" : "";
 }
+<div class="storage">
+    <h1>Payments</h1>
+    <table>
+        <tr>
+            <th>
+                Product name
+            </th>
+            <th>
+                Business name
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Amount
+            </th>
+        </tr>
+        @foreach (var transactions in Model)
+        {
+            <tr>
+                <td>
+                    @transactions.ProductName
+                </td>
+                <td>
+                    @transactions.BusinessName
+                </td>
+                <td>
+                    @transactions.Date.ToString("dddd, dd MMMM yyyy HH:mm:ss")
+                </td>
+                <td>
+                    @if (transactions.AmountUSD != null)
+                    {
+                        <text>@transactions.AmountUSD USD$</text>
+                    }
+                    else
+                    {
+                        <text>@transactions.AmountETH ETH</text>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
 
-<table>
-    <tr>
-        <th>
-            Product name
-        </th>
-        <th>
-            Business name
-        </th>
-        <th>
-            Date
-        </th>
-        <th>
-            Amount
-        </th>
-    </tr>
-@foreach (var transactions in Model)
-{
-    <tr>
-        <td>
-            @transactions.ProductName
-        </td>
-        <td>
-            @transactions.BusinessName
-        </td>
-        <td>
-            @transactions.Date.ToString("dddd, dd MMMM yyyy HH:mm:ss")
-        </td>
-        <td>
-            @if (transactions.AmountUSD != null && transactions.AmountETH == null)
-            {
-                <text>@transactions.AmountUSD USD$</text>
-            }
-            else if (transactions.AmountUSD == null && transactions.AmountETH != null)
-            {
-                <text>@transactions.AmountETH ETH</text>
-            }
-        </td>
-    </tr>
-}
-</table>
-
-<div class="next-btn">
-    <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-    <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+    <div class="next-btn">
+        <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+        <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+    </div>
 </div>
 
 
