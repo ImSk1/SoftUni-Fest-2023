@@ -32,10 +32,9 @@
                 </div>
             </div>
         }
-    </div>
-
-    <div class="next-btn">
-        <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-        <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+        <div class="next-btn">
+            <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+            <a asp-area="" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+        </div>
     </div>
 </div>

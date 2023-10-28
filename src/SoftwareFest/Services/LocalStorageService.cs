@@ -1,24 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SoftwareFest.Services.Contracts;
-
-namespace SoftwareFest.Services
+﻿namespace SoftwareFest.Services
 {
+    using SoftwareFest.Services.Contracts;
+
     public class LocalStorageService : IFileService
     {
-        private readonly IWebHostEnvironment _env;
-
-        public LocalStorageService(IWebHostEnvironment env)
-        {
-            _env = env;
-        }
-
-        public string GetFilePath(string fileName)
-        {
-            string filePath = Path.Combine(Path.Combine(_env.WebRootPath, "localstorage"), fileName);
-
-            return filePath;
-        }
-
         public async Task<string> SaveFile(IFormFile fileData)
         {
             string path = string.Empty;

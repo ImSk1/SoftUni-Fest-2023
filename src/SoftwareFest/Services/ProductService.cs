@@ -54,16 +54,13 @@
 
         public async Task<bool> IsOwner(string userId, int productId)
         {
-            //TODO: Do it again
+            var userBusiness = await _context.Businesses
+                .FirstOrDefaultAsync(a => a.UserId == userId);
 
-            var temp = await _context.Users
-                .Include(u => u.Business)
-                .ThenInclude(b => b.Products)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+            var product = await _context.Products
+                .FirstOrDefaultAsync(a => a.BusinessId == userBusiness!.Id);
 
-            return temp.Business.Products
-                        .Select(p => p.Id)
-                        .Contains(productId);
+            return product != null;
         }
 
         public async Task Delete(int id)
@@ -71,7 +68,7 @@
             var product = await _context.Products
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            _fileService.DeleteFile(product.ImageUrl);
+            _fileService.DeleteFile(product!.ImageUrl);
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
@@ -131,13 +128,13 @@
             var product = await _context.Products
                 .FirstOrDefaultAsync(x => x.Id == model.Id);
 
-            product.Description = model.Description;
+            product!.Description = model.Description;
             product.Price = model.Price;
             product.Name = model.Name;
 
             if (model.Image != null)
             {
-                _fileService.DeleteFile(product.ImageUrl);
+                _fileService.DeleteFile(Path.Combine("wwwroot", product.ImageUrl.Remove(0, 1)));
                 var filepath = await _fileService.SaveFile(model.Image);
                 product.ImageUrl = filepath;
             }
@@ -157,7 +154,7 @@
 
             _logger.LogInformation($"Retrieved details for product with id {productId}");
 
-            return product;
+            return product!;
         }
     }
 }

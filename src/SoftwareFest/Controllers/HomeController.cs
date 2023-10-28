@@ -19,7 +19,7 @@
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                RedirectToAction("All", "Product");
+                return RedirectToAction("All", "Product");
             }
 
             return View();
