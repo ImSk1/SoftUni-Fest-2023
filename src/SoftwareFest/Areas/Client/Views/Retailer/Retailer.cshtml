@@ -21,7 +21,7 @@
                 <option selected="@(SortDirection.Ascending == direction ? "true": "false")" value="@SortDirection.Ascending">Lowest -> Highest</option>
                 <option selected="@(SortDirection.Descending == direction ? "true": "false")" value="@SortDirection.Descending">Highest -> Lowest</option>
             </select>
-            <input type="submit" value="Search" />
+            <input class="submit-input" type="submit" value="Search" />
         </form>
         @foreach (var product in Model)
         {
