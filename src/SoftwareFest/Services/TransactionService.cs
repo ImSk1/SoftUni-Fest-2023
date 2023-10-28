@@ -78,6 +78,8 @@
                 .ThenInclude(b => b.Business)
                 .Where(c => c.Client.UserId == userId)
                 .OrderByDescending(t => t.Date)
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize)
                 .ToListAsync();
 
             result = transactions.Select(x => _mapper.Map<TransactionViewModel>(x)).ToList();

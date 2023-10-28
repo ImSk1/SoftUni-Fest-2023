@@ -10,7 +10,7 @@
 }
 <div class="container-all">
     <div class="products">
-        <form class="formichka" method="post" asp-action="All" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-controller="Product" asp-area="Client">
+        <form class="formichka" method="get" asp-action="All" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-controller="Product" asp-area="Client">
             <input placeholder="Name" name="name" value="@name" type="text" />
             <select name="direction">
                 <option selected="@(SortDirection.Ascending == direction ? true: false)" value="@SortDirection.Ascending">USD$ Lowest -> Highest</option>
@@ -51,8 +51,8 @@
             </div>
         }
         <div class="next-btn">
-            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-name="@name" asp-route-direction="@direction" asp-route-pageIndex="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-name="@name" asp-route-direction="@direction" asp-route-pageIndex="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
         </div>
     </div>
 </div>
