@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Client\Views\Transaction\" />
     <Folder Include="Infrastructure\Migrations\" />
     <Folder Include="wwwroot\localstorage\" />
   </ItemGroup>

@@ -30,5 +30,7 @@
         public ProductType Type { get; set; }
 
         public string ImageUrl { get; set; } = null!;
+
+        public int? Quantity { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿namespace SoftwareFest.Areas.Client.Controllers
 {
+    using System.Security.Claims;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftwareFest.Services.Contracts;
@@ -12,12 +14,14 @@
         private readonly IConfiguration _config;
         private readonly ICheckoutService _checkoutService;
         private readonly IProductService _productService;
+        private readonly ITransactionService _transactionService;
 
-        public CheckoutController(IConfiguration configuration, ICheckoutService checkoutService, IProductService productService)
+        public CheckoutController(IConfiguration configuration, ICheckoutService checkoutService, IProductService productService, ITransactionService transactionService)
         {
             _config = configuration;
             _checkoutService = checkoutService;
             _productService = productService;
+            _transactionService = transactionService;
         }
 
         [Route("checkout/{productId}")]
@@ -37,7 +41,7 @@
         }
 
         [HttpGet("checkout/success")]
-        public IActionResult CheckoutSuccess([FromQuery] string sessionId)
+        public async Task<IActionResult> CheckoutSuccess([FromQuery] string sessionId)
         {
             var sessionService = new SessionService();
             var session = sessionService.Get(sessionId, new SessionGetOptions
@@ -51,8 +55,11 @@
 
             var total = session.AmountTotal.Value;
             var customerEmail = session.CustomerDetails.Email;
-            var productId = session.Metadata["offer_id"];
+            var productId = int.Parse(session.Metadata["offer_id"]);
             var additionalInfo = session.Metadata["business_id"];
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            await _transactionService.Create(productId, userId, sessionId);
 
             return Ok($"{total} {customerEmail}");
         }
