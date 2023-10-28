@@ -81,7 +81,6 @@
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
 
-
             var totalCount = await _context.Products
                 .Where(predicate)
                 .CountAsync();
@@ -95,7 +94,7 @@
                     .OrderBy(orderBy)
                     .ToListAsync();
 
-                 result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
+                result = products.Select(x => _mapper.Map<ShowProductViewModel>(x)).ToList();
             }
             else
             {

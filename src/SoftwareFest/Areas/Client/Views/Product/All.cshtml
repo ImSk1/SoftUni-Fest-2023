@@ -1,10 +1,28 @@
-﻿@model SoftwareFest.Pagination.Page<SoftwareFest.ViewModels.ShowProductViewModel>
+﻿@using SoftwareFest.Models.Enums;
+@using SoftwareFest.Pagination.Enums;
+@model SoftwareFest.Pagination.Page<SoftwareFest.ViewModels.ShowProductViewModel>
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disable" : "";
     var nextDisabled = !Model.HasNextPage ? "disable" : "";
+    var name = ViewBag.Name;
+    var type = ViewBag.Type;
+    var direction = ViewBag.Direction;
 }
 <div class="container-all">
     <div class="products">
+        <form class="formichka" method="post" asp-action="All" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-controller="Product" asp-area="Client">
+            <input name="name" value="@name" type="text" />
+            <select name="type"> 
+                <option selected="@(ProductType.All == type ? "true": "false")" value="@ProductType.All">All</option>
+                <option selected="@(ProductType.Physical == type ? "true": "false")" value="@ProductType.Physical">Physical</option>
+                <option selected="@(ProductType.Service == type ? "true": "false")" value="@ProductType.Service">Service</option>
+            </select>
+            <select name="direction">
+                <option selected="@(SortDirection.Ascending == direction ? "true": "false")" value="@SortDirection.Ascending">Lowest -> Highest</option>
+                <option selected="@(SortDirection.Descending == direction ? "true": "false")" value="@SortDirection.Descending">Highest -> Lowest</option>
+            </select>
+            <input type="submit" value="Search" />
+        </form>
         @foreach (var product in Model)
         {
             <div class="product">
@@ -35,8 +53,8 @@
             </div>
         }
         <div class="next-btn">
-            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+            <a asp-area="Client" asp-action="All" asp-controller="Product" asp-route-name="@name" asp-route-direction="@direction" asp-route-type="@type" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
         </div>
     </div>
 </div>
