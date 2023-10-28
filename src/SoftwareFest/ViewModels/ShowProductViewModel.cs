@@ -15,6 +15,8 @@ namespace SoftwareFest.ViewModels
 
         public double Price { get; set; }
 
+        public double EthPrice { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Product, ShowProductViewModel>()

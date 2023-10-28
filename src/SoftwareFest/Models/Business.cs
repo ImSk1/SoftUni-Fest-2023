@@ -26,6 +26,9 @@
         
         public string? StripeUserId { get; set; } = null!;
 
+        [Required]
+        public string EthereumWalletAddress { get; set; } = default!;
+
         [InverseProperty(nameof(Product.Business))]
         public List<Product> Products { get; set; } = null!;
     }

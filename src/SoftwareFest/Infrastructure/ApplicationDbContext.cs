@@ -37,6 +37,9 @@
                 .HasOne(t => t.Client)
                 .WithMany(c => c.Transactions)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Product>()
+                .Property(x => x.EthPrice).HasPrecision(18, 10);
         }
     }
 }

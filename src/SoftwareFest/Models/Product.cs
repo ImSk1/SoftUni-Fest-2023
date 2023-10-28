@@ -21,6 +21,10 @@
         public long Price { get; set; }
 
         [Required]
+        [Range(0, 0.0005)]
+        public decimal EthPrice { get; set; }
+
+        [Required]
         [ForeignKey(nameof(Business))]
         public int BusinessId { get; set; }
 

@@ -26,6 +26,10 @@ namespace SoftwareFest.ViewModels
         public double Price { get; set; }
 
         [Required]
+        [Range(0, 0.0005)]
+        public decimal EthPrice { get; set; }
+
+        [Required]
         public ProductType Type { get; set; } = default!;
 
         public string ImageUrl { get; set; } = default!;
