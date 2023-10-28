@@ -70,6 +70,8 @@
 
             var totalCount = await _context.Transactions
                 .Include(c => c.Client)
+                .Include(b => b.Product)
+                .ThenInclude(b => b.Business)
                 .Where(c => c.Client.UserId == userId)
                 .CountAsync();
 
@@ -77,6 +79,8 @@
 
             var transactions = await _context.Transactions
                 .Include(c => c.Client)
+                .Include(b => b.Product)
+                .ThenInclude(b => b.Business)
                 .Where(c => c.Client.UserId == userId)
                 .OrderByDescending(t => t.Date)
                 .ToListAsync();

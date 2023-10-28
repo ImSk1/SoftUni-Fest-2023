@@ -147,6 +147,7 @@
 
             product!.Description = model.Description;
             product.Price = (long)(model.Price * 100);
+            product.EthPrice = model.EthPrice;
             product.Name = model.Name;
             product.Quantity = model.Quantity;
 
