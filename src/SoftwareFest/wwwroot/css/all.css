@@ -16,7 +16,7 @@
     }
 
         .container-all .products .product {
-            height: 514px;
+            height: 540px;
             width: 400px;
             margin: 10px;
             border-radius: 15px;
@@ -28,14 +28,24 @@
             align-items: top;
         }
 
-        .container-all .products .btn-input {
+        .container-all .products form .btn-input {
             background-color: white;
             margin: 15px 0;
             font-size: 20px;
             font-weight: 600;
         }
+        .container-all .products form {
+            margin: 0;
+            border: none;
+            box-shadow: none;
+            background-color: white;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-            .container-all .products .btn-input:hover {
+            .container-all .products form .btn-input:hover {
                 background-color: black;
                 color: white
             }

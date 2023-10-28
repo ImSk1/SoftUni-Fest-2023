@@ -18,7 +18,7 @@
                             <span id="productName">@product.Name</span>
                         </div>
                         <div class="product-retailer">
-                            Retailer: 
+                            Retailer:
                             <img src="~/images/9834857.jpg" />
                             <span id="productPrice">Kur</span>
                         </div>
@@ -28,7 +28,10 @@
                     </div>
                 </div>
                 <div class="btn-button">
-                    <input class="btn-input" type="submit" value="Details" />
+                    <form asp-action="Details" asp-controller="Product" asp-area="Client" asp-route-id="@product.Id" method="get">
+                        <input class="btn-input" type="submit" value="Details" />
+                    </form>
+
                 </div>
             </div>
         }

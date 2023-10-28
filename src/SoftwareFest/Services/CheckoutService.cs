@@ -1,4 +1,5 @@
-﻿using SoftwareFest.Services.Contracts;
+﻿using Newtonsoft.Json;
+using SoftwareFest.Services.Contracts;
 using SoftwareFest.ViewModels;
 using Stripe;
 using Stripe.Checkout;
@@ -62,6 +63,7 @@ namespace SoftwareFest.Services
                     }
                 }
             };
+            Console.WriteLine(JsonConvert.SerializeObject(options));
 
             var service = new SessionService();
             var session = await service.CreateAsync(options);

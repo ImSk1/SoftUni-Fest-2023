@@ -28,20 +28,20 @@
                 @{
                     if (Model.IsMine)
                     {
-                        <form class="form" method="post" asp-action="Update" asp-controller="Product" asp-route-id="@Model.Id">
+                        <form class="form" method="post" asp-action="Update" asp-controller="ManageProduct" asp-area="Business" asp-route-id="@Model.Id">
                             <button type="submit" class="btn-form"><i class="fa fa-pen-to-square"></i> Update</button>
                         </form>
-                        <form class="form" method="post" asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id">
+                        <form class="form" method="post" asp-action="Delete" asp-controller="ManageProduct" asp-area="Business" asp-route-id="@Model.Id">
                             <button type="submit" class="btn-form"><i class="fa fa-trash"></i> Delete</button>
                         </form>
                     }
                     else
                     {
-                        <form class="form" method="post" asp-action="Update" asp-controller="Product" asp-route-id="@Model.Id">
-                            <button type="submit" class="btn-form">Pay with <img class="img-style" src="~/images/amex-mastercard-visa-logo.png" /></button>
+                        <form class="form" method="post" asp-action="Checkout" asp-controller="Checkout" asp-area="Client" asp-route-productId="@Model.Id">
+                            <button type="submit" class="btn-form"><i class="fa fa-cart-shopping"></i> Purchase</button>
                         </form>
-                        <form class="form" method="post" asp-action="Update" asp-controller="Product" asp-route-id="@Model.Id">
-                            <button type="submit" class="btn-form">Pay with <img class="img-style" src="~/images/amex-mastercard-visa-logo.png" /></button>
+                        <form class="form" method="post" asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn-form"><i class="fa fa-cart-shopping"></i> Purchase</button>
                         </form>
                     }
                 }
