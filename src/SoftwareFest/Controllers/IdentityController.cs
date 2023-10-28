@@ -4,6 +4,7 @@ using SoftwareFest.Services.Contracts;
 namespace SoftwareFest.Controllers
 {
     using AutoMapper;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.WebUtilities;
@@ -13,6 +14,7 @@ namespace SoftwareFest.Controllers
     using Stripe;
     using System.Text;
 
+    [AllowAnonymous]
     public class IdentityController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

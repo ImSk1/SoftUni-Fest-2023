@@ -1,11 +1,13 @@
 ﻿namespace SoftwareFest.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
     using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
 
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;

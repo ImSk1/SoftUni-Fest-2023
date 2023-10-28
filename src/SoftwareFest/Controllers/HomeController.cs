@@ -1,9 +1,11 @@
 ﻿namespace SoftwareFest.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftwareFest.ViewModels;
     using System.Diagnostics;
-    
+
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,6 +17,11 @@
 
         public IActionResult Index()
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                RedirectToAction("All", "Product");
+            }
+
             return View();
         }
 

@@ -1,10 +1,12 @@
 ﻿namespace SoftwareFest.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
     using Stripe.Checkout;
 
+    [Authorize]
     public class CheckoutController : Controller
     {
         private readonly IConfiguration _config;

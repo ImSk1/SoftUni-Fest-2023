@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SoftwareFest.Models;
 using SoftwareFest.Services.Contracts;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 
 namespace SoftwareFest.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class StripeController : Controller
     {
