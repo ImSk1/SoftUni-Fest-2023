@@ -24,14 +24,12 @@
                 if (User.IsInRole("Business"))
                 {
                     <ul class="nav">
-                        <li><a href="@Url.Action("Offers", "Home")">Dashboard</a></li>
                         <li><a asp-action="Add" asp-controller="ManageProduct" asp-area="Business">Create Listing</a></li>
                     </ul>
                 }
                 else if (User.IsInRole("Client"))
                 {
                     <ul class="nav">
-                        <li><a href="@Url.Action("Popular", "Home")">Trending Services</a></li>
                         <li><a asp-action="All" asp-controller="Product" asp-area="Client">Offers</a></li>
                         <li><a asp-action="Retailers" asp-controller="Retailer" asp-area="Client">Retailers</a></li>
                     </ul>
@@ -43,12 +41,10 @@
                     <div class="dropdown-content">
                         @if (User.IsInRole("Business"))
                         {
-                            <a asp-action="Manage" asp-controller="Account" asp-area="Business">Manage</a>
                             <a asp-action="MyListings" asp-controller="ManageProduct" asp-area="Business">My Listings</a>
                         }
                         else if (User.IsInRole("Client"))
                         {
-                            <a asp-action="Manage" asp-controller="Account" asp-area="Client">Manage</a>
                             <a asp-action="Purchases" asp-controller="Transactions" asp-area="Client">Purchases</a>
                         }
                         <form method="post" asp-action="Logout" asp-area="Home" asp-controller="Identity">
