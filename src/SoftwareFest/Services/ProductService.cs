@@ -120,7 +120,7 @@
             }
 
             _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
-            return new Page<ShowProductViewModel>(result, pageIndex, pageSize, totalCount);
+            return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
         }
 
         public async Task Update(ProductViewModel model)
