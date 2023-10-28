@@ -9,7 +9,7 @@
 <div class="container-all">
     <div class="products">
         <div style="width:1000px; display: flex; justify-content:center; align-content:center;align-items:center;">
-            <form style="width:824px; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border:2px solid black;" class="formichka2" method="post" asp-action="Retailer" asp-route-name="@name" asp-controller="Retailer" asp-area="Client">
+            <form style="width:824px; box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; border:2px solid black;" class="formichka2" method="get" asp-action="Retailer" asp-route-name="@name" asp-controller="Retailer" asp-area="Client">
                 <input placeholder="Name" name="name" value="@name" type="text" />
                 <input class="searchh" type="submit" value="Search" />
             </form>
@@ -44,8 +44,8 @@
             </div>
         }
         <div class="next-btn">
-            <a asp-area="Client" asp-action="Retailer" asp-controller="Retailer" asp-route-name="@name" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-            <a asp-area="Client" asp-action="Retailer" asp-controller="Retailer" asp-route-name="@name" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+            <a asp-area="Client" asp-action="Retailer" asp-controller="Retailer" asp-route-name="@name" asp-route-pageIndex="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+            <a asp-area="Client" asp-action="Retailer" asp-controller="Retailer" asp-route-name="@name" asp-route-pageIndex="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
         </div>
     </div>
 </div>

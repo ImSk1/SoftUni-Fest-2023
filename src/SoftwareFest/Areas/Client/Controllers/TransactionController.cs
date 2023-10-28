@@ -21,7 +21,7 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageIndex = 1,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 2)
+            int pageSize = 5)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 

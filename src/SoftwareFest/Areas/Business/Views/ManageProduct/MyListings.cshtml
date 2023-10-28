@@ -31,8 +31,8 @@
             </div>
         }
         <div class="next-btn">
-            <a asp-area="Business" asp-action="MyListings" asp-controller="ManageProduct" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
-            <a asp-area="Business" asp-action="MyListings" asp-controller="ManageProduct" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
+            <a asp-area="Business" asp-action="MyListings" asp-controller="ManageProduct" asp-route-pageIndex="@(Model.CurrentPage - 1)" class="genric-btn @prevDisabled">Previous</a>
+            <a asp-area="Business" asp-action="MyListings" asp-controller="ManageProduct" asp-route-pageIndex="@(Model.CurrentPage + 1)" class="genric-btn @nextDisabled">Next</a>
         </div>
     </div>
 </div>
