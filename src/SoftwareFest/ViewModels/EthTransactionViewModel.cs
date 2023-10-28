@@ -2,7 +2,7 @@
 
 namespace SoftwareFest.ViewModels
 {
-    public class TransactionViewModel
+    public class EthTransactionViewModel
     {
         public string TxHash { get; set; }
     }

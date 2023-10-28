@@ -14,7 +14,7 @@ namespace SoftwareFest.Areas.Client.Controllers
             httpClient = new HttpClient();
         }
         [HttpPost("handle")]
-        public async Task<IActionResult> HandleTransaction([FromBody] TransactionViewModel data)
+        public async Task<IActionResult> HandleTransaction([FromBody] EthTransactionViewModel data)
         {
             string txHash = data.TxHash;
             string etherscanApiKey = "NG1XRHGEXWADZBY2TJJGP2KFU7P3CEAZY1"; // Replace with your Etherscan API key
