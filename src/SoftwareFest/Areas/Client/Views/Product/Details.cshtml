@@ -1,35 +1,52 @@
 ﻿@using SoftwareFest.ViewModels;
 @model ProductViewModel
 
-<div>
-    <h3>
-        @Model.Name
-    </h3>
-    <p>
-        Price: @((decimal)Model.Price / 100)
-    </p>
-    <p>
-        Type: @Model.Type.ToString()
-    </p>
-    <p>
-        Retailer: @Model.BusinessName
-    </p>
-    <p>
-        <img src="@Model.ImageUrl"/>
-    </p>
-    <p>
-        Description: @Model.Description
-    </p>
+<div class="product-container">
+    <div class="product-container-inside">
+        <section class="left-side">
+            <img src="@Model.ImageUrl" />
+        </section>
+        <section class="right-side">
+            <div class="title">
+                @Model.Name
+            </div>
+            <div class="type">
+                Type: @Model.Type.ToString()
+            </div>
+            <div class="description">
+                @Model.Description
+            </div>
+            <div class="retailer">
+                Retailer: @Model.BusinessName
+            </div>
+            <div class="price-container">
+                <div class="price">
+                    @($"{Model.Price:f2} $")
+                </div>
+            </div>
+            <div class="buttons">
+                @{
+                    if (Model.IsMine)
+                    {
+                        <form class="form" method="post" asp-action="Update" asp-controller="Product" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn-form"><i class="fa fa-pen-to-square"></i> Update</button>
+                        </form>
+                        <form class="form" method="post" asp-action="Delete" asp-controller="Product" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn-form"><i class="fa fa-trash"></i> Delete</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form class="form" method="post" asp-action="Update" asp-controller="Product" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn-form">Pay with <img class="img-style" src="~/images/amex-mastercard-visa-logo.png" /></button>
+                        </form>
+                        <form class="form" method="post" asp-action="Update" asp-controller="Product" asp-route-id="@Model.Id">
+                            <button type="submit" class="btn-form">Pay with <img class="img-style" src="~/images/amex-mastercard-visa-logo.png" /></button>
+                        </form>
+                    }
+                }
+            </div>
+            <a class="a-link" href="https://stripe.com/en-bg">Prowed by <img class="stripe-img" src="~/images/2560px-stripe_logo,_revised_2016.svg.png" /></a>
+        </section>
+    </div>
 </div>
-
-@{
-    if (Model.IsMine)
-    {
-        <form method="post">
-            <input type="submit" asp-action="Delete" asp-controller="Product" value="Delete" asp-route-id="@Model.Id"/>
-        </form>
-        <form method="post">
-            <input type="submit" asp-action="Update" asp-controller="Product" value="Update" asp-route-id="@Model.Id"/>
-        </form>
-    }
-}
