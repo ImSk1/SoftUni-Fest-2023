@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SofwareFest</title>
+    <title>PaySol</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SofwareFest.styles.css" asp-append-version="true" />
@@ -13,6 +13,7 @@
     <link href="~/css/all.css" rel="stylesheet" />
     <link href="~/css/retailers.css" rel="stylesheet" />
     <link href="~/css/details.css" rel="stylesheet" />
+    <link href="~/css/table.css" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -24,14 +25,13 @@
                 if (User.IsInRole("Business"))
                 {
                     <ul class="nav">
-                        <li><a href="@Url.Action("Offers", "Home")">Dashboard</a></li>
+                        <li><a asp-action="Dashboard" asp-controller="Dashboard" asp-area="Business">Dashboard</a></li>
                         <li><a asp-action="Add" asp-controller="ManageProduct" asp-area="Business">Create Listing</a></li>
                     </ul>
                 }
                 else if (User.IsInRole("Client"))
                 {
                     <ul class="nav">
-                        <li><a href="@Url.Action("Popular", "Home")">Trending Services</a></li>
                         <li><a asp-action="All" asp-controller="Product" asp-area="Client">Offers</a></li>
                         <li><a asp-action="Retailers" asp-controller="Retailer" asp-area="Client">Retailers</a></li>
                     </ul>
@@ -43,13 +43,11 @@
                     <div class="dropdown-content">
                         @if (User.IsInRole("Business"))
                         {
-                            <a asp-action="Manage" asp-controller="Account" asp-area="Business">Manage</a>
                             <a asp-action="MyListings" asp-controller="ManageProduct" asp-area="Business">My Listings</a>
                         }
                         else if (User.IsInRole("Client"))
                         {
-                            <a asp-action="Manage" asp-controller="Account" asp-area="Client">Manage</a>
-                            <a asp-action="Purchases" asp-controller="Transactions" asp-area="Client">Purchases</a>
+                            <a asp-action="Transactions" asp-controller="Transaction" asp-area="Client">Purchases</a>
                         }
                         <form method="post" asp-action="Logout" asp-area="Home" asp-controller="Identity">
                             <button type="submit">Logout</button>
@@ -63,12 +61,13 @@
         @RenderBody()
         <script src="https://kit.fontawesome.com/1f167bd3a1.js" crossorigin="anonymous"></script>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@3.6.1/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.0/dist/web3.min.js"></script>
-
+    <script src="~/js/charts.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

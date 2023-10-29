@@ -10,13 +10,22 @@
 
         public string ProductName { get; set; } = null!;
 
+        public bool HasStripePayment { get; set; }
+
         public DateTime Date { get; set; }
+
+        public decimal? AmountUSD { get; set; }
+
+        public decimal? AmountETH { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Transaction, TransactionViewModel>()
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
-                .ForMember(dest => dest.BusinessName, opt => opt.MapFrom(src => src.Product.Business.BusinessName));
+                .ForMember(dest => dest.HasStripePayment, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.StripeTransactionId)))
+                .ForMember(dest => dest.BusinessName, opt => opt.MapFrom(src => src.Product.Business.BusinessName))
+                .ForMember(dest => dest.AmountUSD, opt => opt.MapFrom(src => (decimal)((decimal)src.Product.Price / 100)))
+                .ForMember(dest => dest.AmountETH, opt => opt.MapFrom(src => src.Product.EthPrice));
         }
     }
 }

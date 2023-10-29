@@ -21,22 +21,7 @@
             _mapper = mapper;
         }
 
-        public async Task<Page<RetailerViewModel>> GetPagedProducts(int pageIndex, int pageSize)
-        {
-            pageIndex -= 1;
-
-            if (pageIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(pageIndex));
-            }
-
-            var totalCount = await _context.Businesses.CountAsync();
-            var result = _context.Businesses.Include(a => a.Products).Select(_mapper.Map<RetailerViewModel>);
-
-            return new Page<RetailerViewModel>(result, pageIndex + 1, pageSize, totalCount);
-        }
-
-        public async Task<Page<RetailerViewModel>> GetPagedProducts(int pageIndex, int pageSize, string name)
+        public async Task<Page<RetailerViewModel>> GetPagedProducts(int pageIndex, int pageSize, string name = "")
         {
             pageIndex -= 1;
             if (pageIndex < 0)
@@ -44,13 +29,17 @@
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
 
-            var totalCount = await _context.Businesses.CountAsync();
-            var result = _context.Businesses.Include(a => a.Products).Select(_mapper.Map<RetailerViewModel>);
+            var totalCount = await _context.Businesses
+                .Where(a => a.BusinessName.ToLower().Contains(string.IsNullOrEmpty(name) ? a.BusinessName.ToLower() : name.ToLower()))
+                .CountAsync();
 
-            if (!string.IsNullOrEmpty(name))
-            {
-                result = result.Where(a => a.BusinessName.ToLower().Contains(name.ToLower()));
-            }
+            var result = _context.Businesses
+                .OrderBy(a => a.BusinessName)
+                .Include(a => a.Products)
+                .Select(_mapper.Map<RetailerViewModel>)
+                .Where(a => a.BusinessName.ToLower().Contains(string.IsNullOrEmpty(name) ? a.BusinessName.ToLower() : name.ToLower()))
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize);
 
             return new Page<RetailerViewModel>(result, pageIndex + 1, pageSize, totalCount);
         }
@@ -64,14 +53,23 @@
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
 
-            var business = await _context.Businesses.Include(a => a.Products).FirstOrDefaultAsync(a => a.Id == retailerId);
-            var totalCount = business.Products.Count();
-            var result = business.Products.Select(_mapper.Map<ShowProductViewModel>);
+            var business = await _context.Businesses
+                .Include(a => a.Products)
+                .FirstOrDefaultAsync(a => a.Id == retailerId);
 
-            if (!string.IsNullOrEmpty(name))
-            {
-                result = result.Where(a => a.Name.ToLower().Contains(name.ToLower()));
-            }
+            var totalCount = business.Products
+                .Where(a => a.Quantity != 0)
+                .Where(a => a.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? a.Name.ToLower() : name.ToLower()))
+                .Count();
+
+            var result = business.Products
+                .OrderBy(a => a.Price)
+                .Where(a => a.Quantity != 0)
+                .Where(a => a.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? a.Name.ToLower() : name.ToLower()))
+                .Select(_mapper.Map<ShowProductViewModel>)
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize)
+                .ToList();
 
             return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
         }

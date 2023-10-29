@@ -6,6 +6,7 @@ using SoftwareFest.Services;
 using SoftwareFest.Services.Contracts;
 using Stripe;
 using System.Diagnostics.CodeAnalysis;
+using SoftwareFest.Middlewares;
 using ProductService = SoftwareFest.Services.ProductService;
 using ServiceCollectionExtensions = SoftwareFest.Infrastructure.Extensions.ServiceCollectionExtensions;
 
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<IRetailerService, RetailerService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddTransient<IMailSender, MailSender>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddHttpContextAccessor();
@@ -70,7 +72,7 @@ try
 
     using var scope = app.Services.CreateScope();
 
-    //await DatabaseMiddleware.MigrateDatabase(scope, app.Configuration, app.Logger);
+    await DatabaseMiddleware.MigrateDatabase(scope, app.Configuration, app.Logger);
 
     app.Logger.LogInformation("Starting web host ({ApplicationName})...", appName);
     app.Run();

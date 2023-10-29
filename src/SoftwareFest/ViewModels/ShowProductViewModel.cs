@@ -10,6 +10,8 @@
 
         public string Name { get; set; } = null!;
 
+        public string BusinessName { get; set; } = null!;
+
         public string ImageUrl { get; set; } = null!;
 
         public double Price { get; set; }
@@ -19,7 +21,8 @@
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Product, ShowProductViewModel>()
-                .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => (double)((double)src.Price / 100)));
+                .ForMember(dest => dest.Price, cfg => cfg.MapFrom(src => (double)((double)src.Price / 100)))
+                .ForMember(dest => dest.BusinessName, cfg => cfg.MapFrom(src => src.Business.BusinessName));
         }
     }
 }

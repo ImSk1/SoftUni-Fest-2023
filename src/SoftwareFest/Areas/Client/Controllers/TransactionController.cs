@@ -7,7 +7,7 @@
     using System.Security.Claims;
 
     [Route("[controller]")]
-    public class TransactionController : Controller
+    public class TransactionController : BaseClientController
     {
         private readonly ITransactionService _transactionService;
 
@@ -21,13 +21,13 @@
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
             int pageIndex = 1,
             [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
-            int pageSize = 50)
+            int pageSize = 5)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             var model = await _transactionService.GetPagedTransactions(userId, pageIndex, pageSize);
 
-            return Ok(JsonConvert.SerializeObject(model));
+            return View(model);
         }
     }
 }

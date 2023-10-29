@@ -1,0 +1,78 @@
+﻿@using SoftwareFest.ViewModels;
+@model List<DashboardViewModel>
+<div class="container-main">
+    <div style="height: auto;" class="storage">
+        <h1>Receved Payments</h1>
+        <table>
+            <tr>
+                <th>
+                    Product name
+                </th>
+                <th>
+                    Client name
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Amount
+                </th>
+            </tr>
+            @foreach (var transactions in Model)
+            {
+                <tr>
+                    <td>
+                        @transactions.ProductName
+                    </td>
+                    <td>
+                        @transactions.ClientName
+                    </td>
+                    <td>
+                        @transactions.Payment.Date.ToString("dddd, dd MMMM yyyy HH:mm:ss")
+                    </td>
+                    <td>
+                        @if (transactions.Payment.IsUsdPayment)
+                        {
+                            <text>@transactions.Payment.PriceUSD USD$</text>
+                        }
+                        else
+                        {
+                            <text>@transactions.Payment.PriceETH ETH</text>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div class="flexbox">
+        <section class="chart-cards">
+            <section class="price-cards">
+                <h1>USD Balance</h1>
+                <div id="price-card" class="price-card card">
+                </div>
+                <h1>ETH Balance</h1>
+                <div id="change-card" class="change-card card">
+                </div>
+            </section>
+        </section>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var usd = @Html.Raw(Json.Serialize(Model.Select(a => new {
+            time = a.WalletAmount.Date.ToString("yyyy-MM-dd"),
+            value = a.WalletAmount.AmountUSD
+            })));
+
+        var eth = @Html.Raw(Json.Serialize(Model.Select(a => new {
+            time = a.WalletAmount.Date.ToString("yyyy-MM-dd"),
+            value = a.WalletAmount.AmountETH
+            })));
+        console.log(usd);
+        createChat(usd, 'price-card', 'Light', '400', '800');
+        createChat(eth, 'change-card', 'Light', '400', '800');
+    });
+
+</script>

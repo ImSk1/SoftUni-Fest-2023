@@ -1,15 +1,21 @@
 ﻿namespace SoftwareFest.Services
 {
     using AutoMapper;
+
     using Microsoft.EntityFrameworkCore;
+
+    using SoftwareFest.Models.Enums;
     using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
+
     using SofwareFest.Infrastructure;
+
     using System.Linq;
     using System.Linq.Expressions;
+
     using Product = SoftwareFest.Models.Product;
 
     public class ProductService : IProductService
@@ -35,6 +41,11 @@
                 .FirstOrDefaultAsync();
 
             product.BusinessId = businessId;
+
+            if (product.Type == ProductType.Service)
+            {
+                product.Quantity = null;
+            }
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -70,7 +81,7 @@
             return product;
         }
 
-        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(string name,  int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
+        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(string name, int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
         {
             orderBy ??= x => x.Id;
 
@@ -90,6 +101,7 @@
             if (sortDirection == SortDirection.Ascending)
             {
                 var products = await _context.Products
+                    .Include(x => x.Business)
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
                     .OrderBy(orderBy)
@@ -102,6 +114,7 @@
             else
             {
                 var products = await _context.Products
+                    .Include(x => x.Business)
                     .Where(x => x.Name.ToLower().Contains(string.IsNullOrEmpty(name) ? x.Name : name))
                     .Where(x => x.Quantity != 0)
                     .OrderByDescending(orderBy)
@@ -124,11 +137,17 @@
                 throw new ArgumentOutOfRangeException(nameof(pageIndex));
             }
 
-            var business = await _context.Businesses.Include(a => a.Products).FirstOrDefaultAsync(a => a.UserId == userId);
+            var business = await _context.Businesses
+                .Include(a => a.Products)
+                .FirstOrDefaultAsync(a => a.UserId == userId);
 
             var totalCount = business.Products.Count();
 
-            var result = business.Products.Select(_mapper.Map<ShowProductViewModel>);
+            var result = business.Products
+                .OrderBy(p => p.Price)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize)
+                .Select(_mapper.Map<ShowProductViewModel>);
 
             _logger.LogDebug($"SQLServer -> Got page number: {pageIndex}");
             return new Page<ShowProductViewModel>(result, pageIndex + 1, pageSize, totalCount);
@@ -143,7 +162,11 @@
             product.Price = (long)(model.Price * 100);
             product.EthPrice = model.EthPrice;
             product.Name = model.Name;
-            product.Quantity = model.Quantity;
+            if (product.Type == ProductType.Service)
+            {
+                product.Quantity = null;
+            }
+
 
             _logger.LogInformation($"Updated product with id {model.Id}");
 
