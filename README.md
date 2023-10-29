@@ -1,7 +1,7 @@
 <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/09885b23-2597-4dfe-9c4f-554eea5bcc58" alt="Screenshot 1 Title" width="300" />
 
 # PaySol
-This is a project made in 48 hours that earned us 2nd place out of 20 teams in [SoftUni Software Fest 2023](https://fest.softuni.bg/softuni-fest-2023-software/)
+This is a project made in 48 hours that earned us 2nd place out of ~200 competitors in [SoftUni Software Fest 2023](https://fest.softuni.bg/softuni-fest-2023-software/)
 
 ##  💬 Description
 
