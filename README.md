@@ -28,7 +28,7 @@ The Payment Service Application is a platform designed to facilitate online tran
 
 ## Running the Project
 
-!Set The Environment in - Properties/launchsettings.json from `"ASPNETCORE_ENVIRONMENT": "Development"` to `"ASPNETCORE_ENVIRONMENT": "Production"`!
+!Set The Environment in - Properties/launchsettings.json under the `https`<br> from `"ASPNETCORE_ENVIRONMENT": "Development"` to `"ASPNETCORE_ENVIRONMENT": "Production"`!
 
 You will need to download the [MetaMask](https://metamask.io/download/) extention for your browser.
 You will need a MetaMask wallet.
