@@ -9,7 +9,7 @@
         <input placeholder="Price" asp-for="@Model.Price" />
         <input type="number" placeholder="EthPrice" asp-for="@Model.EthPrice" />
         <textarea placeholder="Description" asp-for="@Model.Description" rows="2"></textarea>
-        <div class="select-clas">
+        <div class="select-clas" style="pointer-events: none; cursor: not-allowed;">
             <select placeholder="Offer type" asp-for="@Model.Type">
                 <option value="@ProductType.Physical">Physical</option>
                 <option value="@ProductType.Service">Service</option>

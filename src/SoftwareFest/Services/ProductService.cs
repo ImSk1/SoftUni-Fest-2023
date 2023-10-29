@@ -1,15 +1,21 @@
 ﻿namespace SoftwareFest.Services
 {
     using AutoMapper;
+
     using Microsoft.EntityFrameworkCore;
+
+    using SoftwareFest.Models.Enums;
     using SoftwareFest.Pagination;
     using SoftwareFest.Pagination.Contracts;
     using SoftwareFest.Pagination.Enums;
     using SoftwareFest.Services.Contracts;
     using SoftwareFest.ViewModels;
+
     using SofwareFest.Infrastructure;
+
     using System.Linq;
     using System.Linq.Expressions;
+
     using Product = SoftwareFest.Models.Product;
 
     public class ProductService : IProductService
@@ -35,6 +41,11 @@
                 .FirstOrDefaultAsync();
 
             product.BusinessId = businessId;
+
+            if (model.Type == ProductType.Service)
+            {
+                model.Quantity = 1;
+            }
 
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
@@ -70,7 +81,7 @@
             return product;
         }
 
-        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(string name,  int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
+        public async Task<IPage<ShowProductViewModel>> GetPagedProducts(string name, int pageIndex = 1, int pageSize = 50, Expression<Func<Models.Product, object>>? orderBy = null, SortDirection sortDirection = SortDirection.Ascending)
         {
             orderBy ??= x => x.Id;
 
@@ -151,7 +162,11 @@
             product.Price = (long)(model.Price * 100);
             product.EthPrice = model.EthPrice;
             product.Name = model.Name;
-            product.Quantity = model.Quantity;
+            if (product.Type == ProductType.Service)
+            {
+                product.Quantity = 1;
+            }
+
 
             _logger.LogInformation($"Updated product with id {model.Id}");
 
