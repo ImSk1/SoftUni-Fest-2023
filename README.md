@@ -1,17 +1,22 @@
-# The commits after 10:30 are only for the readme.md!!!
-- <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/09885b23-2597-4dfe-9c4f-554eea5bcc58" alt="Screenshot 1 Title" width="300" />
-# Go to - running the project
-[Running the project](https://github.com/ImSk1/SoftUni-Fest-2023/tree/main#running-the-project)
-# Presentation Link
-[Link to the presentation (made in canva)](https://www.canva.com/design/DAFyoULOjf4/vJx6bmNlhq2zmv-Jdz9h9A/view?utm_content=DAFyoULOjf4&utm_campaign=designshare&utm_medium=link&utm_source=editor)
-# Payment Service Application for Softuni Fest 2023
-- <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/2cf27d7a-b4d1-430a-a3ea-14ee5d18e723" alt="Screenshot 1 Title" width="300" />
-- <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/07101beb-db98-493d-9b6a-37466daeaa1c" alt="Screenshot 1 Title" width="300" />
-- <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/afe5791b-0851-405f-8a12-b85f0f81a365" alt="Screenshot 1 Title" width="300" />
- 
-## Description
+<img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/09885b23-2597-4dfe-9c4f-554eea5bcc58" alt="Screenshot 1 Title" width="300" />
+
+# PaySol
+This is a project made in 48 hours that earned us 2nd place out of 20 teams in [SoftUni Software Fest 2023](https://fest.softuni.bg/softuni-fest-2023-software/)
+
+##  💬 Description
 
 The Payment Service Application is a platform designed to facilitate online transactions between businesses and their clients. It enables businesses to register and configure their products or services for seamless payment processing, while allowing clients to discover merchants and make purchases using the Stripe platform and Metamask for crypto purchases. The application offers distinct interfaces for both business and client users within a unified environment, ensuring a smooth and efficient payment experience.
+
+[Running the project](https://github.com/ImSk1/SoftUni-Fest-2023/tree/main#running-the-project)
+# 💻 Presentation Link
+[Link to the presentation (made in canva)](https://www.canva.com/design/DAFyoULOjf4/vJx6bmNlhq2zmv-Jdz9h9A/view?utm_content=DAFyoULOjf4&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+## ⚡ Powered by:
+
+<img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/2cf27d7a-b4d1-430a-a3ea-14ee5d18e723" alt="Screenshot 1 Title" width="300" />
+<img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/07101beb-db98-493d-9b6a-37466daeaa1c" alt="Screenshot 1 Title" width="300" />
+<img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/afe5791b-0851-405f-8a12-b85f0f81a365" alt="Screenshot 1 Title" width="300" />
+ 
 
 ## Team
 
