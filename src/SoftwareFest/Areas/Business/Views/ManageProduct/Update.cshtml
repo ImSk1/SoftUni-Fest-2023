@@ -1,5 +1,6 @@
 ﻿@using SoftwareFest.Models.Enums;
 @using SoftwareFest.ViewModels;
+@using Nethereum.Util
 @model ProductViewModel
 
 <div class="container">
@@ -7,7 +8,7 @@
         <h1>Update listing</h1>
         <input placeholder="Name" asp-for="@Model.Name" />
         <input placeholder="Price" asp-for="@Model.Price" />
-        <input type="number" placeholder="EthPrice" asp-for="@Model.EthPrice" />
+        <input placeholder="EthPrice" value="@Model.EthPrice.ToString("F5")" asp-for="@Model.EthPrice" />
         <textarea placeholder="Description" asp-for="@Model.Description" rows="2"></textarea>
         <div class="select-clas" style="pointer-events: none; cursor: not-allowed;">
             <select placeholder="Offer type" asp-for="@Model.Type">

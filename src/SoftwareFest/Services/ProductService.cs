@@ -42,9 +42,9 @@
 
             product.BusinessId = businessId;
 
-            if (model.Type == ProductType.Service)
+            if (product.Type == ProductType.Service)
             {
-                model.Quantity = 1;
+                product.Quantity = null;
             }
 
             await _context.Products.AddAsync(product);
@@ -164,7 +164,7 @@
             product.Name = model.Name;
             if (product.Type == ProductType.Service)
             {
-                product.Quantity = 1;
+                product.Quantity = null;
             }
 
 

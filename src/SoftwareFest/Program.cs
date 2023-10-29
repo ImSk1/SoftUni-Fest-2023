@@ -6,6 +6,7 @@ using SoftwareFest.Services;
 using SoftwareFest.Services.Contracts;
 using Stripe;
 using System.Diagnostics.CodeAnalysis;
+using SoftwareFest.Middlewares;
 using ProductService = SoftwareFest.Services.ProductService;
 using ServiceCollectionExtensions = SoftwareFest.Infrastructure.Extensions.ServiceCollectionExtensions;
 
@@ -71,7 +72,7 @@ try
 
     using var scope = app.Services.CreateScope();
 
-    //await DatabaseMiddleware.MigrateDatabase(scope, app.Configuration, app.Logger);
+    await DatabaseMiddleware.MigrateDatabase(scope, app.Configuration, app.Logger);
 
     app.Logger.LogInformation("Starting web host ({ApplicationName})...", appName);
     app.Run();
