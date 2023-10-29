@@ -1,3 +1,5 @@
+# Go to - running the project
+[Running the project](https://github.com/ImSk1/SoftUni-Fest-2023/tree/main#running-the-project)
 # Payment Service Application for Softuni Fest 2023
 - <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/2cf27d7a-b4d1-430a-a3ea-14ee5d18e723" alt="Screenshot 1 Title" width="300" />
 - <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/07101beb-db98-493d-9b6a-37466daeaa1c" alt="Screenshot 1 Title" width="300" />
