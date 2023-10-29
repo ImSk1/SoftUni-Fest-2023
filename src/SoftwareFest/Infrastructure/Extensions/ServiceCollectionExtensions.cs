@@ -39,7 +39,7 @@
         {
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
-                cfg.LoginPath = new PathString("/login");
+                cfg.LoginPath = "/login";
             });
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
             {
