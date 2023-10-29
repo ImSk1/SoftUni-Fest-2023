@@ -22,6 +22,7 @@
                 .ForMember(dest => dest.BusinessName, opt => opt.MapFrom(src => src.Product.Business.BusinessName))
                 .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => new Payment
                 {
+                    IsUsdPayment = !string.IsNullOrEmpty(src.StripeTransactionId),
                     Date = src.Date,
                     PriceUSD = (decimal)((decimal)src.Product.Price / 100),
                     PriceETH = src.Product.EthPrice
@@ -37,6 +38,7 @@
 
     public class Payment
     {
+        public bool IsUsdPayment { get; set; }
         public DateTime Date { get; set; }
         public decimal? PriceUSD { get; set; }
         public decimal? PriceETH { get; set; }

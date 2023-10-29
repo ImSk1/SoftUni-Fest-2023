@@ -36,7 +36,7 @@
                     @transactions.Date.ToString("dddd, dd MMMM yyyy HH:mm:ss")
                 </td>
                 <td>
-                    @if (transactions.AmountUSD != null)
+                    @if (transactions.HasStripePayment)
                     {
                         <text>@transactions.AmountUSD USD$</text>
                     }

@@ -28,10 +28,10 @@
                         @transactions.ClientName
                     </td>
                     <td>
-                        @transactions.Payment.Date.ToString("dd MM yyyy")
+                        @transactions.Payment.Date.ToString("dddd, dd MMMM yyyy HH:mm:ss")
                     </td>
                     <td>
-                        @if (transactions.Payment.PriceUSD != null)
+                        @if (transactions.Payment.IsUsdPayment)
                         {
                             <text>@transactions.Payment.PriceUSD USD$</text>
                         }

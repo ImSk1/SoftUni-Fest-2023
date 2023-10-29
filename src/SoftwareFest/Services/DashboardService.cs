@@ -32,6 +32,7 @@ namespace SoftwareFest.Services
 
             var payments = transactions.Select(t => new Payment
             {
+                IsUsdPayment = !string.IsNullOrEmpty(t.StripeTransactionId),
                 Date = t.Date,
                 PriceUSD = (decimal)((decimal)t.Product.Price / 100),
                 PriceETH = t.Product.EthPrice
@@ -56,10 +57,10 @@ namespace SoftwareFest.Services
 
             foreach (var payment in payments)
             {
-                if (payment.PriceUSD != null)
+                if (payment.IsUsdPayment)
                     usdRunningTotal += payment.PriceUSD;
-
-                if (payment.PriceETH != null)
+                
+                else
                     ethRunningTotal += payment.PriceETH;
 
                 walletAmounts.Add(new WalletAmount { Date = payment.Date, AmountUSD = usdRunningTotal, AmountETH = ethRunningTotal });
