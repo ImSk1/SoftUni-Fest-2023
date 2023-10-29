@@ -1,4 +1,5 @@
 # The commits after 10:30 are only for the readme.md!!!
+- <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/09885b23-2597-4dfe-9c4f-554eea5bcc58" alt="Screenshot 1 Title" width="300" />
 # Go to - running the project
 [Running the project](https://github.com/ImSk1/SoftUni-Fest-2023/tree/main#running-the-project)
 # Payment Service Application for Softuni Fest 2023
