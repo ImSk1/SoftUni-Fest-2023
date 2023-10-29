@@ -2,6 +2,8 @@
 - <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/09885b23-2597-4dfe-9c4f-554eea5bcc58" alt="Screenshot 1 Title" width="300" />
 # Go to - running the project
 [Running the project](https://github.com/ImSk1/SoftUni-Fest-2023/tree/main#running-the-project)
+# Presentation Link
+[Link to the presentation (made in canva)](https://www.canva.com/design/DAFyoULOjf4/vJx6bmNlhq2zmv-Jdz9h9A/view?utm_content=DAFyoULOjf4&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 # Payment Service Application for Softuni Fest 2023
 - <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/2cf27d7a-b4d1-430a-a3ea-14ee5d18e723" alt="Screenshot 1 Title" width="300" />
 - <img src="https://github.com/ImSk1/SoftUni-Fest-2023/assets/68961310/07101beb-db98-493d-9b6a-37466daeaa1c" alt="Screenshot 1 Title" width="300" />
