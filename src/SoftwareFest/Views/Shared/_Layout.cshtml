@@ -25,6 +25,7 @@
                 if (User.IsInRole("Business"))
                 {
                     <ul class="nav">
+                        <li><a asp-action="Dashboard" asp-controller="Dashboard" asp-area="Business">Dashboard</a></li>
                         <li><a asp-action="Add" asp-controller="ManageProduct" asp-area="Business">Create Listing</a></li>
                     </ul>
                 }

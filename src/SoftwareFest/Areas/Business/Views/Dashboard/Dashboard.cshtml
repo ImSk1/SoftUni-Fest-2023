@@ -1,71 +1,74 @@
 ﻿@using SoftwareFest.ViewModels;
 @model List<DashboardViewModel>
-
-<div class="storage">
-    <h1>Payments</h1>
-    <table>
-        <tr>
-            <th>
-                Product name
-            </th>
-            <th>
-                Client name
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
-                Amount
-            </th>
-        </tr>
-        @foreach (var transactions in Model)
-        {
+<div class="container-main">
+    <div style="height: auto;" class="storage">
+        <h1>Receved Payments</h1>
+        <table>
             <tr>
-                <td>
-                    @transactions.ProductName
-                </td>
-                <td>
-                    @transactions.ClientName
-                </td>
-                <td>
-                    @transactions.Date.ToString("dd MM yyyy")
-                </td>
-                <td>
-                    @if (transactions.AmountUSD != null)
-                    {
-                        <text>@transactions.AmountUSD USD$</text>
-                    }
-                    else
-                    {
-                        <text>@transactions.AmountETH ETH</text>
-                    }
-                </td>
+                <th>
+                    Product name
+                </th>
+                <th>
+                    Client name
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Amount
+                </th>
             </tr>
-        }
-    </table>
-</div>
+            @foreach (var transactions in Model)
+            {
+                <tr>
+                    <td>
+                        @transactions.ProductName
+                    </td>
+                    <td>
+                        @transactions.ClientName
+                    </td>
+                    <td>
+                        @transactions.Payment.Date.ToString("dd MM yyyy")
+                    </td>
+                    <td>
+                        @if (transactions.Payment.PriceUSD != null)
+                        {
+                            <text>@transactions.Payment.PriceUSD USD$</text>
+                        }
+                        else
+                        {
+                            <text>@transactions.Payment.PriceETH ETH</text>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 
-<div class="flexbox">
-    <section class="chart-cards">
-        <section class="price-cards">
-            <div id="price-card" class="price-card card">
-            </div>
-            <div id="change-card" class="change-card card">
-            </div>
+    <div class="flexbox">
+        <section class="chart-cards">
+            <section class="price-cards">
+                <h1>USD Balance</h1>
+                <div id="price-card" class="price-card card">
+                </div>
+                <h1>ETH Balance</h1>
+                <div id="change-card" class="change-card card">
+                </div>
+            </section>
         </section>
-    </section>
+    </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var usd = @Html.Raw(Json.Serialize(Model.Select(a => new {
-            time = a.Date.ToString("yyyy-MM-dd"),
-            value = a.AmountUSD
+            time = a.WalletAmount.Date.ToString("yyyy-MM-dd"),
+            value = a.WalletAmount.AmountUSD
             })));
 
         var eth = @Html.Raw(Json.Serialize(Model.Select(a => new {
-            time = a.Date.ToString("yyyy-MM-dd"),
-            value = a.AmountETH
+            time = a.WalletAmount.Date.ToString("yyyy-MM-dd"),
+            value = a.WalletAmount.AmountETH
             })));
         console.log(usd);
         createChat(usd, 'price-card', 'Light', '400', '800');

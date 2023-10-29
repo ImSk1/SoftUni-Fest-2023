@@ -28,7 +28,44 @@ namespace SoftwareFest.Services
                 .Where(a => a.Product.BusinessId == business.Id)
                 .ToListAsync();
 
-            return transactions.Select(_mapper.Map<DashboardViewModel>).ToList();
+            var model = transactions.Select(_mapper.Map<DashboardViewModel>).ToList();
+
+            var payments = transactions.Select(t => new Payment
+            {
+                Date = t.Date,
+                PriceUSD = (decimal)((decimal)t.Product.Price / 100),
+                PriceETH = t.Product.EthPrice
+            }).ToList();
+
+            var walletAmounts = CalculateWalletAmounts(payments);
+
+            for (int i = 0; i < model.Count; i++)
+            {
+                model[i].Payment = payments[i];
+                model[i].WalletAmount = walletAmounts[i];
+            }
+
+            return model;
+        }
+
+        private List<WalletAmount> CalculateWalletAmounts(List<Payment> payments)
+        {
+            var walletAmounts = new List<WalletAmount>();
+            decimal? usdRunningTotal = 0;
+            decimal? ethRunningTotal = 0;
+
+            foreach (var payment in payments)
+            {
+                if (payment.PriceUSD != null)
+                    usdRunningTotal += payment.PriceUSD;
+
+                if (payment.PriceETH != null)
+                    ethRunningTotal += payment.PriceETH;
+
+                walletAmounts.Add(new WalletAmount { Date = payment.Date, AmountUSD = usdRunningTotal, AmountETH = ethRunningTotal });
+            }
+
+            return walletAmounts;
         }
     }
 }

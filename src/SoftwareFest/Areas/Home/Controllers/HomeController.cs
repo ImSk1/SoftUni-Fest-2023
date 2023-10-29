@@ -23,17 +23,13 @@
 
         public async Task<IActionResult> Index()
         {
-            
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-                var user = await _userManager.FindByIdAsync(userId);
-
-                if (await _userManager.IsInRoleAsync(user, "Business"))
+                if (User.IsInRole("Business"))
                 {
-                    return RedirectToAction("MyListings", "ManageProduct", new { Area = "Business" });
+                    return RedirectToAction("Dashboard", "Dashboard", new { Area = "Business" });
                 }
-                if (await _userManager.IsInRoleAsync(user, "Client"))
+                if (User.IsInRole("Client"))
                 {
                     return RedirectToAction("All", "Product", new { Area = "Client" });
                 }

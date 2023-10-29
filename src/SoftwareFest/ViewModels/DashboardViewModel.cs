@@ -11,11 +11,8 @@
         public string ProductName { get; set; } = null!;
         public string ClientName { get; set; } = null!;
 
-        public DateTime Date { get; set; }
-
-        public decimal? AmountUSD { get; set; }
-
-        public decimal? AmountETH { get; set; }
+        public Payment? Payment { get; set; }
+        public WalletAmount? WalletAmount { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -23,8 +20,32 @@
                 .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.FirstName + " " + src.Client.LastName))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
                 .ForMember(dest => dest.BusinessName, opt => opt.MapFrom(src => src.Product.Business.BusinessName))
-                .ForMember(dest => dest.AmountUSD, opt => opt.MapFrom(src => (decimal)((decimal)src.Product.Price / 100)))
-                .ForMember(dest => dest.AmountETH, opt => opt.MapFrom(src => src.Product.EthPrice));
+                .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => new Payment
+                {
+                    Date = src.Date,
+                    PriceUSD = (decimal)((decimal)src.Product.Price / 100),
+                    PriceETH = src.Product.EthPrice
+                }))
+                .ForMember(dest => dest.WalletAmount, opt => opt.MapFrom(src => new WalletAmount
+                {
+                    Date = src.Date,
+                    AmountUSD = (decimal)((decimal)src.Product.Price / 100),
+                    AmountETH = src.Product.EthPrice
+                }));
         }
+    }
+
+    public class Payment
+    {
+        public DateTime Date { get; set; }
+        public decimal? PriceUSD { get; set; }
+        public decimal? PriceETH { get; set; }
+    }
+
+    public class WalletAmount
+    {
+        public DateTime Date { get; set; }
+        public decimal? AmountUSD { get; set; }
+        public decimal? AmountETH { get; set; }
     }
 }

@@ -50,7 +50,21 @@
 
         [HttpGet("/login")]
         public IActionResult Login()
-            => View();
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                if (User.IsInRole("Business"))
+                {
+                    return RedirectToAction("Dashboard", "Dashboard", new { Area = "Business" });
+                }
+                if (User.IsInRole("Client"))
+                {
+                    return RedirectToAction("All", "Product", new { Area = "Client" });
+                }
+            }
+
+            return View();
+        }
 
         [HttpPost("/login")]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -80,11 +94,39 @@
         }
 
         [HttpGet("/register/business")]
-        public IActionResult BusinessRegister() 
-            => View();
+        public IActionResult BusinessRegister()
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                if (User.IsInRole("Business"))
+                {
+                    return RedirectToAction("Dashboard", "Dashboard", new { Area = "Business" });
+                }
+                if (User.IsInRole("Client"))
+                {
+                    return RedirectToAction("All", "Product", new { Area = "Client" });
+                }
+            }
+
+            return View();
+        }
         [HttpGet("/register/client")]
         public IActionResult ClientRegister()
-            => View();
+        {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                if (User.IsInRole("Business"))
+                {
+                    return RedirectToAction("Dashboard", "Dashboard", new { Area = "Business" });
+                }
+                if (User.IsInRole("Client"))
+                {
+                    return RedirectToAction("All", "Product", new { Area = "Client" });
+                }
+            }
+
+            return View();
+        }
 
         [HttpPost("/register/client")]
         public async Task<IActionResult> ClientRegister(ClientViewModel model)
@@ -175,6 +217,18 @@
         [HttpGet]
         public async Task<IActionResult> EmailConfirmation()
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                if (User.IsInRole("Business"))
+                {
+                    return RedirectToAction("Dashboard", "Dashboard", new { Area = "Business" });
+                }
+                if (User.IsInRole("Client"))
+                {
+                    return RedirectToAction("All", "Product", new { Area = "Client" });
+                }
+            }
+
             var model = new EmailConfirmationViewModel();
             return View(model);
         }
@@ -216,6 +270,18 @@
         [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string? id, string? token)
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                if (User.IsInRole("Business"))
+                {
+                    return RedirectToAction("Dashboard", "Dashboard", new { Area = "Business" });
+                }
+                if (User.IsInRole("Client"))
+                {
+                    return RedirectToAction("All", "Product", new { Area = "Client" });
+                }
+            }
+
             if (id == null || token == null)
             {
                 return RedirectToAction(nameof(Login), "Identity");
