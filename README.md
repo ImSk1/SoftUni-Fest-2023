@@ -65,20 +65,20 @@ If something doesent work as expected try commenting out the `await DatabaseMidd
     "DefaultConnection": "<insert your connection string>."
   },
   "Stripe": {
-    "PublicKey": "pk_test_51O5kkhC2AQuDpkcCKNeCZpFgnecsVYSi5wKMkE6r4278nggXUkCcSknQ1PetNGftCUMuK4i8V3ioMGAdBcS8nABy00YXkmzWp6",
-    "SecretKey": "sk_test_51O5kkhC2AQuDpkcC1Uf5g5GO5B9iQtnliBzu4pnnJpNJHShPckiFg82U31Vg5zItVjq1ld6JM2UPUgthjXjJrWJA00vek8CL7e",
-    "ClientId": "ca_OtZObyUT5NlcNdDQNhF5chQlJcxGzQTX"
+    "PublicKey": "",
+    "SecretKey": "",
+    "ClientId": ""
   },
   "EmailSending": {
     "SmtpServer": "smtp.gmail.com",
-    "SmtpPort": 587,
-    "SmtpUsername": "notiflexnoreply@gmail.com",
-    "SmtpPassword": "eueuusntmpvxfahb",
-    "FromName": "Insightify",
-    "FromAddress": "notiflexnoreply@gmail.com"
+    "SmtpPort": ,
+    "SmtpUsername": "",
+    "SmtpPassword": "",
+    "FromName": "",
+    "FromAddress": ""
   },
   "EtherScan": {
-    "ApiKey": "NG1XRHGEXWADZBY2TJJGP2KFU7P3CEAZY1"
+    "ApiKey": ""
   }
 }
 ```
